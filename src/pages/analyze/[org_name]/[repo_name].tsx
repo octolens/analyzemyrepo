@@ -1,12 +1,18 @@
 import { useRouter } from "next/router";
 import Sidebar from "../../../components/SideBar";
 import Image from "next/image";
+import { trpc } from "../../../utils/trpc";
 
 const RepoPage = () => {
   const router = useRouter();
   const { org_name, repo_name } = router.query;
 
   const full_name = org_name + "/" + repo_name;
+
+  const data = trpc.useQuery([
+    "github.get_github_repo",
+    { owner: org_name as string, repo: repo_name as string },
+  ]);
 
   return (
     <div className="flex">
@@ -18,7 +24,6 @@ const RepoPage = () => {
           "More Insights",
         ]}
       />
-
       <div className="container mx-auto mt-12 flex flex-col">
         <div className="w-fit px-4 py-5 bg-white rounded-lg shadow mx-auto flex flex-row items-center gap-2">
           <div>
@@ -27,6 +32,7 @@ const RepoPage = () => {
               width="48"
               height="48"
               alt={full_name}
+              priority={true}
             />
           </div>
           <div className="text-xl text-gray-900 truncate">{full_name}</div>
@@ -47,6 +53,10 @@ const RepoPage = () => {
             </svg>
           </a>
         </div>
+        <h2 id="Overview" className="text-center">
+          Overview
+        </h2>
+        response ({data.status}): <pre>{JSON.stringify(data.data)}</pre>
       </div>
     </div>
   );
