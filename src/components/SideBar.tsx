@@ -70,8 +70,8 @@ export default function Sidebar({ sections }: SideBarProps) {
           </div> */}
         <div className="flex-1">
           <ul className="pt-2 pb-4 space-y-1 text-sm">
-            {sections.map((section: string) => (
-              <li className="rounded-sm">
+            {sections.map((section: string, key: number) => (
+              <li className="rounded-sm" key={key}>
                 <a
                   href={`#${section}`}
                   className="flex items-center p-2 space-x-3 rounded-md"
