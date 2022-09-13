@@ -5,10 +5,10 @@ export default function Document() {
   return (
     <Html>
       <Head>
-        <link
+        {/* <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/templates/basic_search.css"
-        />
+        /> */}
       </Head>
       <body>
         <Main />
