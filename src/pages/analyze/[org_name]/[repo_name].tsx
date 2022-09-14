@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 import Sidebar from "../../../components/SideBar";
 import Image from "next/image";
 import { trpc } from "../../../utils/trpc";
+import OverViewSection from "../../../components/Overview/Overview";
+import type { GithubAPIRepoResponse } from "../../../types/github_api";
 
 const RepoPage = () => {
   const router = useRouter();
@@ -53,10 +55,12 @@ const RepoPage = () => {
             </svg>
           </a>
         </div>
-        <h2 id="Overview" className="text-center">
-          Overview
-        </h2>
-        response ({data.status}): <pre>{JSON.stringify(data.data)}</pre>
+        {/* Overview section */}
+        <OverViewSection
+          section_id="Overview"
+          response={data.data as GithubAPIRepoResponse}
+          isLoading={data.isLoading}
+        />
       </div>
     </div>
   );
