@@ -15,7 +15,12 @@ const CustomSearchBox = ({
       role="search"
       onSubmit={(event) => {
         event.preventDefault();
-        router.push(`/analyze/${currentRefinement}`);
+        const elements = document.getElementsByClassName("search-hits");
+        if (elements.length > 0)
+          router.push(`/analyze/${elements[0]?.textContent}`);
+        else {
+          router.push(`/analyze/${currentRefinement}`);
+        }
       }}
     >
       <label
