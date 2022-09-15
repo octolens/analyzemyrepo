@@ -12,11 +12,11 @@ const CustomHighlight = ({ highlight, attribute, hit }: any) => {
       {parsedHit.map((part: any, index: number) =>
         part.isHighlighted ? (
           // can be added mark to add hightlight
-          <span key={index} className="truncate">
+          <span key={index} className="">
             {part.value}
           </span>
         ) : (
-          <span key={index} className="truncate">
+          <span key={index} className="">
             {part.value}
           </span>
         )

@@ -19,7 +19,7 @@ const Home: NextPage = () => {
       <div className="min-h-screen flex flex-col">
         <Header />
 
-        <main className="container mx-auto flex flex-col items-center p-4 flex-grow">
+        <main className="container mx-auto flex flex-col items-center p-4 flex-grow max-w-screen-lg">
           <h1 className="text-[2rem] md:text-[3rem] leading-normal font-extrabold text-neutral text-center">
             Community Insights for <span className="text-primary">GitHub</span>{" "}
             repos

@@ -4,7 +4,7 @@ const Header = () => {
   return (
     <>
       <header className="bg-base-100">
-        <div className="px-4 mx-auto sm:px-6 lg:px-8">
+        <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-screen-lg">
           <div className="flex items-center justify-between h-16">
             <div className="flex-1 md:flex md:items-center md:gap-12">
               <Link href="/">
@@ -39,7 +39,7 @@ const Header = () => {
               <div className="flex items-center gap-4">
                 <div className="sm:gap-4 sm:flex">
                   <Link href="/">
-                    <a className="px-5 py-2.5 text-sm font-medium text-white bg-primary rounded-md shadow">
+                    <a className="px-5 py-2.5 text-sm font-medium text-white bg-black rounded-md shadow">
                       Login
                     </a>
                   </Link>
