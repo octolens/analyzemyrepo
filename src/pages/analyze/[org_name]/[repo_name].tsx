@@ -5,6 +5,9 @@ import { trpc } from "../../../utils/trpc";
 import OverViewSection from "../../../components/Overview/Overview";
 import HeaderSecondary from "../../../components/HeaderSecondary";
 import { GoLinkExternal } from "react-icons/go";
+import { GrOverview } from "react-icons/gr";
+import { GiHealthPotion } from "react-icons/gi";
+import { MdIncompleteCircle, MdInsights } from "react-icons/md";
 
 const RepoPage = () => {
   const router = useRouter();
@@ -25,16 +28,32 @@ const RepoPage = () => {
     },
   ]);
 
+  const open_prs = trpc.useQuery([
+    "github.get_github_open_prs",
+    {
+      owner: org_name as string,
+      repo: repo_name as string,
+    },
+  ]);
+
+  const branches = trpc.useQuery([
+    "github.get_github_branches",
+    {
+      owner: org_name as string,
+      repo: repo_name as string,
+    },
+  ]);
+
   return (
     <div className="min-h-screen flex flex-col bg-neutral">
       <HeaderSecondary />
       <main className="container mx-auto p-4 flex max-w-screen-xl">
         <Sidebar
           sections={[
-            "Overview",
-            "Community Health",
-            "Repo Completeness",
-            "More Insights",
+            { section_name: "Overview", logo: <GrOverview /> },
+            { section_name: "Community Health", logo: <GiHealthPotion /> },
+            { section_name: "Repo Completeness", logo: <MdIncompleteCircle /> },
+            { section_name: "More Insights", logo: <MdInsights /> },
           ]}
         />
         <div className="container mx-auto flex flex-col">
@@ -61,6 +80,8 @@ const RepoPage = () => {
             section_id="Overview"
             response={data}
             commits_response={commits}
+            open_prs_response={open_prs}
+            branches_response={branches}
           />
         </div>
       </main>

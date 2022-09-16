@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SearchBar from "./SearchBar/SearchBar";
 
 const HeaderSecondary = () => {
   return (
@@ -16,6 +17,10 @@ const HeaderSecondary = () => {
             </div>
 
             <div className="md:flex md:items-center md:gap-12">
+              {/* <div className="w-96">
+                <SearchBar />
+              </div> */}
+
               {/* <nav
                 className="hidden md:block"
                 aria-labelledby="header-navigation"
