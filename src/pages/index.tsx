@@ -16,15 +16,15 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col bg-neutral">
         <Header />
 
-        <main className="container mx-auto flex flex-col items-center p-4 flex-grow max-w-screen-lg">
-          <h1 className="text-[2rem] md:text-[3rem] leading-normal font-extrabold text-neutral text-center">
+        <main className="container mx-auto flex flex-col items-center p-4 flex-grow max-w-screen-xl">
+          <h1 className="text-[2rem] md:text-[3rem] leading-normal font-extrabold text-black text-center">
             Community Insights for <span className="text-primary">GitHub</span>{" "}
             repos
           </h1>
-          <h2 className="text-[1.5rem] md:text-[2rem] leading-normal text-neutral py-2.5 text-center">
+          <h2 className="text-[1.5rem] md:text-[2rem] leading-normal text-black py-2.5 text-center">
             Free tool to grow your open-source project
           </h2>
           <div className="flex w-full">

@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const Header = () => {
+const HeaderSecondary = () => {
   return (
     <>
       <header className="bg-neutral border border-solid border-b-black shadow">
@@ -72,4 +72,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default HeaderSecondary;
