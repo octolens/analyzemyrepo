@@ -6,8 +6,8 @@ import OverViewSection from "../../../components/Overview/Overview";
 import HeaderSecondary from "../../../components/HeaderSecondary";
 import { GoLinkExternal } from "react-icons/go";
 import { GrOverview } from "react-icons/gr";
-import { GiHealthPotion } from "react-icons/gi";
-import { MdIncompleteCircle, MdInsights } from "react-icons/md";
+import { GiHealthPotion, GiChecklist } from "react-icons/gi";
+import { MdIncompleteCircle, MdInsights, MdChecklist } from "react-icons/md";
 
 const RepoPage = () => {
   const router = useRouter();
@@ -44,6 +44,14 @@ const RepoPage = () => {
     },
   ]);
 
+  const repo_rank = trpc.useQuery([
+    "hasura.get_repo_rank",
+    {
+      owner: org_name as string,
+      repo: repo_name as string,
+    },
+  ]);
+
   return (
     <div className="min-h-screen flex flex-col bg-neutral">
       <HeaderSecondary />
@@ -52,7 +60,10 @@ const RepoPage = () => {
           sections={[
             { section_name: "Overview", logo: <GrOverview /> },
             { section_name: "Community Health", logo: <GiHealthPotion /> },
-            { section_name: "Repo Completeness", logo: <MdIncompleteCircle /> },
+            {
+              section_name: "Repo Checklist",
+              logo: <MdChecklist />,
+            },
             { section_name: "More Insights", logo: <MdInsights /> },
           ]}
         />
@@ -82,6 +93,7 @@ const RepoPage = () => {
             commits_response={commits}
             open_prs_response={open_prs}
             branches_response={branches}
+            repo_rank_response={repo_rank}
           />
         </div>
       </main>

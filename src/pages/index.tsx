@@ -19,13 +19,13 @@ const Home: NextPage = () => {
       <div className="min-h-screen flex flex-col bg-neutral">
         <Header />
 
-        <main className="container mx-auto flex flex-col items-center p-4 flex-grow max-w-screen-xl">
+        <main className="container mx-auto flex flex-col items-center p-12 flex-grow max-w-screen-xl">
           <h1 className="text-[2rem] md:text-[3rem] leading-normal font-extrabold text-black text-center">
-            Community Insights for <span className="text-primary">GitHub</span>{" "}
+            Community insights for <span className="text-primary">GitHub</span>{" "}
             repos
           </h1>
-          <h2 className="text-[1.5rem] md:text-[2rem] leading-normal text-black py-2.5 text-center">
-            Free tool to grow your open-source project
+          <h2 className="text-[1.5rem] md:text-[2rem] leading-normal text-black py-3 text-center">
+            A free tool to understand &amp; grow your open-source project
           </h2>
           <div className="flex w-full">
             <div className="mx-auto pt-36 flex flex-col w-1/2">

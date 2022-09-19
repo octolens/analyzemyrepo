@@ -51,7 +51,7 @@ const CustomSearchBox = ({
           type="search"
           id="default-search"
           className="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary focus:border-primary dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary"
-          placeholder="Search repos with 1,000+ stars"
+          placeholder="Search for a repo"
           value={currentRefinement}
           onChange={(event) => refine(event.currentTarget.value)}
           autoFocus
