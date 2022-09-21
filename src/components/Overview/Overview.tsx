@@ -7,7 +7,9 @@ import {
   GoGitCommit,
   GoGitBranch,
 } from "react-icons/go";
+import { MdSentimentNeutral, MdCancel, MdCheckCircle } from "react-icons/md";
 import { UseQueryResult } from "react-query";
+import { useState } from "react";
 
 interface OverViewSectionProps {
   section_id: string;
@@ -55,10 +57,10 @@ const approximate_repo_distribution: RepoDistributionMap = {
   "1000..100000000": 36816, //1% -- top 1%
 };
 
-const count_percent_rank = (stars: number) => {
+const count_percent_rank = (stars: number, include_zeros: boolean = false) => {
   const values = Object.values(approximate_repo_distribution);
 
-  const sum = values.reduce((accumulator, value) => {
+  let sum = values.reduce((accumulator, value) => {
     return accumulator + value;
   }, 0);
 
@@ -83,6 +85,10 @@ const count_percent_rank = (stars: number) => {
     .reduce((accumulator, value) => {
       return accumulator + value;
     }, 0);
+
+  if (!include_zeros) {
+    sum -= approximate_repo_distribution["0..0"] as number;
+  }
 
   console.log("sum", sum);
   console.log("tail", upper_tail_sum);
@@ -118,25 +124,71 @@ const OverviewSection = ({
         </OverviewSectionColumn>
       </div>
       {/* Insights section */}
-      <div className="pt-10 flex">
-        <div className="mx-auto">
-          {repo_rank_response.isLoading && response.isLoading ? (
-            <TemplateCard />
-          ) : (
+      <Insights repo_rank_response={repo_rank_response} response={response} />
+    </section>
+  );
+};
+
+const Insights = ({
+  repo_rank_response,
+  response,
+}: {
+  repo_rank_response: UseQueryResult<any>;
+  response: UseQueryResult<any>;
+}) => {
+  const [nonZero, setNonZero] = useState(true);
+  return (
+    <div className="pt-10 flex">
+      <div className="mx-auto">
+        {repo_rank_response.isLoading && response.isLoading ? (
+          <TemplateCard />
+        ) : (
+          <div className="flex flex-col items-center gap-2">
             <InsightCard
-              color="positive"
               text={
                 repo_rank_response.data.repos_rank.length > 0
                   ? `№ ${repo_rank_response.data.repos_rank[0].rank} by stars on GitHub`
-                  : `Top ${count_percent_rank(
-                      response.data["stargazers_count"]
+                  : response.data["stargazers_count"] > 0
+                  ? `Top ${count_percent_rank(
+                      response.data["stargazers_count"],
+                      nonZero
                     )}% by stars on GitHub`
+                  : "The repo has zero stars"
               }
+              color={
+                repo_rank_response.data.repos_rank.length > 0
+                  ? "positive"
+                  : response.data["stargazers_count"] > 0
+                  ? "neutral"
+                  : "negative"
+              }
+              // >1k stars - positive, less than 1k, neutral, if 0 stars, then red
             />
-          )}
-        </div>
+            {repo_rank_response.data.repos_rank.length == 0 &&
+            response.data["stargazers_count"] > 0 ? (
+              <label
+                htmlFor="small-toggle"
+                className="inline-flex relative items-center mb-5 cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  id="small-toggle"
+                  className="sr-only peer"
+                  checked={nonZero}
+                  onChange={() => setNonZero(!nonZero)}
+                />
+                <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:primary rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+                <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+                  Include zero star repos
+                </span>
+              </label>
+            ) : (
+              ""
+            )}
+          </div>
+        )}
       </div>
-    </section>
+    </div>
   );
 };
 
@@ -160,9 +212,16 @@ const InsightCard = ({
   };
   return (
     <div
-      className={`rounded-lg w-64 h-6 border boder-solid border-black px-2 flex flex-row items-center ${color_dict[color]} justify-center`}
+      className={`rounded-lg w-64 h-8 border boder-solid border-black px-2 flex flex-row items-center ${color_dict[color]} justify-center gap-2`}
     >
-      {text}
+      <p className="align-middle">{text}</p>
+      {color == "negative" ? (
+        <MdCancel color="red" size={20} />
+      ) : color == "positive" ? (
+        <MdCheckCircle color="green" size={20} />
+      ) : (
+        <MdSentimentNeutral size={20} />
+      )}
     </div>
   );
 };

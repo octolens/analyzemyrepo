@@ -1,5 +1,6 @@
 interface SideBarProps {
   sections: SideBarItem[];
+  className?: string;
 }
 
 interface SideBarItem {
@@ -7,15 +8,18 @@ interface SideBarItem {
   logo: React.ReactNode;
 }
 
-export default function Sidebar({ sections }: SideBarProps) {
+export default function Sidebar({ sections, className }: SideBarProps) {
   return (
-    <aside className="w-64" aria-label="Sidebar">
+    <aside
+      className={"w-64 h-screen sticky top-0" + " " + className}
+      aria-label="Sidebar"
+    >
       <div className="overflow-y-auto py-4 px-3 bg-white rounded dark:bg-gray-800 border border-solid border-black">
         <ul className="space-y-2">
           {sections.map((item: SideBarItem, i: number) => (
             <li key={i}>
               <a
-                href="#"
+                href={`#${item.section_name}`}
                 className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 {item.logo}
