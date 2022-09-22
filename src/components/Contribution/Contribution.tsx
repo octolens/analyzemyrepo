@@ -43,19 +43,6 @@ const ContributionSection = ({ section_id }: ContributionSectionProps) => {
       {response.isLoading && response_2.isLoading ? (
         ""
       ) : (
-        // <PieChart
-        //   width={700}
-        //   height={500}
-        //   data={prepareData(
-        //     response.data,
-        //     response_2.data?.total_contributions as number,
-        //     CONTRIBUTORS_COUNT < response.data.length
-        //       ? CONTRIBUTORS_COUNT
-        //       : response.data.lenght + 1
-        //   )}
-        //   data_display_name="login"
-        //   data_number_name="contributions"
-        // />
         <div className="h-96 w-64 md:w-full">
           <ResponsivePie
             data={prepareData(
