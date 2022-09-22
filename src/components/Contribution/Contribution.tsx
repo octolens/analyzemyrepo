@@ -1,4 +1,3 @@
-import PieChart from "../../components/PieChart/PieChart";
 interface ContributionSectionProps {
   section_id: string;
 }
@@ -36,8 +35,11 @@ const ContributionSection = ({ section_id }: ContributionSectionProps) => {
     ];
   };
   return (
-    <section className="py-4 flex flex-col items-center" id={section_id}>
-      <h2 className="text-center font-extrabold text-3xl">Contribution</h2>
+    <section
+      className="container py-4 flex flex-col items-center"
+      id={section_id}
+    >
+      <h2 className="text-center font-extrabold text-3xl">Contributions</h2>
       {response.isLoading && response_2.isLoading ? (
         ""
       ) : (
@@ -54,7 +56,7 @@ const ContributionSection = ({ section_id }: ContributionSectionProps) => {
         //   data_display_name="login"
         //   data_number_name="contributions"
         // />
-        <div className="w-full h-96">
+        <div className="h-96 w-64 md:w-full">
           <ResponsivePie
             data={prepareData(
               response.data,
@@ -82,10 +84,41 @@ const ContributionSection = ({ section_id }: ContributionSectionProps) => {
                   100
               )}%)`
             }
+            layers={[
+              "arcs",
+              "arcLabels",
+              "arcLinkLabels",
+              "legends",
+              CenteredMetric,
+            ]}
           />
+
+          {/* {JSON.stringify(response_2.data)} */}
         </div>
       )}
     </section>
+  );
+};
+
+const CenteredMetric = ({ dataWithArc, centerX, centerY }: any) => {
+  let total = 0;
+  dataWithArc.forEach((datum: any) => {
+    total += datum.value;
+  });
+
+  return (
+    <text
+      x={centerX}
+      y={centerY}
+      textAnchor="middle"
+      dominantBaseline="central"
+      style={{
+        fontSize: "30px",
+        fontWeight: 600,
+      }}
+    >
+      {total}
+    </text>
   );
 };
 

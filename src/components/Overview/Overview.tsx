@@ -111,7 +111,7 @@ const OverviewSection = ({
       <div className="text-center w-96 truncate py-2">
         {response.isLoading ? "description" : response.data.description}
       </div>
-      <div className="grid grid-cols-2 gap-28">
+      <div className="grid grid-rows-2 md:grid-rows-none md:grid-cols-2 gap-5 md:gap-28">
         <OverviewSectionColumn column_title="Adoption Metrics">
           <AdoptionTable response={response} />
         </OverviewSectionColumn>

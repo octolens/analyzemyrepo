@@ -67,7 +67,7 @@ const RepoPage = () => {
       <main className="container mx-auto p-4 flex max-w-screen-xl">
         <div className="container mx-auto flex flex-col">
           <div className="flex flex-cols">
-            <div>
+            <div className="hidden lg:block">
               <Sidebar
                 className="pt-24"
                 sections={[
@@ -111,10 +111,7 @@ const RepoPage = () => {
                 branches_response={branches}
                 repo_rank_response={repo_rank}
               />
-              <ContributionSection
-                section_id="Contribution"
-                response={repo_contributors}
-              />
+              <ContributionSection section_id="Contributions" />
             </div>
           </div>
         </div>

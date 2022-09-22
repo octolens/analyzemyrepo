@@ -177,8 +177,11 @@ export const githubRouter = createRouter()
       const all_issues = checkHeaders(response_all_issues.headers, 0);
 
       return {
-        total_contributions:
-          all_commits + gh_pages_commits + all_pulls + all_issues,
+        total_contributions: all_commits,
+        all_commits,
+        gh_pages_commits,
+        all_pulls,
+        all_issues: all_issues - all_pulls,
       };
     },
   });
