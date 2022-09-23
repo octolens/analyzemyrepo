@@ -250,7 +250,11 @@ const Card = ({ response, data, response_data_name }: CardProps) => {
     );
   }
 
-  return <p>broken</p>;
+  return (
+    <div className="rounded-lg w-44 bg-white h-6 border boder-solid border-black px-2 flex flex-row justify-end items-center">
+      There was a problem loading data
+    </div>
+  );
 };
 
 // always static content
