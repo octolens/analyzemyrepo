@@ -57,7 +57,7 @@ const approximate_repo_distribution: RepoDistributionMap = {
   "1000..100000000": 36816, //1% -- top 1%
 };
 
-const count_percent_rank = (stars: number, include_zeros: boolean = false) => {
+const count_percent_rank = (stars: number, include_zeros = false) => {
   const values = Object.values(approximate_repo_distribution);
 
   let sum = values.reduce((accumulator, value) => {
@@ -66,8 +66,8 @@ const count_percent_rank = (stars: number, include_zeros: boolean = false) => {
 
   const bins = Object.keys(approximate_repo_distribution);
 
-  let result_bin: string = "0..0";
-  let index_to_sum_from: number = 0;
+  let result_bin = "0..0";
+  let index_to_sum_from = 0;
 
   for (const value of bins) {
     const [left, right] = value.split("..");
@@ -108,8 +108,10 @@ const OverviewSection = ({
   return (
     <section className="py-4 flex flex-col items-center" id={section_id}>
       <h2 className="text-center font-extrabold text-3xl">Overview</h2>
-      <div className="text-center w-96 truncate py-2">
-        {response.isLoading ? "description" : response.data.description}
+      <div className="text-center w-96 py-2">
+        <p className="text-center pt-1 text-gray-500">
+          Main stats about the repo
+        </p>
       </div>
       <div className="grid grid-rows-2 md:grid-rows-none md:grid-cols-2 gap-5 md:gap-28">
         <OverviewSectionColumn column_title="Adoption Metrics">
@@ -233,7 +235,7 @@ const Card = ({ response, data, response_data_name }: CardProps) => {
         {response.isLoading ? (
           <TemplateCard />
         ) : (
-          <div className="rounded-lg w-44 bg-white h-6 border boder-solid border-black px-2 flex flex-row justify-end items-center">
+          <div className="rounded-lg w-32 bg-white h-8 border boder-solid border-black px-2 flex flex-row justify-end items-center">
             {response_data_name
               ? (response.data[response_data_name] as number).toLocaleString()
               : response.data}
@@ -244,14 +246,14 @@ const Card = ({ response, data, response_data_name }: CardProps) => {
   }
   if (data) {
     return (
-      <div className="rounded-lg w-44 bg-white h-6 border boder-solid border-black px-2 flex flex-row justify-end items-center">
+      <div className="rounded-lg w-32 bg-white h-8 border boder-solid border-black px-2 flex flex-row justify-end items-center">
         {data}
       </div>
     );
   }
 
   return (
-    <div className="rounded-lg w-44 bg-white h-6 border boder-solid border-black px-2 flex flex-row justify-end items-center">
+    <div className="rounded-lg w-32 bg-white h-8 border boder-solid border-black px-2 flex flex-row justify-end items-center">
       There was a problem loading data
     </div>
   );
@@ -260,18 +262,18 @@ const Card = ({ response, data, response_data_name }: CardProps) => {
 // always static content
 const CardSmall = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="w-32 rounded-lg bg-white h-6 border boder-solid border-black px-2 flex flex-row items-center justify-start gap-2">
+    <div className="w-44 rounded-lg bg-white text-xl h-8 border boder-solid border-black px-2 flex flex-row items-center justify-start gap-2">
       {children}
     </div>
   );
 };
 
 const TemplateCard = () => {
-  return <div className="rounded-lg w-44 h-6 bg-gray-200 animate-pulse"></div>;
+  return <div className="rounded-lg w-32 h-6 bg-gray-200 animate-pulse"></div>;
 };
 
 const TemplateCardSmall = () => {
-  return <div className="rounded-lg w-32 h-6 bg-gray-200 animate-pulse"></div>;
+  return <div className="rounded-lg w-44 h-6 bg-gray-200 animate-pulse"></div>;
 };
 
 const TableRow = ({
@@ -303,7 +305,7 @@ const AdoptionTable = ({ response }: { response: UseQueryResult<any> }) => {
       <TableRow
         left={
           <>
-            <GoStar />
+            <GoStar size={20} />
             Stars
           </>
         }
@@ -313,7 +315,7 @@ const AdoptionTable = ({ response }: { response: UseQueryResult<any> }) => {
       <TableRow
         left={
           <>
-            <GoIssueOpened />
+            <GoIssueOpened size={20} />
             Open Issues
           </>
         }
@@ -323,7 +325,7 @@ const AdoptionTable = ({ response }: { response: UseQueryResult<any> }) => {
       <TableRow
         left={
           <>
-            <GoRepoForked /> Forks
+            <GoRepoForked size={20} /> Forks
           </>
         }
         response={response}
@@ -347,7 +349,7 @@ const ContributionTable = ({
       <TableRow
         left={
           <>
-            <GoGitBranch />
+            <GoGitBranch size={20} />
             Branches
           </>
         }
@@ -357,7 +359,7 @@ const ContributionTable = ({
       <TableRow
         left={
           <>
-            <GoGitPullRequest />
+            <GoGitPullRequest size={20} />
             Open PRs
           </>
         }
@@ -367,7 +369,7 @@ const ContributionTable = ({
       <TableRow
         left={
           <>
-            <GoGitCommit />
+            <GoGitCommit size={20} />
             Commits
           </>
         }

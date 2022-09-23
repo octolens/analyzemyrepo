@@ -8,7 +8,6 @@ import { GoLinkExternal, GoGraph } from "react-icons/go";
 import { GrOverview } from "react-icons/gr";
 import { MdInsights, MdChecklist } from "react-icons/md";
 import ContributionSection from "../../../components/Contribution/Contribution";
-import { useState } from "react";
 
 const RepoPage = () => {
   const router = useRouter();
@@ -77,7 +76,11 @@ const RepoPage = () => {
               />
             </div>
             <div className="mx-auto">
-              <a href={`https://github.com/${full_name}`} target="_blank">
+              <a
+                href={`https://github.com/${full_name}`}
+                target="_blank"
+                rel="noreferrer"
+              >
                 <div className="w-fit px-4 py-5 bg-white rounded-lg shadow mx-auto flex flex-row items-center gap-2 cursor-pointer">
                   <div>
                     <Image

@@ -62,7 +62,7 @@ const ContributionSection = ({ section_id }: ContributionSectionProps) => {
   const prepareData = (
     data: Record<string, any>[],
     total_contributions: number,
-    end: number = 3
+    end = 3
   ): Record<string, any>[] => {
     const slice = data.slice(0, end);
     const sum = slice.reduce((prev: any, curr: any) => ({
@@ -79,7 +79,10 @@ const ContributionSection = ({ section_id }: ContributionSectionProps) => {
       className="container py-4 flex flex-col items-center"
       id={section_id}
     >
-      <h2 className="text-center font-extrabold text-3xl">Contributions</h2>
+      <h2 className="text-center font-extrabold text-3xl py-2">
+        Contributions
+      </h2>
+      <p className="text-center pt-1 text-gray-500">Distribution of commits</p>
       {response.isLoading && response_2.isLoading ? (
         <div className="h-96 w-64 md:w-full bg-gray-200 animate-pulse"></div>
       ) : (
@@ -105,7 +108,7 @@ const ContributionSection = ({ section_id }: ContributionSectionProps) => {
             cornerRadius={8}
             innerRadius={0.5}
             margin={{ top: 40, right: 20, bottom: 40, left: 20 }}
-            arcLinkLabelsSkipAngle={3}
+            arcLinkLabelsSkipAngle={10}
             arcLinkLabel={(d) =>
               `${d.id} (${Math.round(
                 (d.value / (response_2.data?.total_contributions as number)) *
@@ -122,7 +125,7 @@ const ContributionSection = ({ section_id }: ContributionSectionProps) => {
           />
         </div>
       )}
-      <div className="pt-10 h-24 w-64 md:w-full flex">
+      <div className="pt-2 h-24 w-64 md:w-full flex">
         <div className="flex flex-col gap-2 mx-auto">
           <div className="flex flex-row gap-2 items-center">
             <CardSmall>
@@ -307,9 +310,9 @@ const BusFactorCard = () => {
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               ></path>
             </svg>
           </a>

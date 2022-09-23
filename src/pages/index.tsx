@@ -30,6 +30,10 @@ const Home: NextPage = () => {
           <div className="flex w-full">
             <div className="mx-auto pt-36 flex flex-col w-1/2">
               <SearchBar />
+              <p className="text-center pt-2 text-gray-500">
+                For repos with less than 1000 stars, please insert the name in
+                the format <b>organization/repo</b>
+              </p>
             </div>
           </div>
         </main>

@@ -3,7 +3,7 @@ import { z } from "zod";
 
 const commitsRegExp = /&page=(\d+)>; rel="last"/;
 
-const checkHeaders = (headers: Headers, default_value: number = 0): number => {
+const checkHeaders = (headers: Headers, default_value = 0): number => {
   const link = headers.get("Link") as string;
   if (link) {
     const matches = link.match(commitsRegExp);
