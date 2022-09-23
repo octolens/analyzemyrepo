@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { connectSearchBox } from "react-instantsearch-dom";
+import { useRef, useEffect } from "react";
 
 const CustomSearchBox = ({
   currentRefinement,
@@ -7,6 +8,23 @@ const CustomSearchBox = ({
   refine,
 }: any) => {
   const router = useRouter();
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const keydownHandler = (e: KeyboardEvent) => {
+    if (e.key === "k" && e.ctrlKey) {
+      e.preventDefault();
+      inputRef?.current?.focus();
+    }
+  };
+
+  useEffect(() => {
+    window.document.addEventListener("keydown", keydownHandler);
+
+    return () => {
+      window.document.removeEventListener("keydown", keydownHandler);
+    };
+  }, []);
 
   return (
     <form
@@ -21,6 +39,8 @@ const CustomSearchBox = ({
         else {
           router.push(`/analyze/${currentRefinement}`);
         }
+        refine("");
+        inputRef?.current?.blur();
       }}
     >
       <label
@@ -49,13 +69,14 @@ const CustomSearchBox = ({
         </div>
         <input
           type="search"
+          name="search"
           id="default-search"
           className="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary focus:border-primary dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary"
           placeholder="Search for a repo"
           value={currentRefinement}
           onChange={(event) => refine(event.currentTarget.value)}
-          autoFocus
           autoComplete="off"
+          ref={inputRef}
         />
       </div>
     </form>

@@ -17,9 +17,9 @@ const HeaderSecondary = () => {
             </div>
 
             <div className="md:flex md:items-center md:gap-12">
-              {/* <div className="w-96">
+              <div className="w-96 mt-5">
                 <SearchBar />
-              </div> */}
+              </div>
 
               {/* <nav
                 className="hidden md:block"

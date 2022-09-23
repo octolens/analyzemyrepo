@@ -4,11 +4,11 @@ import Image from "next/image";
 import { trpc } from "../../../utils/trpc";
 import OverViewSection from "../../../components/Overview/Overview";
 import HeaderSecondary from "../../../components/HeaderSecondary";
-import { GoLinkExternal } from "react-icons/go";
+import { GoLinkExternal, GoGraph } from "react-icons/go";
 import { GrOverview } from "react-icons/gr";
-import { GiHealthPotion, GiChecklist } from "react-icons/gi";
-import { MdIncompleteCircle, MdInsights, MdChecklist } from "react-icons/md";
+import { MdInsights, MdChecklist } from "react-icons/md";
 import ContributionSection from "../../../components/Contribution/Contribution";
+import { useState } from "react";
 
 const RepoPage = () => {
   const router = useRouter();
@@ -53,14 +53,6 @@ const RepoPage = () => {
     },
   ]);
 
-  const repo_contributors = trpc.useQuery([
-    "github.get_github_repo_contributors",
-    {
-      owner: org_name as string,
-      repo: repo_name as string,
-    },
-  ]);
-
   return (
     <div className="min-h-screen flex flex-col bg-neutral">
       <HeaderSecondary />
@@ -74,7 +66,7 @@ const RepoPage = () => {
                   { section_name: "Overview", logo: <GrOverview /> },
                   {
                     section_name: "Contributions",
-                    logo: <GiHealthPotion />,
+                    logo: <GoGraph />,
                   },
                   {
                     section_name: "Repo Checklist",
