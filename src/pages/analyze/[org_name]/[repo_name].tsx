@@ -73,7 +73,7 @@ const RepoPage = () => {
                 sections={[
                   { section_name: "Overview", logo: <GrOverview /> },
                   {
-                    section_name: "Community Health",
+                    section_name: "Contributions",
                     logo: <GiHealthPotion />,
                   },
                   {

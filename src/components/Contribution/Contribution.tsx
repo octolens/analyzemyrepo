@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { ResponsivePie } from "@nivo/pie";
 import { UseQueryResult } from "react-query";
 import { ResponsiveBullet } from "@nivo/bullet";
+import Tooltip from "../Tooltip/Tooltip";
 
 const CONTRIBUTORS_COUNT = 10;
 
@@ -124,7 +125,14 @@ const ContributionSection = ({ section_id }: ContributionSectionProps) => {
       <div className="pt-10 h-24 w-64 md:w-full flex">
         <div className="flex flex-col gap-2 mx-auto">
           <div className="flex flex-row gap-2 items-center">
-            <CardSmall>Bus Factor</CardSmall>
+            <CardSmall>
+              <>
+                Bus Factor
+                <div className="mt-1">
+                  <Tooltip tip={<BusFactorCard />} />
+                </div>
+              </>
+            </CardSmall>
             {response.isLoading && response_2.isLoading ? (
               <TemplateCard />
             ) : (
@@ -263,28 +271,52 @@ interface CardProps {
   data?: string | number;
 }
 
-const CustomRange = ({
-  x,
-  y,
-  width,
-  height,
-  color,
-  onMouseEnter,
-  onMouseMove,
-  onMouseLeave,
-}: any) => (
-  <rect
-    x={x + 2}
-    y={y + 2}
-    rx={5}
-    ry={5}
-    width={width - 4}
-    height={height - 4}
-    fill={color}
-    onMouseEnter={onMouseEnter}
-    onMouseMove={onMouseMove}
-    onMouseLeave={onMouseLeave}
-  />
-);
+const BusFactorCard = () => {
+  return (
+    <>
+      <div className="z-10 w-72 text-sm font-light text-gray-500 bg-white rounded-lg border border-gray-200 shadow-sm transition-opacity duration-300 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400">
+        <div className="p-3 space-y-2">
+          <h3 className="font-semibold text-gray-900 dark:text-white">
+            Bus Factor
+          </h3>
+          <p>
+            Bus Factor shows the number of contributors who authored more than
+            50% of all commits. For instance, Bus Factor of one means that one
+            person wrote more than 50% of all code in the repo. A low Bus Factor
+            usually indicates that repo is heavily dependent on a small number
+            of people, which could become a big problem if one of the
+            maintainers leaves.
+          </p>
+          <h3 className="font-semibold text-gray-900 dark:text-white">
+            Calculation
+          </h3>
+          <p>
+            We analyze top 100 contributors of the repo and calculate their
+            commits to the repo. Then we calculate a total number of commits to
+            the repo. Finally, we sort top contributors in an descending order
+            by number of commits and add up these numbers until we get more that
+            50% of all commits.
+          </p>
+          <a href="#" className="flex items-center font-medium text-primary">
+            Read more{" "}
+            <svg
+              className="ml-1 w-4 h-4"
+              aria-hidden="true"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </>
+  );
+};
 
 export default ContributionSection;
