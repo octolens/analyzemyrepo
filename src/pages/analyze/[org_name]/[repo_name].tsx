@@ -5,7 +5,7 @@ import { trpc } from "../../../utils/trpc";
 import OverViewSection from "../../../components/Overview/Overview";
 import HeaderSecondary from "../../../components/HeaderSecondary";
 import GeoSection from "../../../components/Geo/Geo";
-import { GoLinkExternal, GoGraph } from "react-icons/go";
+import { GoLinkExternal, GoGraph, GoGlobe } from "react-icons/go";
 import { GrOverview } from "react-icons/gr";
 import { MdInsights, MdChecklist } from "react-icons/md";
 import ContributionSection from "../../../components/Contribution/Contribution";
@@ -69,6 +69,10 @@ const RepoPage = () => {
                     logo: <GoGraph />,
                   },
                   {
+                    section_name: "Geo Map",
+                    logo: <GoGlobe />,
+                  },
+                  {
                     section_name: "Repo Checklist",
                     logo: <MdChecklist />,
                   },
@@ -108,7 +112,7 @@ const RepoPage = () => {
                 repo_rank_response={repo_rank}
               />
               <ContributionSection section_id="Contributions" />
-              <GeoSection />
+              <GeoSection section_id="Geo Map" />
             </div>
           </div>
         </div>
