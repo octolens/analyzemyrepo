@@ -1,5 +1,7 @@
 import { createRouter } from "./context";
 import { z } from "zod";
+import path from "path";
+import { promises as fs } from "fs";
 
 export const hasuraRouter = createRouter()
   .query("get_repo_rank", {
@@ -53,5 +55,17 @@ export const hasuraRouter = createRouter()
       //     }
 
       return response.json();
+    },
+  })
+  .query("get_static_json", {
+    async resolve() {
+      const jsonDirectory = path.join(process.cwd(), path.join("src", "json"));
+      //Read the json data file data.json
+      const fileContents = await fs.readFile(
+        jsonDirectory + "/data.json",
+        "utf8"
+      );
+      //Return the content of the data file in json format
+      return JSON.parse(fileContents);
     },
   });

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { trpc } from "../../../utils/trpc";
 import OverViewSection from "../../../components/Overview/Overview";
 import HeaderSecondary from "../../../components/HeaderSecondary";
+import GeoSection from "../../../components/Geo/Geo";
 import { GoLinkExternal, GoGraph } from "react-icons/go";
 import { GrOverview } from "react-icons/gr";
 import { MdInsights, MdChecklist } from "react-icons/md";
@@ -107,6 +108,7 @@ const RepoPage = () => {
                 repo_rank_response={repo_rank}
               />
               <ContributionSection section_id="Contributions" />
+              <GeoSection />
             </div>
           </div>
         </div>
