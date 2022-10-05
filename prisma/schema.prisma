@@ -1,64 +1,273 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "sqlite"
-    // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.text annotations in model Account below
-    // Further reading: 
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
-    url      = env("DATABASE_URL")
-}
-
-model Example {
-    id String @id @default(cuid())
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 // Necessary for Next auth
 model Account {
-    id                String  @id @default(cuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? //@db.Text
-    access_token      String? //@db.Text
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? //@db.Text
-    session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@unique([provider, providerAccountId])
+  @@unique([provider, providerAccountId])
 }
 
 model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
 }
 
 model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
+  identifier String
+  token      String   @unique
+  expires    DateTime
 
-    @@unique([identifier, token])
+  @@unique([identifier, token])
+}
+
+model geo_geocode {
+  id        Int     @id @default(autoincrement())
+  lat       Float?
+  lng       Float?
+  score     BigInt?
+  city      String?
+  region    String?
+  country   String?
+  lang_code String?
+  key       String?
+}
+
+model github_clean_repos {
+  repo_id                BigInt    @id
+  full_name              String?
+  description            String?
+  fork                   Boolean?
+  created_at             DateTime? @db.Timestamp(6)
+  updated_at             DateTime? @db.Timestamp(6)
+  pushed_at              DateTime? @db.Timestamp(6)
+  homepage               String?
+  size                   BigInt?
+  stargazers_count       BigInt?
+  watchers_count         BigInt?
+  forks_count            BigInt?
+  language               String?
+  has_issues             Boolean?
+  has_projects           Boolean?
+  has_downloads          Boolean?
+  has_wiki               Boolean?
+  has_pages              Boolean?
+  open_issues_count      BigInt?
+  owner_login            String?
+  owner_id               BigInt?
+  license_name           String?
+  parsed_at              DateTime? @db.Timestamp(6)
+  mirror_url             String?
+  default_branch         String?
+  license_key            String?
+  license_spdx_id        String?
+  owner_type             String?
+  owner_site_admin       Boolean?
+  RR_Q1                  Float?
+  RR_Q2                  Float?
+  RR_Q4                  Float?
+  RR_Q8                  Float?
+  commits                BigInt?
+  contributors           BigInt?
+  age                    Float?
+  commits_qual           BigInt?
+  contributors_qual      BigInt?
+  features_calculated_at DateTime? @db.Date
+  AC_4Q                  Int?
+  AQC_4Q                 Int?
+  NC_4Q                  Int?
+  HHI                    Int?
+  Avg_DAU                Float?
+  Avg_WAU                Float?
+  Avg_QAU                Float?
+  AC_growth_Q            Float?
+  AQC_growth_Q           Float?
+  TC_growth_Q            Float?
+  topics                 String?
+  latest_commit_at       DateTime? @db.Timestamp(6)
+  agr_window_q           Float?
+  agr_window_m           Float?
+  agr_window_w           Float?
+}
+
+model github_raw_commits {
+  id           Int       @id @default(autoincrement())
+  sha          String?
+  commited_at  DateTime? @db.Timestamp(6)
+  author_name  String?
+  best_email   String?
+  author_id    BigInt?
+  author_login String?
+  repo_id      BigInt?
+}
+
+model github_raw_repos {
+  id                Int       @id @default(autoincrement())
+  full_name         String?
+  description       String?
+  fork              Boolean?
+  created_at        DateTime? @db.Timestamp(6)
+  updated_at        DateTime? @db.Timestamp(6)
+  pushed_at         DateTime? @db.Timestamp(6)
+  homepage          String?
+  size              BigInt?
+  stargazers_count  BigInt?
+  watchers_count    BigInt?
+  language          String?
+  has_issues        Boolean?
+  has_projects      Boolean?
+  has_downloads     Boolean?
+  has_wiki          Boolean?
+  has_pages         Boolean?
+  forks_count       BigInt?
+  archived          Boolean?
+  open_issues_count BigInt?
+  score             Float?
+  owner_login       String?
+  owner_id          BigInt?
+  license_name      String?
+  repo_id           BigInt?
+  parsed_at         DateTime? @db.Timestamp(6)
+  mirror_url        String?
+  default_branch    String?
+  license_key       String?
+  license_spdx_id   String?
+  owner_type        String?
+  owner_site_admin  Boolean?
+  topics            String?
+}
+
+model github_raw_users {
+  id               Int       @id @default(autoincrement())
+  login            String?
+  avatar_url       String?
+  gravatar_id      String?
+  type             String?
+  site_admin       Boolean?
+  name             String?
+  company          String?
+  blog             String?
+  location         String?
+  email            String?
+  hireable         String?
+  bio              String?
+  twitter_username String?
+  public_repos     BigInt?
+  public_gists     BigInt?
+  followers        BigInt?
+  following        BigInt?
+  created_at       DateTime? @db.Timestamp(6)
+  updated_at       DateTime? @db.Timestamp(6)
+  user_id          BigInt?
+  parsed_at        DateTime? @db.Timestamp(6)
+}
+
+model github_repos {
+  id                Int       @id(map: "github_repos_temporary_table_1235_pkey") @default(autoincrement())
+  full_name         String?
+  description       String?
+  fork              Boolean?
+  created_at        DateTime? @db.Timestamp(6)
+  updated_at        DateTime? @db.Timestamp(6)
+  pushed_at         DateTime? @db.Timestamp(6)
+  homepage          String?
+  size              BigInt?
+  stargazers_count  BigInt?
+  watchers_count    BigInt?
+  language          String?
+  has_issues        Boolean?
+  has_projects      Boolean?
+  has_downloads     Boolean?
+  has_wiki          Boolean?
+  has_pages         Boolean?
+  forks_count       BigInt?
+  mirror_url        String?
+  archived          Boolean?
+  open_issues_count BigInt?
+  default_branch    String?
+  score             Float?
+  license_name      String?
+  license_key       String?
+  license_spdx_id   String?
+  topics            String?
+  owner_login       String?
+  owner_id          BigInt?
+  owner_type        String?
+  owner_site_admin  Boolean?
+  repo_id           BigInt?   @unique(map: "unique_repo_id")
+  parsed_at         DateTime? @db.Timestamp(6)
+}
+
+model github_stars_dist {
+  id    Int     @id @default(autoincrement())
+  start BigInt?
+  end   BigInt?
+  count BigInt?
+}
+
+model github_users {
+  user_id               BigInt    @id
+  login                 String?
+  avatar_url            String?
+  gravatar_id           String?
+  type                  String?
+  site_admin            Boolean?
+  name                  String?
+  company               String?
+  blog                  String?
+  location              String?
+  email                 String?
+  hireable              String?
+  bio                   String?
+  twitter_username      String?
+  public_repos          BigInt?
+  public_gists          BigInt?
+  followers             BigInt?
+  following             BigInt?
+  created_at            DateTime? @db.Timestamp(6)
+  updated_at            DateTime? @db.Timestamp(6)
+  parsed_at             DateTime? @db.Timestamp(6)
+  repos_collected       BigInt?
+  repos_stars_collected BigInt?
+  repos_forks_collected BigInt?
+  most_freq_website     String?
+  top_repo_id           BigInt?
+  org_members           Int?
+  languages             String?
+  topics                String?
+  commit_emails         String?
+  is_russian_name_prob  Float?
+  total_stars_perc      Int?      @db.SmallInt
+  is_armenian_name_prob Float?
 }

@@ -1,4 +1,29 @@
 import Link from "next/link";
+import { useSession, signIn, signOut } from "next-auth/react";
+
+function LoginButton() {
+  const { data: session } = useSession();
+  if (session) {
+    return (
+      <button
+        onClick={() => signOut()}
+        className="px-5 py-2.5 text-sm font-medium text-white bg-black rounded-md shadow"
+      >
+        Sign out
+      </button>
+    );
+  }
+  return (
+    <button
+      onClick={() =>
+        signIn(undefined, { callbackUrl: "http://localhost:3000/dashboard" })
+      }
+      className="px-5 py-2.5 text-sm font-medium text-white bg-black rounded-md shadow"
+    >
+      Sign in
+    </button>
+  );
+}
 
 const Header = () => {
   return (
@@ -38,11 +63,12 @@ const Header = () => {
 
               <div className="flex items-center gap-4">
                 <div className="sm:gap-4 sm:flex">
-                  <Link href="/">
+                  {/* <Link href="/">
                     <a className="px-5 py-2.5 text-sm font-medium text-white bg-black rounded-md shadow">
                       Login
                     </a>
-                  </Link>
+                  </Link> */}
+                  <LoginButton />
                 </div>
 
                 <div className="block md:hidden">
