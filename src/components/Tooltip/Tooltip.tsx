@@ -1,13 +1,24 @@
-import { Popover, ArrowContainer } from "react-tiny-popover";
+import { Popover, ArrowContainer, PopoverPosition } from "react-tiny-popover";
 import { useState } from "react";
 
-const Tooltip = ({ tip }: { tip: JSX.Element }) => {
+const Tooltip = ({
+  tip,
+  position_priority = "top",
+}: {
+  tip: JSX.Element;
+  position_priority?: PopoverPosition;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isInside, setIsInside] = useState(false);
+
+  const positions: PopoverPosition[] = ["top", "bottom", "left", "right"];
   return (
     <>
       <Popover
-        positions={["top", "bottom", "left", "right"]}
+        positions={[
+          position_priority,
+          ...positions.filter((value) => value != position_priority),
+        ]}
         isOpen={isOpen || isInside}
         padding={10}
         content={({ position, childRect, popoverRect }) => (

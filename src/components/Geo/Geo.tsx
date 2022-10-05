@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { trpc } from "../../utils/trpc";
 import { ResponsiveChoropleth } from "@nivo/geo";
 import { useState } from "react";
+import Tooltip from "../Tooltip/Tooltip";
 
 const RadioHorizontal = ({
   radio_names,
@@ -126,6 +127,12 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
   return (
     <section className="flex flex-col gap-3" id={section_id}>
       <h2 className="text-center font-extrabold text-3xl py-2">Geo Map</h2>
+      <p className="text-center text-gray-500">
+        Locations of contributors{" "}
+        <div className="inline align-middle">
+          <Tooltip tip={<GeoToolTip />} position_priority={"right"} />
+        </div>
+      </p>
       <RadioHorizontal
         radio_names={["commits_count", "contributors_count"]}
         active_radio_name={geoCalcType}
@@ -143,6 +150,39 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
         </div>
       )}
     </section>
+  );
+};
+
+const GeoToolTip = () => {
+  return (
+    <>
+      <div className="z-10 w-72 text-sm font-light text-gray-500 bg-white rounded-lg border border-gray-200 shadow-sm transition-opacity duration-300 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400">
+        <div className="p-3 space-y-2">
+          <h3 className="font-semibold text-gray-900 dark:text-white">
+            How map is calculated
+          </h3>
+          <p>
+            We analyze all quailified commits to the repo and collect all users
+            from them. Then we "parse" users location based on information in
+            their public profile. Because not all users specify their location
+            or sometimes specify something unindentifible, this map is only
+            approximate, but still can provide some insights into geography of
+            your contributors.
+          </p>
+          <h3 className="font-semibold text-gray-900 dark:text-white">
+            Commits_count vs contributors_count
+          </h3>
+          <p>
+            You can select how you want the map to be calculated.{" "}
+            <b>Commits_count </b>
+            option highlights countries by the number of commits originating
+            from this country, while <b>contributors_count</b> highlight
+            countries based on number of contributors coming from particular
+            country.
+          </p>
+        </div>
+      </div>
+    </>
   );
 };
 
