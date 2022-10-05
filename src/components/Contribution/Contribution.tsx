@@ -82,11 +82,13 @@ const ContributionSection = ({ section_id }: ContributionSectionProps) => {
       <h2 className="text-center font-extrabold text-3xl py-2">
         Contributions
       </h2>
-      <p className="text-center pt-1 text-gray-500">Distribution of commits</p>
+      <p className="text-center pt-1 text-gray-500">
+        Distribution of commits by users
+      </p>
       {response.isLoading && response_2.isLoading ? (
         <div className="h-96 w-64 md:w-full bg-gray-200 animate-pulse"></div>
       ) : (
-        // chart
+        // char
         <div className="h-96 w-64 md:w-full">
           <ResponsivePie
             data={prepareData(
