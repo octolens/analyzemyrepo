@@ -271,3 +271,11 @@ model github_users {
   total_stars_perc      Int?      @db.SmallInt
   is_armenian_name_prob Float?
 }
+
+// it's a view
+model github_repos_serious_contributors {
+  full_name         String?
+  repo_id           BigInt  @unique
+  serious_commiters BigInt
+  total_commiters   BigInt
+}

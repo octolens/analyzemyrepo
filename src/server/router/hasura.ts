@@ -68,4 +68,18 @@ export const hasuraRouter = createRouter()
       //Return the content of the data file in json format
       return JSON.parse(fileContents);
     },
+  })
+  .query("get_serious_contributors", {
+    input: z.object({
+      owner: z.string(),
+      repo: z.string(),
+    }),
+    async resolve({ ctx, input }) {
+      const client = ctx.prisma;
+      const data = await client.github_repos_serious_contributors.findFirst({
+        where: { full_name: `${input.owner}/${input.repo}` },
+      });
+
+      return data;
+    },
   });

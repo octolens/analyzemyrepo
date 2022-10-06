@@ -7,9 +7,9 @@ import {
   GoGitCommit,
   GoGitBranch,
 } from "react-icons/go";
-import { MdSentimentNeutral, MdCancel, MdCheckCircle } from "react-icons/md";
 import { UseQueryResult } from "react-query";
 import { useState } from "react";
+import InsightCard from "../Cards/InsightCard";
 
 interface OverViewSectionProps {
   section_id: string;
@@ -90,8 +90,6 @@ const count_percent_rank = (stars: number, include_zeros = false) => {
     sum -= approximate_repo_distribution["0..0"] as number;
   }
 
-  console.log("sum", sum);
-  console.log("tail", upper_tail_sum);
   const percentage = (upper_tail_sum / sum) * 100;
 
   return Math.ceil(percentage).toFixed(0);
@@ -200,34 +198,6 @@ interface CardProps {
   data?: string | number;
 }
 
-const InsightCard = ({
-  color,
-  text,
-}: {
-  color: "positive" | "negative" | "neutral";
-  text: string;
-}) => {
-  const color_dict = {
-    positive: "bg-green-200",
-    negative: "bg-red-200",
-    neutral: "bg-gray-200",
-  };
-  return (
-    <div
-      className={`rounded-lg w-64 h-8 border boder-solid border-black px-2 flex flex-row items-center ${color_dict[color]} justify-center gap-2`}
-    >
-      <p className="align-middle">{text}</p>
-      {color == "negative" ? (
-        <MdCancel color="red" size={20} />
-      ) : color == "positive" ? (
-        <MdCheckCircle color="green" size={20} />
-      ) : (
-        <MdSentimentNeutral size={20} />
-      )}
-    </div>
-  );
-};
-
 const Card = ({ response, data, response_data_name }: CardProps) => {
   if (response) {
     return (
@@ -270,10 +240,6 @@ const CardSmall = ({ children }: { children: React.ReactNode }) => {
 
 const TemplateCard = () => {
   return <div className="rounded-lg w-32 h-6 bg-gray-200 animate-pulse"></div>;
-};
-
-const TemplateCardSmall = () => {
-  return <div className="rounded-lg w-44 h-6 bg-gray-200 animate-pulse"></div>;
 };
 
 const TableRow = ({

@@ -5,8 +5,10 @@ import { trpc } from "../../utils/trpc";
 import { useRouter } from "next/router";
 import { ResponsivePie } from "@nivo/pie";
 import { UseQueryResult } from "react-query";
-import { ResponsiveBullet } from "@nivo/bullet";
+import BulletChart from "../Charts/Bullet";
 import Tooltip from "../Tooltip/Tooltip";
+import TemplateCard from "../Cards/TemplateCard";
+import { MdCancel, MdCheckCircle } from "react-icons/md";
 
 const CONTRIBUTORS_COUNT = 10;
 
@@ -47,6 +49,22 @@ const calculate_bus_factor = (
   };
 };
 
+const prepareData = (
+  data: Record<string, any>[],
+  total_contributions: number,
+  end = 3
+): Record<string, any>[] => {
+  const slice = data.slice(0, end);
+  const sum = slice.reduce((prev: any, curr: any) => ({
+    contributions: prev["contributions"] + curr["contributions"],
+  }))["contributions"];
+
+  return [
+    ...slice,
+    { login: "Other", contributions: total_contributions - sum },
+  ];
+};
+
 const ContributionSection = ({ section_id }: ContributionSectionProps) => {
   const router = useRouter();
   const { org_name, repo_name } = router.query;
@@ -59,21 +77,6 @@ const ContributionSection = ({ section_id }: ContributionSectionProps) => {
     { owner: org_name as string, repo: repo_name as string },
   ]);
 
-  const prepareData = (
-    data: Record<string, any>[],
-    total_contributions: number,
-    end = 3
-  ): Record<string, any>[] => {
-    const slice = data.slice(0, end);
-    const sum = slice.reduce((prev: any, curr: any) => ({
-      contributions: prev["contributions"] + curr["contributions"],
-    }))["contributions"];
-
-    return [
-      ...slice,
-      { login: "Other", contributions: total_contributions - sum },
-    ];
-  };
   return (
     <section
       className="container py-4 flex flex-col items-center"
@@ -88,7 +91,6 @@ const ContributionSection = ({ section_id }: ContributionSectionProps) => {
       {response.isLoading && response_2.isLoading ? (
         <div className="h-96 w-64 md:w-full bg-gray-200 animate-pulse"></div>
       ) : (
-        // char
         <div className="h-96 w-64 md:w-full">
           <ResponsivePie
             data={prepareData(
@@ -129,69 +131,7 @@ const ContributionSection = ({ section_id }: ContributionSectionProps) => {
       )}
       <div className="pt-2 h-24 w-64 md:w-full flex">
         <div className="flex flex-col gap-2 mx-auto">
-          <div className="flex flex-row gap-2 items-center">
-            <CardSmall>
-              <>
-                Bus Factor
-                <div className="mt-1">
-                  <Tooltip tip={<BusFactorCard />} />
-                </div>
-              </>
-            </CardSmall>
-            {response.isLoading && response_2.isLoading ? (
-              <TemplateCard />
-            ) : (
-              // <Card
-              //   data={`${
-              //     calculate_bus_factor(
-              //       response.data,
-              //       response_2.data?.total_contributions as number
-              //     ).bus_factor
-              //   }`}
-              // />
-              <div className="h-20 w-72">
-                <ResponsiveBullet
-                  data={[
-                    {
-                      id: "Data",
-                      ranges: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50],
-                      title: `${
-                        calculate_bus_factor(
-                          response.data,
-                          response_2.data?.total_contributions as number
-                        ).bus_factor
-                      }`,
-                      measures: [
-                        calculate_bus_factor(
-                          response.data,
-                          response_2.data?.total_contributions as number
-                        ).bus_factor as number,
-                      ],
-                      markers: [
-                        calculate_bus_factor(
-                          response.data,
-                          response_2.data?.total_contributions as number
-                        ).bus_factor as number,
-                      ],
-                    },
-                  ]}
-                  maxValue={20}
-                  minValue={1}
-                  spacing={46}
-                  titleAlign="start"
-                  measureSize={0.1}
-                  titleOffsetX={10}
-                  animate={true}
-                  margin={{ right: 30, bottom: 20, left: 10, top: 20 }}
-                  markerSize={1.3}
-                  rangeColors="red_yellow_green"
-                  measureColors="black"
-                  markerColors="black"
-                  titlePosition="after"
-                />
-              </div>
-            )}
-          </div>
+          <BusFactorBullet response={response} response_2={response_2} />
           {/* <div className="flex flex-row gap-2">
             <CardSmall>Coverage Ratio</CardSmall>
           </div>
@@ -235,40 +175,36 @@ const CardSmall = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const Card = ({ response, data, response_data_name }: CardProps) => {
-  if (response) {
-    return (
-      <>
-        {response.isLoading ? (
-          <TemplateCard />
-        ) : (
-          <div className="rounded-lg w-44 bg-white h-6 border boder-solid border-black px-2 flex flex-row justify-end items-center">
-            {response_data_name
-              ? (response.data[response_data_name] as number).toLocaleString()
-              : response.data}
-          </div>
-        )}
-      </>
-    );
-  }
-  if (data) {
-    return (
-      <div className="rounded-lg w-44 bg-white h-6 border boder-solid border-black px-2 flex flex-row justify-end items-center">
-        {data}
-      </div>
-    );
-  }
+// const Card = ({ response, data, response_data_name }: CardProps) => {
+//   if (response) {
+//     return (
+//       <>
+//         {response.isLoading ? (
+//           <TemplateCard />
+//         ) : (
+//           <div className="rounded-lg w-44 bg-white h-6 border boder-solid border-black px-2 flex flex-row justify-end items-center">
+//             {response_data_name
+//               ? (response.data[response_data_name] as number).toLocaleString()
+//               : response.data}
+//           </div>
+//         )}
+//       </>
+//     );
+//   }
+//   if (data) {
+//     return (
+//       <div className="rounded-lg w-44 bg-white h-6 border boder-solid border-black px-2 flex flex-row justify-end items-center">
+//         {data}
+//       </div>
+//     );
+//   }
 
-  return (
-    <div className="rounded-lg w-44 bg-white h-6 border boder-solid border-black px-2 flex flex-row justify-end items-center">
-      There was a problem loading data
-    </div>
-  );
-};
-
-const TemplateCard = () => {
-  return <div className="rounded-lg w-44 h-6 bg-gray-200 animate-pulse"></div>;
-};
+//   return (
+//     <div className="rounded-lg w-44 bg-white h-6 border boder-solid border-black px-2 flex flex-row justify-end items-center">
+//       There was a problem loading data
+//     </div>
+//   );
+// };
 
 interface CardProps {
   response?: UseQueryResult<any>;
@@ -321,6 +257,108 @@ const BusFactorCard = () => {
         </div>
       </div>
     </>
+  );
+};
+
+const BusFactorBullet = ({
+  response,
+  response_2,
+}: {
+  response: UseQueryResult<any>;
+  response_2: UseQueryResult<any>;
+}) => {
+  return (
+    <div className="flex flex-row gap-2 items-center">
+      <CardSmall>
+        <>
+          Bus Factor
+          <div className="mt-1">
+            <Tooltip tip={<BusFactorCard />} />
+          </div>
+        </>
+      </CardSmall>
+      {response.isLoading && response_2.isLoading ? (
+        <TemplateCard width="w-80" height="h-20" />
+      ) : (
+        <BulletChart
+          className="h-20 w-80"
+          title={
+            calculate_bus_factor(
+              response.data,
+              response_2.data?.total_contributions as number
+            ).bus_factor
+          }
+          ranges={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50]}
+          measures={[
+            calculate_bus_factor(
+              response.data,
+              response_2.data?.total_contributions as number
+            ).bus_factor as number,
+          ]}
+          markers={[
+            calculate_bus_factor(
+              response.data,
+              response_2.data?.total_contributions as number
+            ).bus_factor as number,
+          ]}
+          maxValue={20}
+          minValue={1}
+          titlePosition="before"
+          margin={{ left: 40, right: 10, top: 20, bottom: 20 }}
+        />
+      )}
+    </div>
+  );
+};
+
+const SeriousCountBullet = ({
+  response,
+  response_2,
+}: {
+  response: UseQueryResult<any>;
+  response_2: UseQueryResult<any>;
+}) => {
+  return (
+    <div className="flex flex-row gap-2 items-center">
+      <CardSmall>
+        <>
+          Serious Ratio
+          <div className="mt-1">
+            <Tooltip tip={<BusFactorCard />} />
+          </div>
+        </>
+      </CardSmall>
+      {response.isLoading && response_2.isLoading ? (
+        <TemplateCard width="w-80" height="h-20" />
+      ) : (
+        <BulletChart
+          className="h-20 w-80"
+          title={
+            calculate_bus_factor(
+              response.data,
+              response_2.data?.total_contributions as number
+            ).bus_factor
+          }
+          ranges={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50]}
+          measures={[
+            calculate_bus_factor(
+              response.data,
+              response_2.data?.total_contributions as number
+            ).bus_factor as number,
+          ]}
+          markers={[
+            calculate_bus_factor(
+              response.data,
+              response_2.data?.total_contributions as number
+            ).bus_factor as number,
+          ]}
+          maxValue={20}
+          minValue={1}
+          titlePosition="before"
+          margin={{ left: 40, right: 10, top: 20, bottom: 20 }}
+        />
+      )}
+    </div>
   );
 };
 
