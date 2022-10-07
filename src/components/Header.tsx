@@ -15,9 +15,7 @@ function LoginButton() {
   }
   return (
     <button
-      onClick={() =>
-        signIn(undefined, { callbackUrl: "http://localhost:3000/dashboard" })
-      }
+      onClick={() => signIn(undefined, { callbackUrl: "/dashboard" })}
       className="px-5 py-2.5 text-sm font-medium text-white bg-black rounded-md shadow"
     >
       Sign in
