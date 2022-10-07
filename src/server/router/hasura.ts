@@ -80,6 +80,9 @@ export const hasuraRouter = createRouter()
         where: { full_name: `${input.owner}/${input.repo}` },
       });
 
-      return data;
+      return {
+        serious_commiters: Number(data?.serious_commiters),
+        total_commiters: Number(data?.total_commiters),
+      };
     },
   });

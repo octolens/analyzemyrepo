@@ -11,8 +11,10 @@ const calculate_title_offset = (value: number | string) => {
   }
 
   if (str.length == 3) {
-    return -35;
+    return -37;
   }
+
+  return -42;
 };
 
 const BulletChart = ({

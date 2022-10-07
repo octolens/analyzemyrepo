@@ -16,8 +16,11 @@ const SimpleTable = ({
           </tr>
         </thead>
         <tbody>
-          {rows.map((element: JSX.Element) => (
-            <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+          {rows.map((element: JSX.Element, index: number) => (
+            <tr
+              className="bg-white border-b dark:bg-gray-900 dark:border-gray-700"
+              key={`simple-table-row-${index}`}
+            >
               <th
                 scope="row"
                 className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"

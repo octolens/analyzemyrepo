@@ -102,17 +102,18 @@ const RepoPage = () => {
                   <GoLinkExternal className="mt-1 hover:fill-primary" />
                 </div>
               </a>
-              {/* Overview section */}
-              <OverViewSection
-                section_id="Overview"
-                response={data}
-                commits_response={commits}
-                open_prs_response={open_prs}
-                branches_response={branches}
-                repo_rank_response={repo_rank}
-              />
-              <ContributionSection section_id="Contributions" />
-              <GeoSection section_id="Geo Map" />
+              <div id="sections" className="container mx-auto flex flex-col">
+                <OverViewSection
+                  section_id="Overview"
+                  response={data}
+                  commits_response={commits}
+                  open_prs_response={open_prs}
+                  branches_response={branches}
+                  repo_rank_response={repo_rank}
+                />
+                <ContributionSection section_id="Contributions" />
+                <GeoSection section_id="Geo Map" />
+              </div>
             </div>
           </div>
         </div>
