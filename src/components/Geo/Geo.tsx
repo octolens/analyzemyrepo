@@ -236,7 +236,7 @@ const TableRowsArray = ({
     data: data,
     key: key,
   }).map((value: Record<string, any>) => (
-    <div className="flex flex-row justify-around">
+    <div className="flex flex-row justify-around" key={value["id"]}>
       {/* add country flags https://countryflagsapi.com/:filetype/:code */}
       <span>{value["id"]}</span>
       <span>{value[key]}</span>

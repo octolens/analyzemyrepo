@@ -376,7 +376,8 @@ const SeriousFactorCard = () => {
         <p>
           Serious ratio shows the ratio of contributors who authored more than 1
           commit to all contributors. The idea of this metric is to show
-          percentage of <b>"serious" contributors VS one-off commiters.</b>
+          percentage of{" "}
+          <b>&quot;serious&quot; contributors VS one-off commiters.</b>
         </p>
         <h3 className="font-semibold text-gray-900 dark:text-white">
           Calculation

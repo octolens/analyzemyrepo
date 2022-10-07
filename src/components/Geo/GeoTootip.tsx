@@ -7,11 +7,11 @@ const GeoToolTip = () => {
         </h3>
         <p>
           We analyze all quailified commits to the repo and collect all users
-          from them. Then we "parse" users location based on information in
-          their public profile. Because not all users specify their location or
-          sometimes specify something unindentifible, this map is only
-          approximate, but still can provide some insights into geography of
-          your contributors.
+          from them. Then we &quot;parse&quot; users location based on
+          information in their public profile. Because not all users specify
+          their location or sometimes specify something unindentifible, this map
+          is only approximate, but still can provide some insights into
+          geography of your contributors.
         </p>
         <h3 className="font-semibold text-gray-900 dark:text-white">
           Commits_count vs contributors_count
