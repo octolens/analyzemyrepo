@@ -85,4 +85,21 @@ export const hasuraRouter = createRouter()
         total_commiters: Number(data?.total_commiters),
       };
     },
+  })
+  .mutation("add_parse_request", {
+    input: z.object({
+      full_name: z.string(),
+      user_id: z.string(),
+    }),
+    async resolve({ ctx, input }) {
+      const client = ctx.prisma;
+      const request = await client.user_parse_request.create({
+        data: {
+          full_name: input.full_name,
+          userId: input.user_id,
+        },
+      });
+
+      return request.request_id;
+    },
   });

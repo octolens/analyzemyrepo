@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-// import { trpc } from "../utils/trpc";
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar/SearchBar";
 

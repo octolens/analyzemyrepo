@@ -35,13 +35,14 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
+  id             String               @id @default(cuid())
+  name           String?
+  email          String?              @unique
+  emailVerified  DateTime?
+  image          String?
+  accounts       Account[]
+  sessions       Session[]
+  parse_requests user_parse_request[]
 }
 
 model VerificationToken {
@@ -278,4 +279,12 @@ model github_repos_serious_contributors {
   repo_id           BigInt  @unique
   serious_commiters BigInt
   total_commiters   BigInt
+}
+
+model user_parse_request {
+  request_id String   @id @default(cuid())
+  full_name  String
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  User       User     @relation(fields: [userId], references: [id])
+  userId     String
 }
