@@ -9,6 +9,7 @@ import { GoLinkExternal, GoGraph, GoGlobe } from "react-icons/go";
 import { GrOverview } from "react-icons/gr";
 import { MdInsights, MdChecklist } from "react-icons/md";
 import ContributionSection from "../../../components/Contribution/Contribution";
+import CompletenessSection from "../../../components/Completeness/Completeness";
 
 const RepoPage = () => {
   const router = useRouter();
@@ -102,7 +103,10 @@ const RepoPage = () => {
                   <GoLinkExternal className="mt-1 hover:fill-primary" />
                 </div>
               </a>
-              <div id="sections" className="container mx-auto flex flex-col">
+              <div
+                id="sections"
+                className="container mx-auto flex flex-col gap-2"
+              >
                 <OverViewSection
                   section_id="Overview"
                   response={data}
@@ -113,6 +117,7 @@ const RepoPage = () => {
                 />
                 <ContributionSection section_id="Contributions" />
                 <GeoSection section_id="Geo Map" />
+                <CompletenessSection />
               </div>
             </div>
           </div>

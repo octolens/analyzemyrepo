@@ -20,7 +20,7 @@ const Home: NextPage = () => {
 
         <main className="container mx-auto flex flex-col items-center p-12 flex-grow max-w-screen-xl">
           <h1 className="text-[2rem] md:text-[3rem] leading-normal font-extrabold text-black text-center">
-            Community insights for <span className="text-primary">GitHub</span>{" "}
+            <span className="text-primary">Community insights</span> for Github
             repos
           </h1>
           <h2 className="text-[1.5rem] md:text-[2rem] leading-normal text-black py-3 text-center">

@@ -184,6 +184,24 @@ export const githubRouter = createRouter()
         // all_issues: all_issues - all_pulls,
       };
     },
-  });
+  })
+  .query("get_community_health", {
+    input: z.object({
+      owner: z.string(),
+      repo: z.string(),
+    }),
+    async resolve({ input }) {
+      const response = await fetch(
+        `https://api.github.com/repos/${input.owner}/${input.repo}/community/profile`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/vnd.github+json",
+            Authorization: "Bearer " + process.env.GITHUB_ACCESS_TOKEN_2,
+          },
+        }
+      );
 
-// commits to main + all issues + all prs + all commits to gh-pages
+      return response.json();
+    },
+  });
