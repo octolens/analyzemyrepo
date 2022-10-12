@@ -39,7 +39,7 @@ const HealthTable = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="grid grid-cols-2 gap-2 w-96">
+      <div className="grid grid-cols-[1fr_auto] gap-2">
         <SimpleTable
           header={false}
           column_name="Metrics"
@@ -61,27 +61,35 @@ const HealthTable = () => {
           rows={[
             <ConditionalIcon
               condition={health_query.data.description !== null}
+              key="conditional-icon-1"
             />,
             <ConditionalIcon
               condition={health_query.data.documentation !== null}
+              key="conditional-icon-2"
             />,
             <ConditionalIcon
               condition={health_query.data.files.code_of_conduct !== null}
+              key="conditional-icon-3"
             />,
             <ConditionalIcon
               condition={health_query.data.files.contributing !== null}
+              key="conditional-icon-4"
             />,
             <ConditionalIcon
               condition={health_query.data.files.issue_template !== null}
+              key="conditional-icon-5"
             />,
             <ConditionalIcon
               condition={health_query.data.files.pull_request_template !== null}
+              key="conditional-icon-6"
             />,
             <ConditionalIcon
               condition={health_query.data.files.license !== null}
+              key="conditional-icon-7"
             />,
             <ConditionalIcon
               condition={health_query.data.files.readme !== null}
+              key="conditional-icon-7"
             />,
           ]}
         />

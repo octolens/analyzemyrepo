@@ -89,9 +89,9 @@ const ContributionSection = ({ section_id }: ContributionSectionProps) => {
         Distribution of commits by users
       </p>
       {response.isLoading && response_2.isLoading ? (
-        <div className="h-96 w-64 md:w-full bg-gray-200 animate-pulse"></div>
+        <div className="h-96 container px-4 mx-auto overflow-hidden bg-gray-200 animate-pulse"></div>
       ) : (
-        <div className="h-96 w-64 md:w-full">
+        <div className="h-96 container px-4 mx-auto overflow-hidden">
           <ResponsivePie
             data={prepareData(
               response.data,
@@ -212,13 +212,13 @@ const BusFactorBullet = ({
   response_2: UseQueryResult<any>;
 }) => {
   return (
-    <div className="flex flex-row gap-2 items-center">
+    <div className="flex flex-col md:flex-row gap-2 items-center">
       <SmallCardTooltip text="Bus Factor" tip={<BusFactorCard />} />
       {response.isLoading && response_2.isLoading ? (
         <TemplateCard width="w-80" height="h-20" />
       ) : (
         <BulletChart
-          className="h-20 w-80"
+          className="h-20 w-72 md:w-80"
           title={
             calculate_bus_factor(
               response.data,
@@ -326,7 +326,7 @@ const SeriousCountBullet = ({
   };
 
   return (
-    <div className="flex flex-row gap-2 items-center">
+    <div className="flex flex-col md:flex-row gap-2 items-center">
       <SmallCardTooltip
         text="Serious Ratio"
         tip={<SeriousFactorCard />}
@@ -335,7 +335,7 @@ const SeriousCountBullet = ({
         <TemplateCard width="w-80" height="h-20" />
       ) : (
         <BulletChart
-          className="h-20 w-80"
+          className="h-20 w-72 md:w-80"
           title={`${handle_data_and_calculate_factor({
             data_db: response.data,
             data_gh: response_hack.data,

@@ -26,12 +26,18 @@ const getBaseUrl = () => {
 };
 
 export default withTRPC<AppRouter>({
-  config() {
+  config({ ctx }) {
     /**
      * If you want to use SSR, you need to use the server's full URL
      * @link https://trpc.io/docs/ssr
      */
     const url = `${getBaseUrl()}/api/trpc`;
+
+    const ONE_DAY_SECONDS = 60 * 60 * 24;
+    ctx?.res?.setHeader(
+      "Cache-Control",
+      `s-maxage=3600, stale-while-revalidate=${ONE_DAY_SECONDS}`
+    );
 
     return {
       links: [
@@ -47,11 +53,13 @@ export default withTRPC<AppRouter>({
       /**
        * @link https://react-query.tanstack.com/reference/QueryClient
        */
-      // queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
+      queryClientConfig: {
+        defaultOptions: { queries: { staleTime: 5 * 60 * 1000 } }, // 5mins
+      },
     };
   },
   /**
    * @link https://trpc.io/docs/ssr
    */
-  ssr: false,
+  ssr: true,
 })(MyApp);

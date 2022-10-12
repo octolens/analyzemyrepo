@@ -106,7 +106,7 @@ const OverviewSection = ({
   return (
     <section className="py-4 flex flex-col items-center" id={section_id}>
       <h2 className="text-center font-extrabold text-3xl">Overview</h2>
-      <div className="text-center w-96 py-2">
+      <div className="text-center w-fit py-2">
         <p className="text-center pt-1 text-gray-500">
           Main stats about the repo
         </p>
@@ -205,7 +205,7 @@ const Card = ({ response, data, response_data_name }: CardProps) => {
         {response.isLoading ? (
           <TemplateCard />
         ) : (
-          <div className="rounded-lg w-32 bg-white h-8 border boder-solid border-black px-2 flex flex-row justify-end items-center">
+          <div className="rounded-lg w-28 bg-white h-8 border boder-solid border-black px-2 flex flex-row justify-end items-center">
             {response_data_name
               ? (response.data[response_data_name] as number).toLocaleString()
               : response.data}
@@ -216,14 +216,14 @@ const Card = ({ response, data, response_data_name }: CardProps) => {
   }
   if (data) {
     return (
-      <div className="rounded-lg w-32 bg-white h-8 border boder-solid border-black px-2 flex flex-row justify-end items-center">
+      <div className="rounded-lg w-28 bg-white h-8 border boder-solid border-black px-2 flex flex-row justify-end items-center">
         {data}
       </div>
     );
   }
 
   return (
-    <div className="rounded-lg w-32 bg-white h-8 border boder-solid border-black px-2 flex flex-row justify-end items-center">
+    <div className="rounded-lg w-28 bg-white h-8 border boder-solid border-black px-2 flex flex-row justify-end items-center">
       There was a problem loading data
     </div>
   );

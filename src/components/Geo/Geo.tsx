@@ -21,7 +21,7 @@ const RadioHorizontal = ({
   setRadioName: (x: any) => any;
 }) => {
   return (
-    <div className="flex mx-auto">
+    <div className="flex flex-col md:flex-row mx-auto items-center gap-2">
       {radio_names.map((value: string, index: number) => {
         return (
           <div className="flex items-center mr-4" key={index}>
@@ -60,12 +60,13 @@ const GeoChart = ({
       data={data}
       features={features}
       value={value} // value accessor
-      margin={{ top: 50, right: 0, bottom: 50, left: 0 }}
+      margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
       colors="oranges"
       domain={[0, calculate_color_max({ data: data, key: value })]}
       unknownColor="#ffffff"
       label="properties.name"
       valueFormat=".0f"
+      projectionScale={100}
       projectionTranslation={[0.5, 0.5]}
       projectionRotation={[0, 0, 0]}
       enableGraticule={true}
@@ -187,17 +188,17 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
       />
       {json_query.isLoading || geo_query.isLoading ? (
         // skeleton
-        <div className="w-[700px] h-80 mx-auto animate-pulse bg-gray-200 rounded-lg"></div>
+        <div className="container h-80 mx-auto animate-pulse bg-gray-200 rounded-lg"></div>
       ) : (
-        <div className="flex flex-row">
-          <div className="w-[700px] h-80 mx-auto">
+        <div className="flex flex-col md:flex-row">
+          <div className="container h-80 mx-auto">
             <GeoChart
               features={json_query.data["features"]}
               data={geo_query.data["github_repos_contributors_countries"]}
               value={geoCalcType}
             />
           </div>
-          <div>
+          <div className="mx-auto">
             <SimpleTable
               column_name="Top 5 Countries"
               rows={TableRowsArray({
@@ -217,7 +218,7 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
           </div>
         </div>
       )}
-      <div className="mx-auto flex flex-col gap-3 pt-2">
+      <div className="flex flex-col gap-3 pt-2 items-center justify-center">
         <InsightCountryCard geo_query={geo_query} />
         <InsightShareCard geo_query={geo_query} />
       </div>

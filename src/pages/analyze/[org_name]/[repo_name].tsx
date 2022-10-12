@@ -3,7 +3,7 @@ import Sidebar from "../../../components/SideBar";
 import Image from "next/image";
 import { trpc } from "../../../utils/trpc";
 import OverViewSection from "../../../components/Overview/Overview";
-import HeaderSecondary from "../../../components/HeaderSecondary";
+import HeaderSecondary from "../../../components/NewHeader";
 import GeoSection from "../../../components/Geo/Geo";
 import { GoLinkExternal, GoGraph, GoGlobe } from "react-icons/go";
 import { GrOverview } from "react-icons/gr";
@@ -81,13 +81,13 @@ const RepoPage = () => {
                 ]}
               />
             </div>
-            <div className="mx-auto">
+            <div className="container mx-auto px-4">
               <a
                 href={`https://github.com/${full_name}`}
                 target="_blank"
                 rel="noreferrer"
               >
-                <div className="w-fit px-4 py-5 bg-white rounded-lg shadow mx-auto flex flex-row items-center gap-2 cursor-pointer">
+                <div className="max-w-full w-fit px-4 py-5 bg-white rounded-lg shadow mx-auto flex flex-row items-center gap-2 cursor-pointer">
                   <div>
                     <Image
                       src={`https://github.com/${org_name}.png`}

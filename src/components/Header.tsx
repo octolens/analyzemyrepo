@@ -43,7 +43,7 @@ const Header = () => {
             <div className="md:flex md:items-center md:gap-12">
               <nav
                 className={"md:block" + (isOpen ? "" : "")}
-                aria-aria-labelledby="header-navigation"
+                aria-labelledby="header-navigation"
               >
                 <h2 className="sr-only" id="header-navigation">
                   Header navigation
@@ -51,10 +51,7 @@ const Header = () => {
 
                 <ul className="flex items-center text-sm gap-6">
                   <li>
-                    <a
-                      className="text-gray-500 transition hover:text-gray-500/75"
-                      href="/"
-                    >
+                    <a className="text-gray-500 transition hover:text-gray-500/75">
                       About
                     </a>
                   </li>
