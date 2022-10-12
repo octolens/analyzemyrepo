@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useState } from "react";
 
 function LoginButton() {
   const { data: session } = useSession();
@@ -24,6 +25,7 @@ function LoginButton() {
 }
 
 const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       <header className="bg-neutral border border-solid border-b-black shadow">
@@ -31,7 +33,7 @@ const Header = () => {
           <div className="flex items-center justify-between h-16">
             <div className="flex-1 md:flex md:items-center md:gap-12">
               <Link href="/">
-                <a className="block text-primary font-bold text-xl">
+                <a className="block text-primary font-bold text-md md:text-xl">
                   <span className="sr-only">Home</span>
                   repoanalyzer.com
                 </a>
@@ -39,9 +41,9 @@ const Header = () => {
             </div>
 
             <div className="md:flex md:items-center md:gap-12">
-              {/* <nav
-                className="hidden md:block"
-                aria-labelledby="header-navigation"
+              <nav
+                className={"md:block" + (isOpen ? "" : "")}
+                aria-aria-labelledby="header-navigation"
               >
                 <h2 className="sr-only" id="header-navigation">
                   Header navigation
@@ -57,20 +59,18 @@ const Header = () => {
                     </a>
                   </li>
                 </ul>
-              </nav> */}
+              </nav>
 
               <div className="flex items-center gap-4">
                 <div className="sm:gap-4 sm:flex">
-                  {/* <Link href="/">
-                    <a className="px-5 py-2.5 text-sm font-medium text-white bg-black rounded-md shadow">
-                      Login
-                    </a>
-                  </Link> */}
                   <LoginButton />
                 </div>
 
                 <div className="block md:hidden">
-                  <button className="p-2 text-gray-600 bg-gray-100 rounded transition hover:text-gray-600/75">
+                  <button
+                    className="p-2 text-gray-600 bg-gray-100 rounded transition hover:text-gray-600/75"
+                    onClick={() => setIsOpen(!isOpen)}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="w-5 h-5"

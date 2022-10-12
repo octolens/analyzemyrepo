@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Header from "../components/Header";
+import Header from "../components/NewHeader";
 import SearchBar from "../components/SearchBar/SearchBar";
 
 const Home: NextPage = () => {
@@ -19,11 +19,11 @@ const Home: NextPage = () => {
         <Header />
 
         <main className="container mx-auto flex flex-col items-center p-12 flex-grow max-w-screen-xl">
-          <h1 className="text-[2rem] md:text-[3rem] leading-normal font-extrabold text-black text-center">
+          <h1 className="text-[1.5rem] md:text-[3rem] leading-normal font-extrabold text-black text-center">
             <span className="text-primary">Community insights</span> for Github
             repos
           </h1>
-          <h2 className="text-[1.5rem] md:text-[2rem] leading-normal text-black py-3 text-center">
+          <h2 className="text-[1rem] md:text-[2rem] leading-normal text-black py-3 text-center">
             A free tool to understand &amp; grow your open-source project
           </h2>
           <div className="flex w-full">
