@@ -28,14 +28,14 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <header className="bg-neutral border border-solid border-b-black shadow px-2 sm:px-4 py-2.5">
-      <div className="container flex flex-wrap justify-between items-center mx-auto px-2 sm:px-6 lg:px-8 max-w-screen-xl">
+      <div className="container flex flex-wrap justify-start items-center mx-auto px-2 sm:px-6 lg:px-8 max-w-screen-xl">
         <Link href="/">
-          <a className="flex items-center text-primary font-bold text-md md:text-xl">
+          <a className="flex flex-1 items-center text-primary font-bold text-md md:text-xl">
             <span className="sr-only">Home</span>
             repoanalyzer.com
           </a>
         </Link>
-        <div className="flex md:order-2">
+        <div className="flex flex-1 md:order-2 justify-end">
           <LoginButton />
           <button
             data-collapse-toggle="navbar-cta"

@@ -36,7 +36,7 @@ const Header = () => {
             repoanalyzer.com
           </a>
         </Link>
-        <div className="flex gap-2 md:order-2 items-center">
+        <div className="flex flex-1 gap-2 md:order-2 items-center justify-end">
           <div className="w-28">
             <SearchBox />
           </div>
@@ -67,7 +67,7 @@ const Header = () => {
         </div>
         <div
           className={
-            "items-center w-full md:flex md:w-auto md:order-1" +
+            "items-center w-full md:flex md:w-auto md:order-1 md:flex-1 md:mt-0.5 md:ml-4" +
             (isOpen ? "" : " hidden")
           }
           id="navbar-cta"
