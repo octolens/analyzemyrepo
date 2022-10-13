@@ -3,7 +3,7 @@ import Sidebar from "../../../components/Sidebar/SideBar";
 import Image from "next/image";
 import { trpc } from "../../../utils/trpc";
 import OverViewSection from "../../../components/Overview/Overview";
-import HeaderSecondary from "../../../components/Headers/NewHeader";
+import HeaderSecondary from "../../../components/Headers/NewHeaderSecondary";
 import GeoSection from "../../../components/Geo/Geo";
 import { GoLinkExternal, GoGraph, GoGlobe } from "react-icons/go";
 import { GrOverview } from "react-icons/gr";
@@ -88,22 +88,21 @@ const RepoPage = () => {
                   href={`https://github.com/${full_name}`}
                   target="_blank"
                   rel="noreferrer"
+                  className="max-w-full w-fit px-4 py-5 bg-white rounded-lg shadow mx-auto flex flex-row items-center gap-2 cursor-pointer"
                 >
-                  <div className="max-w-full w-fit px-4 py-5 bg-white rounded-lg shadow mx-auto flex flex-row items-center gap-2 cursor-pointer">
-                    <div>
-                      <Image
-                        src={`https://github.com/${org_name}.png`}
-                        width="30"
-                        height="30"
-                        alt={full_name}
-                        priority={true}
-                      />
-                    </div>
-                    <div className="text-xl text-gray-900 truncate">
-                      {full_name}
-                    </div>
-                    <GoLinkExternal className="mt-1 hover:fill-primary" />
+                  <div>
+                    <Image
+                      src={`https://github.com/${org_name}.png`}
+                      width="30"
+                      height="30"
+                      alt={full_name}
+                      priority={true}
+                    />
                   </div>
+                  <div className="text-xl text-gray-900 truncate max-w-sm">
+                    {full_name}
+                  </div>
+                  <GoLinkExternal className="mt-1 hover:fill-primary" />
                 </a>
                 <div
                   id="sections"
@@ -124,6 +123,7 @@ const RepoPage = () => {
               </div>
             </div>
           </div>
+          <div id="modal"></div>
         </main>
       </ErrorBoundary>
     </div>

@@ -1,20 +1,16 @@
-import { useRouter } from "next/router";
-import { connectSearchBox } from "react-instantsearch-dom";
-import { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
+import Modal from "../Modal/Modal";
 
-const CustomSearchBox = ({
-  currentRefinement,
-  isSearchStalled,
-  refine,
-}: any) => {
-  const router = useRouter();
-
+const CustomSearchBox = () => {
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const keydownHandler = (e: KeyboardEvent) => {
     if (e.key === "k" && e.ctrlKey) {
       e.preventDefault();
       inputRef?.current?.focus();
+      setIsOpen(true);
     }
   };
 
@@ -27,22 +23,7 @@ const CustomSearchBox = ({
   }, []);
 
   return (
-    <form
-      noValidate
-      action=""
-      role="search"
-      onSubmit={(event) => {
-        event.preventDefault();
-        const elements = document.getElementsByClassName("search-hits");
-        if (elements.length > 0) {
-          router.push(`/analyze/${elements[0]?.textContent}`);
-        } else {
-          router.push(`/analyze/${currentRefinement}`);
-        }
-        refine("");
-        inputRef?.current?.blur();
-      }}
-    >
+    <form>
       <label
         htmlFor="default-search"
         className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300"
@@ -70,20 +51,17 @@ const CustomSearchBox = ({
         <input
           type="search"
           name="search"
-          id="default-search"
-          className="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary focus:border-primary dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary"
-          placeholder="Search for a repo"
-          value={currentRefinement}
-          onChange={(event) => refine(event.currentTarget.value)}
+          className="block py-2.5 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary focus:border-primary dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary caret-transparent"
+          placeholder="Search"
           autoComplete="off"
-          autoFocus
           ref={inputRef}
+          readOnly
+          onClick={() => setIsOpen(true)}
         />
       </div>
+      <Modal isOpen={isOpen} setIsOpen={setIsOpen} />
     </form>
   );
 };
 
-const SearchBox = connectSearchBox(CustomSearchBox);
-
-export default SearchBox;
+export default CustomSearchBox;

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
+import SearchBox from "../SearchBar/EmptySearchBox";
 
 function LoginButton() {
   const { data: session } = useSession();
@@ -35,7 +36,10 @@ const Header = () => {
             repoanalyzer.com
           </a>
         </Link>
-        <div className="flex md:order-2">
+        <div className="flex gap-2 md:order-2 items-center">
+          <div className="w-28">
+            <SearchBox />
+          </div>
           <LoginButton />
           <button
             data-collapse-toggle="navbar-cta"
