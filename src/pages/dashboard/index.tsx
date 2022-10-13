@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react";
-import HeaderDashboard from "../../components/HeaderDashboard";
+import HeaderDashboard from "../../components/Headers/HeaderDashboard";
 import { FormEvent, useState } from "react";
 import { trpc } from "../../utils/trpc";
 import { ToastContainer, toast } from "react-toastify";
