@@ -11,7 +11,7 @@ const MyModal = ({
   setIsOpen,
 }: {
   isOpen: boolean;
-  setIsOpen: Function;
+  setIsOpen: (x: boolean) => void;
 }) => {
   const router = useRouter();
 
