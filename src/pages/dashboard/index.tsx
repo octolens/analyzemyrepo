@@ -119,7 +119,7 @@ export default function Page() {
 const AdditionalInfo = () => {
   const [repo, setRepo] = useState("");
   const { data: session } = useSession();
-  const mutation = trpc.useMutation(["hasura.add_parse_request"]);
+  const mutation = trpc.useMutation(["postgres.add_parse_request"]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();

@@ -273,12 +273,33 @@ model github_users {
   is_armenian_name_prob Float?
 }
 
+//!!! ALL VIEWs SHOULD BE COMMENTED WHEN MAKING db pull or db push
+// WHEN UNCOMENT AND do prisma generate
+
 // it's a view
 model github_repos_serious_contributors {
   full_name         String?
   repo_id           BigInt  @unique
-  serious_commiters BigInt
-  total_commiters   BigInt
+  serious_commiters Int
+  total_commiters   Int
+}
+
+// it's a view
+model repos_rank {
+  full_name String @unique
+  rank      Int
+}
+
+// it's a view
+model github_repos_contributors_countries {
+  id                 BigInt  @unique
+  full_name          String
+  repo_id            BigInt
+  country            String?
+  contributors_count Int
+  commits_count      Int
+  contributors_perc  Float
+  commits_perc       Float
 }
 
 model user_parse_request {

@@ -3,13 +3,13 @@ import { createRouter } from "./context";
 import superjson from "superjson";
 import { protectedExampleRouter } from "./protected-example-router";
 import { githubRouter } from "./github";
-import { hasuraRouter } from "./hasura";
+import { postgresRouter } from "./postgres";
 
 export const appRouter = createRouter()
   .transformer(superjson)
   .merge("auth.", protectedExampleRouter)
   .merge("github.", githubRouter)
-  .merge("hasura.", hasuraRouter);
+  .merge("postgres.", postgresRouter);
 
 // export type definition of API
 export type AppRouter = typeof appRouter;

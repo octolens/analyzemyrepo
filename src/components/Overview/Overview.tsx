@@ -146,8 +146,8 @@ const Insights = ({
           <div className="flex flex-col items-center gap-2">
             <InsightCard
               text={
-                repo_rank_response.data.repos_rank.length > 0
-                  ? `№ ${repo_rank_response.data.repos_rank[0].rank} by stars on GitHub`
+                repo_rank_response.data?.full_name
+                  ? `№ ${repo_rank_response.data.rank} by stars on GitHub`
                   : response.data["stargazers_count"] > 0
                   ? `Top ${count_percent_rank(
                       response.data["stargazers_count"],
@@ -156,7 +156,7 @@ const Insights = ({
                   : "The repo has zero stars"
               }
               color={
-                repo_rank_response.data.repos_rank.length > 0
+                repo_rank_response.data?.full_name
                   ? "positive"
                   : response.data["stargazers_count"] > 0
                   ? "neutral"
@@ -164,7 +164,7 @@ const Insights = ({
               }
               // >1k stars - positive, less than 1k, neutral, if 0 stars, then red
             />
-            {repo_rank_response.data.repos_rank.length == 0 &&
+            {!repo_rank_response.data?.full_name &&
             response.data["stargazers_count"] > 0 ? (
               <label
                 htmlFor="small-toggle"

@@ -3,28 +3,19 @@ import { z } from "zod";
 import path from "path";
 import { promises as fs } from "fs";
 
-export const hasuraRouter = createRouter()
+export const postgresRouter = createRouter()
   .query("get_repo_rank", {
     input: z.object({
       owner: z.string(),
       repo: z.string(),
     }),
-    async resolve({ input }) {
-      const response = await fetch(
-        `${process.env.HASURA_URL as string}/api/rest/get_repo_rank`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-hasura-admin-secret": process.env.HASURA_SECRET as string,
-          },
-          body: JSON.stringify({
-            full_name: `${input.owner}/${input.repo}`,
-          }),
-        }
-      );
-
-      return response.json();
+    async resolve({ ctx, input }) {
+      const client = ctx.prisma;
+      return client.repos_rank.findUnique({
+        where: {
+          full_name: `${input.owner}/${input.repo}`,
+        },
+      });
     },
   })
   .query("get_repo_contributors_countries", {
@@ -32,29 +23,14 @@ export const hasuraRouter = createRouter()
       owner: z.string(),
       repo: z.string(),
     }),
-    async resolve({ input }) {
-      const response = await fetch(
-        `${
-          process.env.HASURA_URL as string
-        }/api/rest/get_repo_contributors_countries`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-hasura-admin-secret": process.env.HASURA_SECRET as string,
-          },
-          body: JSON.stringify({
-            full_name: `${input.owner}/${input.repo}`,
-          }),
-        }
-      );
-
-      // in case of repo is not found, this endpoint will return
-      //     {
-      //     "github_repos_contributors_countries": []
-      //     }
-
-      return response.json();
+    async resolve({ ctx, input }) {
+      const client = ctx.prisma;
+      const data = await client.github_repos_contributors_countries.findMany({
+        where: {
+          full_name: `${input.owner}/${input.repo}`,
+        },
+      });
+      return data;
     },
   })
   .query("get_static_json", {

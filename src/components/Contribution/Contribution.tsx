@@ -258,7 +258,7 @@ const SeriousCountBullet = ({
   const { org_name, repo_name } = router.query;
 
   const response = trpc.useQuery([
-    "hasura.get_serious_contributors",
+    "postgres.get_serious_contributors",
     { owner: org_name as string, repo: repo_name as string },
   ]);
 

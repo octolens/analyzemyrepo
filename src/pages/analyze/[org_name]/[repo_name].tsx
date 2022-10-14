@@ -48,7 +48,7 @@ const RepoPage = () => {
   ]);
 
   const repo_rank = trpc.useQuery([
-    "hasura.get_repo_rank",
+    "postgres.get_repo_rank",
     {
       owner: org_name as string,
       repo: repo_name as string,

@@ -9,7 +9,7 @@ import GeoToolTip from "./GeoTootip";
 import InsightCard from "../Cards/InsightCard";
 import TemplateCard from "../Cards/TemplateCard";
 import TeaseCard from "../Cards/TeaseCard";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 
 const RadioHorizontal = ({
   radio_names,
@@ -55,9 +55,10 @@ const GeoChart = ({
   features: any[];
   value: string;
 }) => {
+  console.log("AATA", data);
   return (
     <ResponsiveChoropleth
-      data={data}
+      data={data.map((value) => ({ ...value, id: value["country"] }))}
       features={features}
       value={value} // value accessor
       margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
@@ -114,7 +115,7 @@ const calculate_color_max = ({
   key: string;
 }) => {
   return Math.max(
-    ...data.filter((value) => value["id"] != null).map((o) => o[key])
+    ...data.filter((value) => value["country"] != null).map((o) => o[key])
   );
 };
 
@@ -125,13 +126,13 @@ const cook_data_for_the_table = ({
   data: Record<string, any>[];
   key: string;
 }) => {
-  if (!data.length) {
-    return [{ id: "NO DATA FOR THIS REPO", key: "" }];
+  if (data.length == 0) {
+    return [{ country: "NO DATA FOR THIS REPO", key: "" }];
   }
   const new_data = data
     .sort((a, b) => (a[key] < b[key] ? 1 : -1))
     .slice(0, 5 + 1)
-    .filter((value) => value["id"] != null);
+    .filter((value) => value["country"] != null);
 
   if (key.includes("perc")) {
     const new_data_2 = new_data.map((value) => {
@@ -166,11 +167,11 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
   >("commits_count");
 
   const geo_query = trpc.useQuery([
-    "hasura.get_repo_contributors_countries",
+    "postgres.get_repo_contributors_countries",
     { owner: org_name as string, repo: repo_name as string },
   ]);
 
-  const json_query = trpc.useQuery(["hasura.get_static_json"]);
+  const json_query = trpc.useQuery(["postgres.get_static_json"]);
 
   return (
     <section className="flex flex-col gap-3" id={section_id}>
@@ -194,7 +195,7 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
           <div className="container h-80 mx-auto">
             <GeoChart
               features={json_query.data["features"]}
-              data={geo_query.data["github_repos_contributors_countries"]}
+              data={geo_query.data as Record<string, any>[]}
               value={geoCalcType}
             />
           </div>
@@ -202,12 +203,11 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
             <SimpleTable
               column_name="Top 5 Countries"
               rows={TableRowsArray({
-                data: geo_query.data["github_repos_contributors_countries"],
+                data: geo_query.data as Record<string, any>[],
                 key: mapping[geoCalcType],
               })}
             />
-            {geo_query.data["github_repos_contributors_countries"].length ==
-            0 ? (
+            {(geo_query.data?.length ?? 0) == 0 ? (
               <div className="pt-2 flex flex-col">
                 <TeaseCard />
                 <div className="pt-2 mx-auto flex">
@@ -237,9 +237,9 @@ const TableRowsArray = ({
     data: data,
     key: key,
   }).map((value: Record<string, any>) => (
-    <div className="flex flex-row justify-around" key={value["id"]}>
+    <div className="flex flex-row justify-around" key={value["country"]}>
       {/* add country flags https://countryflagsapi.com/:filetype/:code */}
-      <span>{value["id"]}</span>
+      <span>{value["country"]}</span>
       <span>{value[key]}</span>
     </div>
   ));
@@ -255,13 +255,10 @@ const InsightCountryCard = ({
   }
 
   // cooking data
-  const data = geo_query.data["github_repos_contributors_countries"] as Record<
-    string,
-    any
-  >[];
+  const data = geo_query.data as Record<string, any>[];
   const sorted = data
     .sort((a, b) => (a["commits_perc"] < b["commits_perc"] ? 1 : -1))
-    .filter((value) => value["id"] != null);
+    .filter((value) => value["country"] != null);
 
   if (sorted[0] == undefined) {
     return null;
@@ -271,7 +268,7 @@ const InsightCountryCard = ({
     return (
       <InsightCard
         color="negative"
-        text={`More than 50% of commits from one country (${sorted[0]["id"]})`}
+        text={`More than 50% of commits from one country (${sorted[0]["country"]})`}
         width="w-72"
         height="h-12"
         size={20}
@@ -300,13 +297,10 @@ const InsightShareCard = ({
   }
 
   // cooking data
-  const data = geo_query.data["github_repos_contributors_countries"] as Record<
-    string,
-    any
-  >[];
+  const data = geo_query.data as Record<string, any>[];
   const sorted = data
     .sort((a, b) => (a["commits_perc"] < b["commits_perc"] ? 1 : -1))
-    .filter((value) => value["id"] != null);
+    .filter((value) => value["country"] != null);
 
   if (sorted[0] == undefined) {
     return null;
