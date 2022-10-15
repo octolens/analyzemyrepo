@@ -98,21 +98,17 @@ const HealthTable = () => {
         {count_score(health_query.data) > 4 ? (
           <InsightCard
             color="positive"
-            text={`More than half checks (${count_score(
-              health_query.data
-            )} / 8)`}
+            text={`More than half checks (${count_score(health_query.data)}/8)`}
           />
         ) : count_score(health_query.data) == 4 ? (
           <InsightCard
             color="neutral"
-            text={`Half of the checks (${count_score(health_query.data)} / 8)`}
+            text={`Half of the checks (${count_score(health_query.data)}/8)`}
           />
         ) : (
           <InsightCard
             color="negative"
-            text={`Less than half checks (${count_score(
-              health_query.data
-            )} / 8)`}
+            text={`Less than half checks (${count_score(health_query.data)}/8)`}
           />
         )}
       </div>

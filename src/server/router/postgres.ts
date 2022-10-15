@@ -78,4 +78,20 @@ export const postgresRouter = createRouter()
 
       return request.request_id;
     },
+  })
+  .query("get_repo_contributors_companies", {
+    input: z.object({
+      owner: z.string(),
+      repo: z.string(),
+    }),
+    async resolve({ ctx, input }) {
+      const client = ctx.prisma;
+      const data = client.github_repos_contributors_companies.findMany({
+        where: {
+          full_name: `${input.owner}/${input.repo}`,
+        },
+      });
+
+      return data;
+    },
   });

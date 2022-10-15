@@ -10,6 +10,7 @@ import InsightCard from "../Cards/InsightCard";
 import TemplateCard from "../Cards/TemplateCard";
 import TeaseCard from "../Cards/TeaseCard";
 import { useSession, signIn } from "next-auth/react";
+import OrgChart from "./Org";
 
 const RadioHorizontal = ({
   radio_names,
@@ -55,7 +56,6 @@ const GeoChart = ({
   features: any[];
   value: string;
 }) => {
-  console.log("AATA", data);
   return (
     <ResponsiveChoropleth
       data={data.map((value) => ({ ...value, id: value["country"] }))}
@@ -174,7 +174,10 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
   const json_query = trpc.useQuery(["postgres.get_static_json"]);
 
   return (
-    <section className="flex flex-col gap-3" id={section_id}>
+    <section
+      className="p-4 flex flex-col gap-3 border border-black rounded-md mt-4"
+      id={section_id}
+    >
       <h2 className="text-center font-extrabold text-3xl py-2">Geo Map</h2>
       <p className="text-center text-gray-500">
         Locations of contributors{" "}
@@ -221,6 +224,9 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
       <div className="flex flex-col gap-3 pt-2 items-center justify-center">
         <InsightCountryCard geo_query={geo_query} />
         <InsightShareCard geo_query={geo_query} />
+      </div>
+      <div className="container h-96 mx-auto">
+        <OrgChart />
       </div>
     </section>
   );

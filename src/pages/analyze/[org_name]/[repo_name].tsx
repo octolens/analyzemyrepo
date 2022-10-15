@@ -11,6 +11,7 @@ import { MdInsights, MdChecklist } from "react-icons/md";
 import ContributionSection from "../../../components/Contribution/Contribution";
 import CompletenessSection from "../../../components/Completeness/Completeness";
 import ErrorBoundary from "../../../components/Errors/ErrorBoundary";
+import NewOverviewSection from "../../../components/Overview/NewOverview";
 
 const RepoPage = () => {
   const router = useRouter();
@@ -108,6 +109,7 @@ const RepoPage = () => {
                   id="sections"
                   className="container mx-auto flex flex-col gap-2"
                 >
+                  <NewOverviewSection />
                   <OverViewSection
                     section_id="Overview"
                     response={data}

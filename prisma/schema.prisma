@@ -302,6 +302,20 @@ model github_repos_contributors_countries {
   commits_perc       Float
 }
 
+// it's a view
+model github_repos_contributors_companies {
+  id                 BigInt  @unique
+  full_name          String
+  repo_id            BigInt
+  company_name       String?
+  contributors_count Int
+  commits_count      Int
+  contributors_perc  Float
+  commits_perc       Float
+}
+
+// END OF VIEWS
+
 model user_parse_request {
   request_id String   @id @default(cuid())
   full_name  String

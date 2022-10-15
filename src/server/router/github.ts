@@ -3,6 +3,30 @@ import { z } from "zod";
 
 const commitsRegExp = /&page=(\d+)>; rel="last"/;
 
+// const store_in_redis = async ({
+//   key,
+//   data,
+// }: {
+//   key: string;
+//   data: Record<string, any>;
+// }) => {
+//   const result = await fetch(
+//     "https://us1-united-grizzly-38526.upstash.io/set/foo/bar",
+//     {
+//       method: "POST",
+//       headers: {
+//         Authorization:
+//           "Bearer AZZ-ACQgNzY3OWVkMWItZTFjYS00NGYxLWI4YzYtZGQ2NDVlNWMzMzU0ZDMxNjI4MGVmYmMwNGM5OTk0N2QwMGU1YTY0MmM1OTc=",
+//       },
+//     }
+//   );
+// };
+
+// trying to get some data from redis
+// if not data for this key or this data is expired:
+//     fetch new data from Github API and my database
+//     update corresponding key in redis setting a expiration key
+
 const checkHeaders = (headers: Headers, default_value = 0): number => {
   const link = headers.get("Link") as string;
   if (link) {

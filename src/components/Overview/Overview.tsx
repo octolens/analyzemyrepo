@@ -104,7 +104,10 @@ const OverviewSection = ({
   repo_rank_response,
 }: OverViewSectionProps) => {
   return (
-    <section className="py-4 flex flex-col items-center" id={section_id}>
+    <section
+      className="p-4 mt-4 flex flex-col items-center rounded-md border border-black"
+      id={section_id}
+    >
       <h2 className="text-center font-extrabold text-3xl">Overview</h2>
       <div className="text-center w-fit py-2">
         <p className="text-center pt-1 text-gray-500">
