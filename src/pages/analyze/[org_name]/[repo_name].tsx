@@ -69,7 +69,7 @@ const RepoPage = () => {
                   sections={[
                     { section_name: "Overview", logo: <GrOverview /> },
                     {
-                      section_name: "Contributions",
+                      section_name: "Contributions Health",
                       logo: <GoGraph />,
                     },
                     {
@@ -80,7 +80,7 @@ const RepoPage = () => {
                       section_name: "Repo Checklist",
                       logo: <MdChecklist />,
                     },
-                    { section_name: "More Insights", logo: <MdInsights /> },
+                    // { section_name: "More Insights", logo: <MdInsights /> },
                   ]}
                 />
               </div>
@@ -118,9 +118,9 @@ const RepoPage = () => {
                     branches_response={branches}
                     repo_rank_response={repo_rank}
                   />
-                  <ContributionSection section_id="Contributions" />
+                  <ContributionSection section_id="Contributions Health" />
                   <GeoSection section_id="Geo Map" />
-                  <CompletenessSection />
+                  <CompletenessSection section_id="Repo Checklist" />
                 </div>
               </div>
             </div>

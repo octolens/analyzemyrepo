@@ -1,3 +1,5 @@
+import { useEffect, useState, useCallback } from "react";
+
 interface SideBarProps {
   sections: SideBarItem[];
   className?: string;
@@ -9,7 +11,48 @@ interface SideBarItem {
   logo: React.ReactNode;
 }
 
+const debounce = <T extends (...args: any[]) => any>(
+  callback: T,
+  waitFor: number
+) => {
+  let timeout: ReturnType<typeof setTimeout>;
+  return (...args: Parameters<T>): ReturnType<T> => {
+    let result: any;
+    timeout && clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      result = callback(...args);
+    }, waitFor);
+    return result;
+  };
+};
+
 export default function Sidebar({ sections, className }: SideBarProps) {
+  const [active, setActive] = useState<string | null>("Overview");
+
+  const debounced_setter = debounce((a: string) => setActive(a), 500);
+  useEffect(() => {
+    const options: IntersectionObserverInit = {
+      root: null, // all viewport
+      threshold: 0.5,
+    };
+
+    const callback: IntersectionObserverCallback = (entries) => {
+      entries.forEach(async (entry) => {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+          debounced_setter(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(callback, options);
+
+    sections.forEach((value) => {
+      observer.observe(
+        document.getElementById(`${value.section_name}`) as Element
+      );
+    });
+  }, []);
+
   return (
     <aside
       className={"w-64 h-screen sticky top-0" + " " + className}
@@ -22,7 +65,8 @@ export default function Sidebar({ sections, className }: SideBarProps) {
               <a
                 href={`#${item.section_name}`}
                 className={
-                  "flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                  "flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100" +
+                  (item.section_name == active ? " bg-gray-200" : "")
                 }
               >
                 {item.logo}

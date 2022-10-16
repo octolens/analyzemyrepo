@@ -30,7 +30,9 @@ const prepareData = (
   ];
 };
 
-const ContributionSection = ({ section_id }: ContributionSectionProps) => {
+const ContributionSection = ({
+  section_id = "Contributions Health",
+}: ContributionSectionProps) => {
   const router = useRouter();
   const { org_name, repo_name } = router.query;
   const response = trpc.useQuery([
@@ -47,11 +49,14 @@ const ContributionSection = ({ section_id }: ContributionSectionProps) => {
       className="container p-4 mt-4 flex flex-col items-center border border-black rounded-md"
       id={section_id}
     >
-      <h2 className="text-center font-extrabold text-3xl py-2">
-        Contributions
+      <h2 className="font-extrabold text-3xl py-2 text-center text-primary">
+        Contributions Health
       </h2>
-      <p className="text-center pt-1 text-gray-500">
-        Distribution of commits by users
+      <h3 className="font-extrabold text-2xl pb-2 pt-6">
+        Commits Distribution
+      </h3>
+      <p className="text-center pt-1 text-gray-500 text-sm">
+        Top 10 contibutors to the repo and their shares
       </p>
       {response.isLoading && response_2.isLoading ? (
         <div className="h-96 container px-4 mx-auto overflow-hidden bg-gray-200 animate-pulse"></div>

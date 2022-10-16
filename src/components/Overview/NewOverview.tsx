@@ -1,4 +1,4 @@
-import { verdicts, checks } from "../../utils/rating";
+import { checks } from "../../utils/rating";
 import { trpc } from "../../utils/trpc";
 import { useRouter } from "next/router";
 
@@ -27,7 +27,7 @@ const OverviewSection = ({ section_id = "New Overview" }) => {
   ]);
   return (
     <section
-      className="p-4 mt-4 flex flex-col items-center rounded-md border border-black"
+      className="p-4 mt-5 flex flex-col items-center rounded-md border border-black"
       id={section_id}
     >
       <h2 className="text-center font-extrabold text-3xl">Overview</h2>
