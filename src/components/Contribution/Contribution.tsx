@@ -52,7 +52,7 @@ const ContributionSection = ({
       <h2 className="font-extrabold text-3xl py-2 text-center text-primary">
         Contributions Health
       </h2>
-      <h3 className="font-extrabold text-2xl pb-2 pt-6">
+      <h3 className="font-extrabold text-2xl pb-2 pt-2">
         Commits Distribution
       </h3>
       <p className="text-center pt-1 text-gray-500 text-sm">

@@ -11,6 +11,10 @@ interface SideBarItem {
   logo: React.ReactNode;
 }
 
+//
+// if click is fired I want to make this item active immediately and igore intersection observer
+// otherwise do debouncing as usuall
+
 const debounce = <T extends (...args: any[]) => any>(
   callback: T,
   waitFor: number
@@ -29,7 +33,11 @@ const debounce = <T extends (...args: any[]) => any>(
 export default function Sidebar({ sections, className }: SideBarProps) {
   const [active, setActive] = useState<string | null>("Overview");
 
-  const debounced_setter = debounce((a: string) => setActive(a), 500);
+  const debounced_fast = useCallback(
+    debounce((a: string) => setActive(a), 500),
+    []
+  );
+
   useEffect(() => {
     const options: IntersectionObserverInit = {
       root: null, // all viewport
@@ -39,7 +47,7 @@ export default function Sidebar({ sections, className }: SideBarProps) {
     const callback: IntersectionObserverCallback = (entries) => {
       entries.forEach(async (entry) => {
         if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-          debounced_setter(entry.target.id);
+          debounced_fast(entry.target.id);
         }
       });
     };
@@ -61,11 +69,16 @@ export default function Sidebar({ sections, className }: SideBarProps) {
       <div className="overflow-y-auto py-4 px-3 bg-white rounded dark:bg-gray-800 border border-solid border-black">
         <ul className="space-y-2">
           {sections.map((item: SideBarItem, index: number) => (
-            <li key={index}>
+            <li
+              key={index}
+              onClick={() => {
+                setActive(item.section_name);
+              }}
+            >
               <a
                 href={`#${item.section_name}`}
                 className={
-                  "flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100" +
+                  "flex items-center p-2 text-base font-normal text-gray-900 rounded-lg" +
                   (item.section_name == active ? " bg-gray-200" : "")
                 }
               >

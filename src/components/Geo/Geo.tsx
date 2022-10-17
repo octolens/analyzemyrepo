@@ -10,42 +10,8 @@ import InsightCard from "../Cards/InsightCard";
 import TemplateCard from "../Cards/TemplateCard";
 import TeaseCard from "../Cards/TeaseCard";
 import { useSession, signIn } from "next-auth/react";
-import OrgChart from "./Org";
-
-const RadioHorizontal = ({
-  radio_names,
-  active_radio_name,
-  setRadioName,
-}: {
-  radio_names: string[];
-  active_radio_name: string;
-  setRadioName: (x: any) => any;
-}) => {
-  return (
-    <div className="flex flex-col md:flex-row mx-auto items-center gap-2">
-      {radio_names.map((value: string, index: number) => {
-        return (
-          <div className="flex items-center mr-4" key={index}>
-            <input
-              id={`inline-radio-${index}`}
-              type="radio"
-              name="inline-radio-group"
-              checked={value == active_radio_name}
-              onChange={() => setRadioName(value)}
-              className="w-4 h-4 text-primary bg-gray-100 border-gray-300 focus:ring-black"
-            />
-            <label
-              htmlFor={`inline-radio-${index}`}
-              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
-              {value}
-            </label>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
+import OrgSubSection from "./Org";
+import RadioHorizontal from "../Radio/RadioHorizontal";
 
 const GeoChart = ({
   data,
@@ -175,12 +141,17 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
 
   return (
     <section
-      className="p-4 flex flex-col gap-3 border border-black rounded-md mt-4"
+      className="container p-4 flex flex-col border border-black rounded-md mt-4"
       id={section_id}
     >
-      <h2 className="text-center font-extrabold text-3xl py-2">Geo Map</h2>
-      <p className="text-center text-gray-500">
-        Locations of contributors{" "}
+      <h2 className="font-extrabold text-3xl py-2 text-center text-primary">
+        Diversity
+      </h2>
+      <h3 className="font-extrabold text-2xl pb-2 pt-2 text-center">
+        Geo Distribution
+      </h3>
+      <p className="text-center text-gray-500 mb-5">
+        Top locations by number of contributors and commits{" "}
         <div className="inline align-middle">
           <Tooltip tip={<GeoToolTip />} position_priority={"right"} />
         </div>
@@ -189,12 +160,13 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
         radio_names={["commits_count", "contributors_count"]}
         active_radio_name={geoCalcType}
         setRadioName={setGeoCalcType}
+        id_modifier="geo"
       />
       {json_query.isLoading || geo_query.isLoading ? (
         // skeleton
-        <div className="container h-80 mx-auto animate-pulse bg-gray-200 rounded-lg"></div>
+        <div className="container h-80 mx-auto animate-pulse bg-gray-200 rounded-lg mt-4"></div>
       ) : (
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col md:flex-row mt-4">
           <div className="container h-80 mx-auto">
             <GeoChart
               features={json_query.data["features"]}
@@ -221,13 +193,11 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
           </div>
         </div>
       )}
-      <div className="flex flex-col gap-3 pt-2 items-center justify-center">
+      <div className="flex flex-col gap-3 pt-4 items-center justify-center">
         <InsightCountryCard geo_query={geo_query} />
         <InsightShareCard geo_query={geo_query} />
       </div>
-      <div className="container h-96 mx-auto">
-        <OrgChart />
-      </div>
+      <OrgSubSection />
     </section>
   );
 };
@@ -243,7 +213,10 @@ const TableRowsArray = ({
     data: data,
     key: key,
   }).map((value: Record<string, any>) => (
-    <div className="flex flex-row justify-around" key={value["country"]}>
+    <div
+      className="flex flex-row justify-around"
+      key={value["country"] + value[key]}
+    >
       {/* add country flags https://countryflagsapi.com/:filetype/:code */}
       <span>{value["country"]}</span>
       <span>{value[key]}</span>

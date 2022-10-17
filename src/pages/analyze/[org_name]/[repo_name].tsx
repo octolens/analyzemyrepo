@@ -73,7 +73,7 @@ const RepoPage = () => {
                       logo: <GoGraph />,
                     },
                     {
-                      section_name: "Geo Map",
+                      section_name: "Diversity",
                       logo: <GoGlobe />,
                     },
                     {
@@ -119,7 +119,7 @@ const RepoPage = () => {
                     repo_rank_response={repo_rank}
                   />
                   <ContributionSection section_id="Contributions Health" />
-                  <GeoSection section_id="Geo Map" />
+                  <GeoSection section_id="Diversity" />
                   <CompletenessSection section_id="Repo Checklist" />
                 </div>
               </div>
