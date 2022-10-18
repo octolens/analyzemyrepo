@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 // results framework
 // key format: adoption+contribution-diversity+community+growth-
 
-const OverviewSection = ({ section_id = "New Overview" }) => {
+const OverviewSection = ({ section_id = "Overview" }) => {
   const router = useRouter();
   const { org_name, repo_name } = router.query;
   const repo = trpc.useQuery([

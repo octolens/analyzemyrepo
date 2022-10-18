@@ -142,18 +142,18 @@ model github_raw_repos {
   updated_at        DateTime? @db.Timestamp(6)
   pushed_at         DateTime? @db.Timestamp(6)
   homepage          String?
-  size              BigInt?
-  stargazers_count  BigInt?
-  watchers_count    BigInt?
+  size              Int?
+  stargazers_count  Int?
+  watchers_count    Int?
   language          String?
   has_issues        Boolean?
   has_projects      Boolean?
   has_downloads     Boolean?
   has_wiki          Boolean?
   has_pages         Boolean?
-  forks_count       BigInt?
+  forks_count       Int?
   archived          Boolean?
-  open_issues_count BigInt?
+  open_issues_count Int?
   score             Float?
   owner_login       String?
   owner_id          BigInt?

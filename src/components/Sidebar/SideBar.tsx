@@ -33,11 +33,6 @@ const debounce = <T extends (...args: any[]) => any>(
 export default function Sidebar({ sections, className }: SideBarProps) {
   const [active, setActive] = useState<string | null>("Overview");
 
-  const debounced_fast = useCallback(
-    debounce((a: string) => setActive(a), 500),
-    []
-  );
-
   useEffect(() => {
     const options: IntersectionObserverInit = {
       root: null, // all viewport
@@ -47,7 +42,7 @@ export default function Sidebar({ sections, className }: SideBarProps) {
     const callback: IntersectionObserverCallback = (entries) => {
       entries.forEach(async (entry) => {
         if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-          debounced_fast(entry.target.id);
+          setActive(entry.target.id);
         }
       });
     };
@@ -71,9 +66,9 @@ export default function Sidebar({ sections, className }: SideBarProps) {
           {sections.map((item: SideBarItem, index: number) => (
             <li
               key={index}
-              onClick={() => {
-                setActive(item.section_name);
-              }}
+              // onClick={() => {
+              //   setActive(item.section_name);
+              // }}
             >
               <a
                 href={`#${item.section_name}`}

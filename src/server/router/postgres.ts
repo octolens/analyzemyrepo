@@ -94,4 +94,26 @@ export const postgresRouter = createRouter()
 
       return data;
     },
+  })
+  .query("get_repo_history", {
+    input: z.object({
+      owner: z.string(),
+      repo: z.string(),
+    }),
+    async resolve({ ctx, input }) {
+      const client = ctx.prisma;
+      const data = client.github_raw_repos.findMany({
+        where: {
+          full_name: `${input.owner}/${input.repo}`,
+        },
+        orderBy: [
+          {
+            updated_at: "desc",
+          },
+        ],
+        take: 10,
+      });
+
+      return data;
+    },
   });

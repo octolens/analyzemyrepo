@@ -16,6 +16,7 @@
     "@nivo/circle-packing": "^0.80.0",
     "@nivo/core": "^0.80.0",
     "@nivo/geo": "^0.80.0",
+    "@nivo/line": "^0.80.0",
     "@nivo/pie": "^0.80.0",
     "@prisma/client": "^4.3.1",
     "@react-spring/web": "^9.5.4",

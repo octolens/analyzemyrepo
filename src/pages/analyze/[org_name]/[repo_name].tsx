@@ -1,17 +1,16 @@
 import { useRouter } from "next/router";
 import Sidebar from "../../../components/Sidebar/SideBar";
 import Image from "next/image";
-import { trpc } from "../../../utils/trpc";
-import OverViewSection from "../../../components/Overview/Overview";
 import HeaderSecondary from "../../../components/Headers/NewHeaderSecondary";
 import GeoSection from "../../../components/Geo/Geo";
-import { GoLinkExternal, GoGraph, GoGlobe } from "react-icons/go";
+import { GoLinkExternal, GoGraph, GoGlobe, GoRocket } from "react-icons/go";
 import { GrOverview } from "react-icons/gr";
-import { MdInsights, MdChecklist } from "react-icons/md";
+import { MdChecklist } from "react-icons/md";
 import ContributionSection from "../../../components/Contribution/Contribution";
 import CompletenessSection from "../../../components/Completeness/Completeness";
 import ErrorBoundary from "../../../components/Errors/ErrorBoundary";
 import NewOverviewSection from "../../../components/Overview/NewOverview";
+import AdoptionSection from "../../../components/Adoption/Adoption";
 
 const RepoPage = () => {
   const router = useRouter();
@@ -19,42 +18,42 @@ const RepoPage = () => {
 
   const full_name = org_name + "/" + repo_name;
 
-  const data = trpc.useQuery([
-    "github.get_github_repo",
-    { owner: org_name as string, repo: repo_name as string },
-  ]);
+  // const data = trpc.useQuery([
+  //   "github.get_github_repo",
+  //   { owner: org_name as string, repo: repo_name as string },
+  // ]);
 
-  const commits = trpc.useQuery([
-    "github.get_github_commits",
-    {
-      owner: org_name as string,
-      repo: repo_name as string,
-    },
-  ]);
+  // const commits = trpc.useQuery([
+  //   "github.get_github_commits",
+  //   {
+  //     owner: org_name as string,
+  //     repo: repo_name as string,
+  //   },
+  // ]);
 
-  const open_prs = trpc.useQuery([
-    "github.get_github_open_prs",
-    {
-      owner: org_name as string,
-      repo: repo_name as string,
-    },
-  ]);
+  // const open_prs = trpc.useQuery([
+  //   "github.get_github_open_prs",
+  //   {
+  //     owner: org_name as string,
+  //     repo: repo_name as string,
+  //   },
+  // ]);
 
-  const branches = trpc.useQuery([
-    "github.get_github_branches",
-    {
-      owner: org_name as string,
-      repo: repo_name as string,
-    },
-  ]);
+  // const branches = trpc.useQuery([
+  //   "github.get_github_branches",
+  //   {
+  //     owner: org_name as string,
+  //     repo: repo_name as string,
+  //   },
+  // ]);
 
-  const repo_rank = trpc.useQuery([
-    "postgres.get_repo_rank",
-    {
-      owner: org_name as string,
-      repo: repo_name as string,
-    },
-  ]);
+  // const repo_rank = trpc.useQuery([
+  //   "postgres.get_repo_rank",
+  //   {
+  //     owner: org_name as string,
+  //     repo: repo_name as string,
+  //   },
+  // ]);
 
   return (
     <div className="min-h-screen flex flex-col bg-neutral">
@@ -68,6 +67,7 @@ const RepoPage = () => {
                   className="pt-24"
                   sections={[
                     { section_name: "Overview", logo: <GrOverview /> },
+                    { section_name: "Adoption", logo: <GoRocket /> },
                     {
                       section_name: "Contributions Health",
                       logo: <GoGraph />,
@@ -110,14 +110,15 @@ const RepoPage = () => {
                   className="container mx-auto flex flex-col gap-2"
                 >
                   <NewOverviewSection />
-                  <OverViewSection
+                  {/* <OverViewSection
                     section_id="Overview"
                     response={data}
                     commits_response={commits}
                     open_prs_response={open_prs}
                     branches_response={branches}
                     repo_rank_response={repo_rank}
-                  />
+                  /> */}
+                  <AdoptionSection />
                   <ContributionSection section_id="Contributions Health" />
                   <GeoSection section_id="Diversity" />
                   <CompletenessSection section_id="Repo Checklist" />

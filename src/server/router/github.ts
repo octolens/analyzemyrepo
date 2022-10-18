@@ -26,6 +26,11 @@ const commitsRegExp = /&page=(\d+)>; rel="last"/;
 // if not data for this key or this data is expired:
 //     fetch new data from Github API and my database
 //     update corresponding key in redis setting a expiration key
+// const data = fetch_from_redis("key to fetch for")
+// // if (data) {
+//   return data
+// }
+// return null; // indicating what we should fetch from other source
 
 const checkHeaders = (headers: Headers, default_value = 0): number => {
   const link = headers.get("Link") as string;
