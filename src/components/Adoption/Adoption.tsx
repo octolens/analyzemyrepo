@@ -87,16 +87,14 @@ const AdoptionSection = ({ section_id = "Adoption" }) => {
     "stargazers_count"
   );
 
-  const router = useRouter();
+  // const router = useRouter();
 
-  const { org_name, repo_name } = router.query;
+  // const { org_name, repo_name } = router.query;
 
-  const data = trpc.useQuery([
-    "postgres.get_repo_history",
-    { owner: org_name as string, repo: repo_name as string },
-  ]);
-
-  const get_growth = () => {};
+  // const data = trpc.useQuery([
+  //   "postgres.get_repo_history",
+  //   { owner: org_name as string, repo: repo_name as string },
+  // ]);
   return (
     <section
       className="p-4 mt-4 flex flex-col items-center rounded-md border border-black"
