@@ -73,7 +73,7 @@ const OrgSubSection = () => {
         <OrgChart value={orgCalcType} />
       </div>
       <div className="flex flex-col gap-3 pt-4 items-center justify-center">
-        <InsightCountryCard />
+        <InsightCompanyCard />
         <InsightShareCard />
       </div>
     </div>
@@ -130,7 +130,7 @@ const InsightShareCard = () => {
   );
 };
 
-const InsightCountryCard = () => {
+const InsightCompanyCard = () => {
   const router = useRouter();
   const { org_name, repo_name } = router.query;
   const org_query = trpc.useQuery([

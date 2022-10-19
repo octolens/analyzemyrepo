@@ -3,25 +3,7 @@ import { MdCancel, MdCheckCircle } from "react-icons/md";
 import { trpc } from "../../utils/trpc";
 import { useRouter } from "next/router";
 import InsightCard from "../Cards/InsightCard";
-
-const count_score = (data: Record<string, any>) => {
-  const one_if_not_null = (value: any) => (value !== null ? 1 : 0) as number;
-
-  const score = [
-    data.description,
-    data.documentation,
-    data.files.code_of_conduct,
-    data.files.contributing,
-    data.files.issue_template,
-    data.files.pull_request_template,
-    data.files.license,
-    data.files.readme,
-  ]
-    .map(one_if_not_null)
-    .reduce((prev, curr) => prev + curr);
-
-  return score;
-};
+import { count_community_score } from "../../utils/community";
 
 const HealthTable = () => {
   const router = useRouter();
@@ -95,20 +77,26 @@ const HealthTable = () => {
         />
       </div>
       <div className="pt-4">
-        {count_score(health_query.data) > 4 ? (
+        {count_community_score(health_query.data) > 4 ? (
           <InsightCard
             color="positive"
-            text={`More than half checks (${count_score(health_query.data)}/8)`}
+            text={`More than half checks (${count_community_score(
+              health_query.data
+            )}/8)`}
           />
-        ) : count_score(health_query.data) == 4 ? (
+        ) : count_community_score(health_query.data) == 4 ? (
           <InsightCard
             color="neutral"
-            text={`Half of the checks (${count_score(health_query.data)}/8)`}
+            text={`Half of the checks (${count_community_score(
+              health_query.data
+            )}/8)`}
           />
         ) : (
           <InsightCard
             color="negative"
-            text={`Less than half checks (${count_score(health_query.data)}/8)`}
+            text={`Less than half checks (${count_community_score(
+              health_query.data
+            )}/8)`}
           />
         )}
       </div>

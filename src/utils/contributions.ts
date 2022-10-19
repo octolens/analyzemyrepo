@@ -1,10 +1,27 @@
 import { inferQueryOutput } from "./trpc";
+import { count_true } from "./common";
+
+export const checks_texts: Record<string, any> = {
+  bus_factor: {
+    good: "More than 10 contributors constitute 50% of commits to the repo",
+    bad: "Less than 10 contributors constitute 50% of commits to the repo",
+  },
+  serious_factor: {
+    good: "More than 50% of contributors authored more than 1 commit",
+    bad: "Less than 50% of contributors authored more than 1 commit (others authored only 1)",
+  },
+  contributors_count: {
+    good: "There are more than 20 contributors to the repo",
+    bad: "There are less than 20 contibutors to the repo",
+  },
+  default: "Not enough data to run this check",
+};
 
 const calculate_factor = ({
   data,
   format = true,
 }: {
-  data: Record<string, number> | undefined;
+  data: inferQueryOutput<"postgres.get_serious_contributors">;
   format?: boolean;
 }) => {
   const perc =
@@ -22,9 +39,12 @@ const calculate_factor = ({
   return perc;
 };
 
-const calculate_factor_hack = (data: Record<string, any>[], format = true) => {
+const calculate_factor_hack = (
+  data: inferQueryOutput<"github.get_github_repo_contributors">,
+  format = true
+) => {
   const serious_commiters = data.filter(
-    (value) => value["contributions"] > 1
+    (value: any) => value["contributions"] > 1
   ).length;
   const total_commiters = data.length;
   // this method neeeded if the don't have commits of this repo in the database
@@ -49,8 +69,8 @@ export const handle_data_and_calculate_factor = ({
   data_gh,
   format = true,
 }: {
-  data_db: Record<string, any> | undefined;
-  data_gh: Record<string, any>[];
+  data_db: inferQueryOutput<"postgres.get_serious_contributors"> | undefined;
+  data_gh: inferQueryOutput<"github.get_github_repo_contributors">;
   format: boolean;
 }) => {
   if (data_db?.serious_commiters || data_db?.total_commiters) {
@@ -69,9 +89,14 @@ export const check_bus_factor = (
 };
 
 export const check_contributors_count = (
-  data: inferQueryOutput<"postgres.get_serious_contributors">
+  data: inferQueryOutput<"postgres.get_serious_contributors"> | undefined,
+  data_gh: inferQueryOutput<"github.get_github_repo_contributors">
 ) => {
-  return data.total_commiters > 10;
+  if (data?.total_commiters) {
+    return data.total_commiters > 20;
+  } else {
+    return data_gh.length > 20;
+  }
 };
 
 export const check_serious_contributors = ({
@@ -79,14 +104,14 @@ export const check_serious_contributors = ({
   data_gh,
   format = true,
 }: {
-  data_db: Record<string, any> | undefined;
-  data_gh: Record<string, any>[];
+  data_db: inferQueryOutput<"postgres.get_serious_contributors"> | undefined;
+  data_gh: inferQueryOutput<"github.get_github_repo_contributors">;
   format: boolean;
 }) => {
   const serious_perc = handle_data_and_calculate_factor({
     data_db,
     data_gh,
-    format: false,
+    format: format,
   });
 
   return serious_perc > 0.5;
@@ -98,7 +123,7 @@ interface BusFactor {
 }
 
 export const calculate_bus_factor = (
-  data: Record<string, any>[],
+  data: inferQueryOutput<"github.get_github_repo_contributors">,
   total_contributions: number
 ): BusFactor => {
   // calculate number of contributors who consist more than 50% of commits
@@ -126,5 +151,41 @@ export const calculate_bus_factor = (
   return {
     bus_factor: 100,
     share: Math.round((sum / total_contributions) * 100),
+  };
+};
+
+export const calculate_contribution_verdict = ({
+  contributors_data,
+  serious_data,
+  contributions_count_data,
+}: {
+  contributors_data: inferQueryOutput<"github.get_github_repo_contributors">;
+  serious_data:
+    | inferQueryOutput<"postgres.get_serious_contributors">
+    | undefined;
+  contributions_count_data:
+    | inferQueryOutput<"github.get_contributions_count">
+    | undefined;
+}) => {
+  const total_contributions =
+    contributions_count_data?.total_contributions ?? 1;
+  const bus_factor = check_bus_factor(contributors_data, total_contributions);
+  const serious_factor = check_serious_contributors({
+    data_db: serious_data,
+    data_gh: contributors_data,
+    format: false,
+  });
+
+  const contributors_count = check_contributors_count(
+    serious_data,
+    contributors_data
+  );
+
+  const score = count_true([bus_factor, serious_factor, contributors_count]);
+
+  return {
+    verdict: score > 2,
+    score: score,
+    results: { bus_factor, serious_factor, contributors_count },
   };
 };

@@ -1,44 +1,20 @@
-import {
-  check_forks,
-  check_stars,
-  check_rating,
-  check_issues,
-  calculate_adoption_verdict,
-} from "./adoption";
-
-import {
-  check_serious_contributors,
-  check_bus_factor,
-  check_contributors_count,
-} from "./contributions";
+import { calculate_adoption_verdict } from "./adoption";
+import { calculate_contribution_verdict } from "./contributions";
+import { calculate_diversity_verdict } from "./diversity";
+import { calculate_community_verdict } from "./community";
 
 export const checks = {
   adoption: {
-    forks: { check: check_forks },
-    stars: { check: check_stars },
-    rating: { check: check_rating },
-    issues: { check: check_issues },
     calculate_verdict: calculate_adoption_verdict,
   },
   contribution: {
-    bus_factor: { check: check_bus_factor },
-    serious_contributors: { check: check_serious_contributors },
-    contributors_count: { check: check_contributors_count },
+    calculate_verdict: calculate_contribution_verdict,
   },
   diversity: {
-    geo_dominance: {},
-    geo_density: {},
-    org_dominance: {},
+    calculate_verdict: calculate_diversity_verdict,
   },
   community: {
-    description: {},
-    website: {},
-    code_of_conduct: {},
-    contributing_md: {},
-    issue_template: {},
-    pr_template: {},
-    license: {},
-    readme: {},
+    calclulate_verdict: calculate_community_verdict,
   },
   // growth: {
   //   issues_delta: {},
