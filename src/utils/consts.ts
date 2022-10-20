@@ -56,7 +56,7 @@ export const verdicts = {
   "adoption-contribution-diversity+community-growth-":
     "Good work with diversity, but problems with everything else",
   "adoption-contribution-diversity-community+growth+":
-    "Good work with community docs and docs, but it's worth to focus a bit on adoption and contributions",
+    "Good work with community docs and growth, but it's worth to focus a bit on adoption and contributions",
   "adoption-contribution-diversity-community+growth-":
     "Good work with community docs, but problems in all other ascpects",
   "adoption-contribution-diversity-community-growth+":

@@ -15,8 +15,8 @@ export const checks_texts: Record<string, any> = {
     bad: "More than 50% of commits from one organization",
   },
   org_density: {
-    good: "None of the organizations have more than 50% commits to the repo",
-    bad: "More than 50% of commits from one organization",
+    good: "None of the organizations have more than 3% of commits",
+    bad: "Less than 3 organizations have more than 3% of commits",
   },
   default: "Not enough data to run this check",
 };
@@ -24,7 +24,7 @@ export const checks_texts: Record<string, any> = {
 const check_geo_diversity = (
   data: inferQueryOutput<"postgres.get_repo_contributors_countries"> | undefined
 ) => {
-  if (!data) {
+  if (!data || data.length == 0) {
     return null;
   }
   const sorted = data
@@ -41,7 +41,7 @@ const check_geo_diversity = (
 const check_geo_density = (
   data: inferQueryOutput<"postgres.get_repo_contributors_countries"> | undefined
 ) => {
-  if (!data) {
+  if (!data || data.length == 0) {
     return null;
   }
   const sorted = data
@@ -60,7 +60,7 @@ const check_geo_density = (
 const check_company_diversity = (
   data: inferQueryOutput<"postgres.get_repo_contributors_companies"> | undefined
 ) => {
-  if (!data) {
+  if (!data || data.length == 0) {
     return null;
   }
   const sorted = data
@@ -77,7 +77,7 @@ const check_company_diversity = (
 const check_company_density = (
   data: inferQueryOutput<"postgres.get_repo_contributors_companies"> | undefined
 ) => {
-  if (!data) {
+  if (!data || data.length == 0) {
     return null;
   }
   const sorted = data

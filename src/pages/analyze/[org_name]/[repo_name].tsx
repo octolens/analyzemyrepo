@@ -9,7 +9,7 @@ import { MdChecklist } from "react-icons/md";
 import ContributionSection from "../../../components/Contribution/Contribution";
 import CompletenessSection from "../../../components/Completeness/Completeness";
 import ErrorBoundary from "../../../components/Errors/ErrorBoundary";
-import NewOverviewSection from "../../../components/Overview/NewOverview";
+import OverviewSection from "../../../components/Overview/NewOverview";
 import AdoptionSection from "../../../components/Adoption/Adoption";
 
 const RepoPage = () => {
@@ -17,43 +17,6 @@ const RepoPage = () => {
   const { org_name, repo_name } = router.query;
 
   const full_name = org_name + "/" + repo_name;
-
-  // const data = trpc.useQuery([
-  //   "github.get_github_repo",
-  //   { owner: org_name as string, repo: repo_name as string },
-  // ]);
-
-  // const commits = trpc.useQuery([
-  //   "github.get_github_commits",
-  //   {
-  //     owner: org_name as string,
-  //     repo: repo_name as string,
-  //   },
-  // ]);
-
-  // const open_prs = trpc.useQuery([
-  //   "github.get_github_open_prs",
-  //   {
-  //     owner: org_name as string,
-  //     repo: repo_name as string,
-  //   },
-  // ]);
-
-  // const branches = trpc.useQuery([
-  //   "github.get_github_branches",
-  //   {
-  //     owner: org_name as string,
-  //     repo: repo_name as string,
-  //   },
-  // ]);
-
-  // const repo_rank = trpc.useQuery([
-  //   "postgres.get_repo_rank",
-  //   {
-  //     owner: org_name as string,
-  //     repo: repo_name as string,
-  //   },
-  // ]);
 
   return (
     <div className="min-h-screen flex flex-col bg-neutral">
@@ -77,7 +40,7 @@ const RepoPage = () => {
                       logo: <GoGlobe />,
                     },
                     {
-                      section_name: "Repo Checklist",
+                      section_name: "Community Guidelines",
                       logo: <MdChecklist />,
                     },
                     // { section_name: "More Insights", logo: <MdInsights /> },
@@ -91,7 +54,7 @@ const RepoPage = () => {
                   rel="noreferrer"
                   className="max-w-full w-fit px-4 py-5 bg-white rounded-lg shadow mx-auto flex flex-row items-center gap-2 cursor-pointer"
                 >
-                  <div>
+                  <span className="flex items-center">
                     <Image
                       src={`https://github.com/${org_name}.png`}
                       width="30"
@@ -99,29 +62,21 @@ const RepoPage = () => {
                       alt={full_name}
                       priority={true}
                     />
-                  </div>
-                  <div className="text-xl text-gray-900 truncate max-w-sm">
+                  </span>
+                  <span className="text-xl text-gray-900 truncate max-w-sm">
                     {full_name}
-                  </div>
+                  </span>
                   <GoLinkExternal className="mt-1 hover:fill-primary" />
                 </a>
                 <div
                   id="sections"
                   className="container mx-auto flex flex-col gap-2"
                 >
-                  <NewOverviewSection />
-                  {/* <OverViewSection
-                    section_id="Overview"
-                    response={data}
-                    commits_response={commits}
-                    open_prs_response={open_prs}
-                    branches_response={branches}
-                    repo_rank_response={repo_rank}
-                  /> */}
+                  <OverviewSection />
                   <AdoptionSection />
                   <ContributionSection section_id="Contributions Health" />
                   <GeoSection section_id="Diversity" />
-                  <CompletenessSection section_id="Repo Checklist" />
+                  <CompletenessSection section_id="Community Guidelines" />
                 </div>
               </div>
             </div>

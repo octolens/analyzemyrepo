@@ -18,6 +18,7 @@
     "@nivo/geo": "^0.80.0",
     "@nivo/line": "^0.80.0",
     "@nivo/pie": "^0.80.0",
+    "@nivo/radar": "^0.80.0",
     "@prisma/client": "^4.3.1",
     "@react-spring/web": "^9.5.4",
     "@trpc/client": "^9.27.2",

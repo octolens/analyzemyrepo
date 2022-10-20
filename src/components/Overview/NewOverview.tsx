@@ -2,58 +2,106 @@ import { checks } from "../../utils/rating";
 import { trpc } from "../../utils/trpc";
 import { useRouter } from "next/router";
 import ListSkeleton from "../Skeletons/ListSkeleton";
-import { MdCancel, MdCheckCircle } from "react-icons/md";
+import { MdCheckCircle, MdInfo } from "react-icons/md";
+import { RiErrorWarningFill } from "react-icons/ri";
 import Modal from "../Modal/Modal";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { checks_texts as contribution_texts } from "../../utils/contributions";
 import { checks_texts as adoption_texts } from "../../utils/adoption";
 import { checks_texts as diversity_texts } from "../../utils/diversity";
 import { checks_texts as community_texts } from "../../utils/community";
-
-// How to calculate verdict
-// I have 5 categories - each of them could be positiive or negative depending on majority
-
-// Insgihts - just share 2-3 positive and 2-3 negative
+import { verdicts } from "../../utils/consts";
+import RadarChart from "./RadarChart";
 
 // results framework
 // key format: adoption+contribution-diversity+community+growth-
 
-const OverviewSection = ({ section_id = "Overview" }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  return (
-    <section
-      className="p-4 mt-5 flex flex-col items-center rounded-md border border-black"
-      id={section_id}
-    >
-      <h2 className="text-center font-extrabold text-3xl">Overview</h2>
-      <div className="text-center w-fit py-2">
-        <p className="text-center pt-1 text-gray-500">
-          Main stats about the repo
-        </p>
-      </div>
-      <div className="container flex flex-row">
-        <Summary modalIsOpen={isOpen} modalSetIsOpen={setIsOpen} />
-        <div>Here will be chart</div>
-      </div>
-      <div className="self-start pt-4">
-        <button
-          className="px-2 py-1 text-sm font-medium text-white bg-black rounded-md shadow bg-opacity-80 hover:bg-opacity-100"
-          onClick={() => setIsOpen(true)}
-        >
-          See all checks
-        </button>
-      </div>
-    </section>
-  );
+const sample_insights_from_checks = (checks: Record<string, any>) => {
+  const MAX_GOOD_THINGS = 5;
+  const MAX_BAD_THINGS = 3;
+  const MAX_PER_CATEGORY = 2; // this is in both good and bad
+
+  const CATEGORY_PRIORITIES: (keyof ChecksType)[] = [
+    "diversity",
+    "adoption",
+    "contribution",
+    "community",
+  ];
+
+  const checks_getter = (category: keyof ChecksType) => {
+    if (category == "adoption") {
+      return adoption_texts;
+    }
+
+    if (category == "community") {
+      return community_texts;
+    }
+
+    if (category == "diversity") {
+      return diversity_texts;
+    }
+
+    if (category == "contribution") {
+      return contribution_texts;
+    }
+  };
+
+  const PRIORITIES = {
+    adoption: ["rating", "stars", "issues", "forks"],
+    diversity: ["geo_diversity", "org_diversity", "geo_density", "org_density"],
+    contribution: ["bus_factor", "serious_factor", "contributors_count"],
+    community: [
+      "code_of_conduct",
+      "contributing",
+      "issue_template",
+      "pull_request_template",
+      "license",
+      "readme",
+      "description",
+      "documentation",
+    ],
+  };
+
+  const good: string[] = [];
+  const bad: string[] = [];
+
+  for (const category of CATEGORY_PRIORITIES) {
+    let category_count_good = 0;
+    let category_count_bad = 0;
+    for (const metric of PRIORITIES[category]) {
+      if (checks[category][metric]) {
+        if (
+          good.length < MAX_GOOD_THINGS &&
+          category_count_good < MAX_PER_CATEGORY
+        ) {
+          const obj = checks_getter(category);
+          if (obj) {
+            good.push(obj[metric].good);
+            category_count_good += 1;
+          }
+        }
+      }
+      // we want to show only bad things, filtering no data insights
+      else if (checks[category][metric] != null) {
+        if (
+          bad.length < MAX_BAD_THINGS &&
+          category_count_bad < MAX_PER_CATEGORY
+        ) {
+          const obj = checks_getter(category);
+          if (obj) {
+            bad.push(obj[metric].bad);
+            category_count_bad += 1;
+          }
+        }
+      }
+    }
+  }
+
+  return { good, bad };
 };
 
-const Summary = ({
-  modalIsOpen,
-  modalSetIsOpen,
-}: {
-  modalIsOpen: boolean;
-  modalSetIsOpen: (x: boolean) => void;
-}) => {
+const OverviewSection = ({ section_id = "Overview" }) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const router = useRouter();
   const { org_name, repo_name } = router.query;
 
@@ -97,7 +145,20 @@ const Summary = ({
     { owner: org_name as string, repo: repo_name as string },
   ]);
 
-  const get_all_checks = () => {
+  const isLoading =
+    rank.isLoading ||
+    repo.isLoading ||
+    gh_contributors.isLoading ||
+    serious_contributors.isLoading ||
+    total_contributions.isLoading ||
+    geo.isLoading ||
+    org.isLoading ||
+    community.isLoading;
+
+  const get_all_checks = useMemo(() => {
+    if (isLoading) {
+      return;
+    }
     const adoption_checks = checks.adoption.calculate_verdict({
       rank_data: rank?.data,
       repo_data: repo.data,
@@ -118,41 +179,96 @@ const Summary = ({
       community.data
     );
 
-    return {
-      adoption_score: adoption_checks.score,
-      contribution_score: contribution_checks.score,
-      diversity_score: diversity_checks.score,
-      community_score: community_checks.score,
-      checks: {
-        adoption: adoption_checks.results,
-        contribution: contribution_checks.results,
-        diversity: diversity_checks.results,
-        community: community_checks.results,
-      },
+    const checks_results = {
+      adoption: adoption_checks.results,
+      contribution: contribution_checks.results,
+      diversity: diversity_checks.results,
+      community: community_checks.results,
     };
-  };
 
-  // const calculate_adoption = ({
-  //   rank_data,
-  //   repo_data,
-  // }: {
-  //   rank_data: inferQueryOutput<"postgres.get_repo_rank">;
-  //   repo_data: inferQueryOutput<"github.get_github_repo">;
-  // }) => {
-  //   const result = checks.adoption.calculate_verdict({ rank_data, repo_data });
-  // };
+    const get_verdict = () => {
+      const plus_minus = (x: boolean) => (x ? "+" : "-");
+      const key = `adoption${plus_minus(
+        adoption_checks.verdict
+      )}contribution${plus_minus(
+        contribution_checks.verdict
+      )}diversity${plus_minus(diversity_checks.verdict)}community${plus_minus(
+        community_checks.verdict
+      )}growth+`;
 
-  // const calculate_contributions = ({
-  //   contributors_data,
-  //   serious_data,
-  //   contributions_data,
-  // }: {
-  //   contributors_data: inferQueryOutput<"github.get_github_repo_contributors">;
-  //   serious_data: inferQueryOutput<"postgres.get_serious_contributors">;
-  //   contributions_data: inferQueryOutput<"github.get_contributions_count">;
-  // }) => {};
+      return (verdicts as Record<string, any>)[key] as string;
+    };
 
-  if (repo.isLoading || rank.isLoading) {
+    return {
+      scores: {
+        adoption_score: adoption_checks.score,
+        contribution_score: contribution_checks.score,
+        diversity_score: diversity_checks.score,
+        community_score: community_checks.score,
+      },
+      checks: checks_results,
+      insights: sample_insights_from_checks(checks_results),
+      verdict: get_verdict(),
+    };
+  }, [isLoading, org_name, repo_name]);
+  return (
+    <section
+      className="p-4 mt-[26px] flex flex-col items-center rounded-md border border-black"
+      id={section_id}
+    >
+      <h2 className="text-center font-extrabold text-3xl text-primary">
+        Overview
+      </h2>
+      <div className="text-center w-fit py-2">
+        <p className="text-center pt-1 text-gray-500">
+          Main stats about the repo
+        </p>
+      </div>
+      <div className="container flex flex-row">
+        <Summary
+          modalIsOpen={isOpen}
+          modalSetIsOpen={setIsOpen}
+          isLoading={isLoading}
+          data={get_all_checks?.checks}
+          insights={get_all_checks?.insights}
+        />
+        <div className="flex flex-col">
+          <div className="container flex flex-1">
+            <div className="w-96 h-80">
+              <RadarChart score_data={get_all_checks?.scores} />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-row w-full justify-between pt-4 items-center">
+        <button
+          className="w-fit h-fit px-2 py-1 text-sm font-medium text-white bg-black rounded-md shadow bg-opacity-80 hover:bg-opacity-100"
+          onClick={() => setIsOpen(true)}
+        >
+          See all checks
+        </button>
+        <div className="max-w-md text-center font-semibold">
+          {get_all_checks?.verdict}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Summary = ({
+  modalIsOpen,
+  modalSetIsOpen,
+  isLoading,
+  data,
+  insights,
+}: {
+  modalIsOpen: boolean;
+  modalSetIsOpen: (x: boolean) => void;
+  isLoading: boolean;
+  data: ChecksType | undefined;
+  insights: { good: any[]; bad: any[] } | undefined;
+}) => {
+  if (isLoading || !data || !insights) {
     return (
       <div className="flex-1">
         <ListSkeleton />
@@ -161,29 +277,33 @@ const Summary = ({
   }
 
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="flex-1 flex flex-col gap-2">
       <div>
         <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
           Highs
         </h3>
         <ul className="space-y-1 max-w-md list-inside text-gray-500 dark:text-gray-400">
-          <GoodListItem text="Very good" />
+          {insights.good.map((value) => (
+            <GoodListItem text={value} key={`${value}-good-item-insight`} />
+          ))}
         </ul>
       </div>
-      <div>
-        <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-          Lows
-        </h3>
-        <ul className="space-y-1 max-w-md list-inside text-gray-500 dark:text-gray-400">
-          <li className="flex items-center gap-2">
-            <BadListItem text="Very bad" />
-          </li>
-        </ul>
-      </div>
+      {insights.bad.length > 0 ? (
+        <div>
+          <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+            Lows
+          </h3>
+          <ul className="space-y-1 max-w-md list-inside text-gray-500 dark:text-gray-400">
+            {insights.bad.map((value) => (
+              <BadListItem text={value} key={`${value}-bad-item-insight`} />
+            ))}
+          </ul>
+        </div>
+      ) : null}
       <Modal
         isOpen={modalIsOpen}
         setIsOpen={modalSetIsOpen}
-        content={<ModalContents data={get_all_checks().checks} />}
+        content={<ModalContents data={data} />}
       />
     </div>
   );
@@ -191,18 +311,33 @@ const Summary = ({
 
 const GoodListItem = ({ text }: { text: string }) => {
   return (
-    <li className="flex items-center gap-2">
-      <MdCheckCircle color="green" size={18} />
-      {text}
+    <li className="flex items-center gap-2 leading-tight">
+      <span className="self-start">
+        <MdCheckCircle color="green" size={"20px"} />
+      </span>
+      <span>{text}</span>
     </li>
   );
 };
 
 const BadListItem = ({ text }: { text: string }) => {
   return (
-    <li className="flex items-center gap-2">
-      <MdCancel color="red" size={18} />
-      {text}
+    <li className="flex items-start gap-2 leading-tight">
+      <span className="self-start">
+        <RiErrorWarningFill color="orange" size={"20px"} />
+      </span>
+      <span>{text}</span>
+    </li>
+  );
+};
+
+const NoDataListItem = ({ text }: { text: string }) => {
+  return (
+    <li className="flex items-center gap-2 leading-tight">
+      <span>
+        <MdInfo color="gray" size={"20px"} />
+      </span>
+      <span> {text}</span>
     </li>
   );
 };
@@ -239,13 +374,15 @@ type ChecksType = {
 
 const ModalContents = ({ data }: { data: ChecksType }) => {
   return (
-    <div className="flex flex-col overflow-y-auto gap-3">
+    <div className="flex flex-col gap-3">
       <div className="flex flex-col gap-3">
         <h3 className="text-xl font-extrabold">Adoption</h3>
         <ul>
           {Object.entries(data.adoption).map((value) =>
             value[1] ? (
               <GoodListItem text={adoption_texts[value[0]].good} />
+            ) : value[1] == null ? (
+              <NoDataListItem text={adoption_texts.default} />
             ) : (
               <BadListItem text={adoption_texts[value[0]].bad} />
             )
@@ -258,6 +395,8 @@ const ModalContents = ({ data }: { data: ChecksType }) => {
           {Object.entries(data.contribution).map((value) =>
             value[1] ? (
               <GoodListItem text={contribution_texts[value[0]].good} />
+            ) : value[1] == null ? (
+              <NoDataListItem text={contribution_texts.default} />
             ) : (
               <BadListItem text={contribution_texts[value[0]].bad} />
             )
@@ -270,6 +409,8 @@ const ModalContents = ({ data }: { data: ChecksType }) => {
           {Object.entries(data.diversity).map((value) =>
             value[1] ? (
               <GoodListItem text={diversity_texts[value[0]].good} />
+            ) : value[1] == null ? (
+              <NoDataListItem text={diversity_texts.default} />
             ) : (
               <BadListItem text={diversity_texts[value[0]].bad} />
             )
@@ -282,6 +423,8 @@ const ModalContents = ({ data }: { data: ChecksType }) => {
           {Object.entries(data.community).map((value) =>
             value[1] ? (
               <GoodListItem text={community_texts[value[0]].good} />
+            ) : value[1] == null ? (
+              <NoDataListItem text={community_texts.default} />
             ) : (
               <BadListItem text={community_texts[value[0]].bad} />
             )
