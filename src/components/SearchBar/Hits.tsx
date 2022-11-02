@@ -25,9 +25,7 @@ const CustomHits = ({ hits }: any) => (
       {hits.map((hit: any) => (
         <li key={hit.objectID} className="search-hits first:font-extrabold">
           <Link className="cursor-pointer" href={`/analyze/${hit.full_name}`}>
-            <a className="mx-auto">
-              <Highlight attribute="full_name" hit={hit} />
-            </a>
+            <Highlight attribute="full_name" hit={hit} />
           </Link>
         </li>
       ))}

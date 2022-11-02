@@ -8,11 +8,8 @@ const HeaderSecondary = () => {
         <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-screen-xl">
           <div className="flex items-center justify-between h-16">
             <div className="flex-1 md:flex md:items-center md:gap-12">
-              <Link href="/">
-                <a className="block text-primary font-bold text-xl">
-                  <span className="sr-only">Home</span>
-                  repoanalyzer.com
-                </a>
+              <Link href="/" className="block text-primary font-bold text-xl">
+                <span className="sr-only">Home</span>repoanalyzer.com
               </Link>
             </div>
 
@@ -22,31 +19,32 @@ const HeaderSecondary = () => {
               </div>
 
               {/* <nav
-                className="hidden md:block"
-                aria-labelledby="header-navigation"
-              >
-                <h2 className="sr-only" id="header-navigation">
-                  Header navigation
-                </h2>
+              className="hidden md:block"
+              aria-labelledby="header-navigation"
+            >
+              <h2 className="sr-only" id="header-navigation">
+                Header navigation
+              </h2>
 
-                <ul className="flex items-center text-sm gap-6">
-                  <li>
-                    <a
-                      className="text-gray-500 transition hover:text-gray-500/75"
-                      href="/"
-                    >
-                      About
-                    </a>
-                  </li>
-                </ul>
-              </nav> */}
+              <ul className="flex items-center text-sm gap-6">
+                <li>
+                  <a
+                    className="text-gray-500 transition hover:text-gray-500/75"
+                    href="/"
+                  >
+                    About
+                  </a>
+                </li>
+              </ul>
+            </nav> */}
 
               <div className="flex items-center gap-4">
                 <div className="sm:gap-4 sm:flex">
-                  <Link href="/">
-                    <a className="px-5 py-2.5 text-sm font-medium text-white bg-black rounded-md shadow">
-                      Login
-                    </a>
+                  <Link
+                    href="/"
+                    className="px-5 py-2.5 text-sm font-medium text-white bg-black rounded-md shadow"
+                  >
+                    Login
                   </Link>
                 </div>
 

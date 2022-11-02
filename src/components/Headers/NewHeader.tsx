@@ -29,11 +29,11 @@ const Header = () => {
   return (
     <header className="bg-neutral border border-solid border-b-black shadow px-2 sm:px-4 py-2.5">
       <div className="container flex flex-wrap justify-start items-center mx-auto px-2 sm:px-6 lg:px-8 max-w-screen-xl">
-        <Link href="/">
-          <a className="flex flex-1 items-center text-primary font-bold text-md md:text-xl">
-            <span className="sr-only">Home</span>
-            repoanalyzer.com
-          </a>
+        <Link
+          href="/"
+          className="flex flex-1 items-center text-primary font-bold text-md md:text-xl"
+        >
+          <span className="sr-only">Home</span>repoanalyzer.com
         </Link>
         <div className="flex flex-1 md:order-2 justify-end">
           <LoginButton />
@@ -70,33 +70,30 @@ const Header = () => {
         >
           <ul className="flex flex-col space-y-2 p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-neutral md:space-y-0">
             <li>
-              <Link href="/about">
-                <a
-                  className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0"
-                  aria-current="page"
-                >
-                  about
-                </a>
+              <Link
+                href="/about"
+                className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0"
+                aria-current="page"
+              >
+                about
               </Link>
             </li>
             <li>
-              <Link href="/dashboard">
-                <a
-                  className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0"
-                  aria-current="page"
-                >
-                  dashboard
-                </a>
+              <Link
+                href="/dashboard"
+                className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0"
+                aria-current="page"
+              >
+                dashboard
               </Link>
             </li>
             <li>
-              <Link href="https://crowd.dev">
-                <a
-                  className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0"
-                  aria-current="page"
-                >
-                  crowd.dev
-                </a>
+              <Link
+                href="https://crowd.dev"
+                className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0"
+                aria-current="page"
+              >
+                crowd.dev
               </Link>
             </li>
           </ul>
