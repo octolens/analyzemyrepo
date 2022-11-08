@@ -12,6 +12,7 @@ import { checks_texts as diversity_texts } from "../../utils/diversity";
 import { checks_texts as community_texts } from "../../utils/community";
 import { verdicts } from "../../utils/consts";
 import RadarChart from "./RadarChart";
+import convertTextInSvgStringIntoPath from "../../utils/textToPath";
 
 // results framework
 // key format: adoption+contribution-diversity+community+growth-
@@ -232,7 +233,7 @@ const OverviewSection = ({ section_id = "Overview" }) => {
           data={get_all_checks?.checks}
           insights={get_all_checks?.insights}
         />
-        <div className="flex flex-col">
+        <div className="flex flex-col" id="radar-chart">
           <div className="container flex flex-1">
             <div className="w-96 h-80">
               <RadarChart score_data={get_all_checks?.scores} />
@@ -251,6 +252,21 @@ const OverviewSection = ({ section_id = "Overview" }) => {
           {get_all_checks?.verdict}
         </div>
       </div>
+      <button
+        onClick={async () => {
+          const node = document.getElementById("radar-chart");
+          const svg = node?.getElementsByTagName("svg")[0];
+          const imageURL =
+            "data:image/svg+xml;base64," +
+            Buffer.from(svg?.outerHTML as string).toString("base64");
+          router.push({
+            pathname: "/api/og_radar",
+            query: { imageURL, org_name, repo_name },
+          });
+        }}
+      >
+        RENDER
+      </button>
     </section>
   );
 };

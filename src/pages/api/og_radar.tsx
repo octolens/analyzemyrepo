@@ -1,0 +1,96 @@
+import { ImageResponse } from "@vercel/og";
+import { NextRequest } from "next/server";
+
+export const config = {
+  runtime: "experimental-edge",
+};
+
+export default async function handler(req: NextRequest) {
+  const { searchParams } = req.nextUrl;
+  const imageURL = searchParams.get("imageURL");
+  const org_name = searchParams.get("org_name");
+  const repo_name = searchParams.get("repo_name");
+  if (!imageURL) {
+    return new ImageResponse(<>Visit repoanalyzer.com</>, {
+      width: 1000,
+      height: 1000,
+    });
+  }
+
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          display: "flex",
+          fontSize: 60,
+          background: "#f6f6f6",
+          width: "100%",
+          height: "100%",
+          paddingTop: 50,
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          fontFamily: "monospace",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <p style={{ fontSize: "30", marginRight: "-70", marginBottom: "65" }}>
+            Contribution
+          </p>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <p
+              style={{ fontSize: "30", marginBottom: "-20", marginLeft: "30" }}
+            >
+              Adoption
+            </p>
+            <img width="600" height="530" src={imageURL} />
+            <p style={{ fontSize: "30", marginTop: "-50", marginLeft: "20" }}>
+              Community
+            </p>
+          </div>
+          <p style={{ fontSize: "30", marginLeft: "-40", marginBottom: "65" }}>
+            Diversity
+          </p>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <p
+            style={{
+              fontSize: "40",
+              margin: "0",
+              maxWidth: "600",
+              textAlign: "center",
+            }}
+          >{`${org_name}/${repo_name}`}</p>
+          <p>
+            <span style={{ color: "#e94f2e" }}>repoanalyzer.com</span>
+          </p>
+        </div>
+      </div>
+    ),
+    {
+      width: 1000,
+      height: 1000,
+    }
+  );
+}
