@@ -12,7 +12,7 @@ const TwitterButton = ({
 }) => {
   const url =
     "https://" +
-    process.env.VERCEL_URL +
+    process.env.NEXT_PUBLIC_VERCEL_URL +
     `/share/radar/${org_name}/${repo_name}`;
 
   const url_text = encodeURIComponent(text);
