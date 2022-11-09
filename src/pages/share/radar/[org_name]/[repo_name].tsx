@@ -1,12 +1,25 @@
 import Head from "next/head";
-import { useRouter } from "next/router";
+import { GetServerSideProps, NextPage } from "next";
 
-export default function RadarShare() {
-  const router = useRouter();
-  const { org_name, repo_name } = router.query;
+type MyProps = { org_name: string; repo_name: string };
+
+export const getServerSideProps: GetServerSideProps<MyProps> = async (
+  context
+) => {
+  return {
+    props: {
+      org_name: context.query.org_name as string,
+      repo_name: context.query.repo_name as string,
+    },
+  };
+};
+
+const RadarShare: NextPage<MyProps> = (props: MyProps) => {
   const host = process.env.NEXT_PUBLIC_VERCEL_URL
     ? "https://" + process.env.NEXT_PUBLIC_VERCEL_URL
     : "http://localhost:3000";
+  const org_name = props.org_name;
+  const repo_name = props.repo_name;
   return (
     <Head>
       <meta name="og:url" content={`${host}/analyze/${org_name}${repo_name}`} />
@@ -39,4 +52,6 @@ export default function RadarShare() {
       />
     </Head>
   );
-}
+};
+
+export default RadarShare;
