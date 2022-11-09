@@ -25,8 +25,8 @@ export default async function handler(req: NextRequest) {
 
   if (!data.data_url) {
     return new ImageResponse(<>Visit repoanalyzer.com</>, {
-      width: 1000,
-      height: 1000,
+      width: 1200,
+      height: 675,
     });
   }
 
@@ -54,7 +54,7 @@ export default async function handler(req: NextRequest) {
             alignItems: "center",
           }}
         >
-          <p style={{ fontSize: "30", marginRight: "-70", marginBottom: "65" }}>
+          <p style={{ fontSize: "30", marginRight: "-75", marginBottom: "5" }}>
             Contribution
           </p>
           <div
@@ -70,12 +70,19 @@ export default async function handler(req: NextRequest) {
             >
               Adoption
             </p>
-            <img width="600" height="530" src={data.data_url} />
-            <p style={{ fontSize: "30", marginTop: "-50", marginLeft: "20" }}>
+            <img width="500" height="430" src={data.data_url} />
+            <p
+              style={{
+                fontSize: "30",
+                marginTop: "-50",
+                marginLeft: "20",
+                marginBottom: "10",
+              }}
+            >
               Community
             </p>
           </div>
-          <p style={{ fontSize: "30", marginLeft: "-40", marginBottom: "65" }}>
+          <p style={{ fontSize: "30", marginLeft: "-40", marginBottom: "5" }}>
             Diversity
           </p>
         </div>
@@ -95,15 +102,15 @@ export default async function handler(req: NextRequest) {
               textAlign: "center",
             }}
           >{`${org_name}/${repo_name}`}</p>
-          <p>
+          <p style={{ marginTop: "0" }}>
             <span style={{ color: "#e94f2e" }}>repoanalyzer.com</span>
           </p>
         </div>
       </div>
     ),
     {
-      width: 1000,
-      height: 1000,
+      width: 1200,
+      height: 675,
     }
   );
 }
