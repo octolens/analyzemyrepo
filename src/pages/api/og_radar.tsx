@@ -7,10 +7,23 @@ export const config = {
 
 export default async function handler(req: NextRequest) {
   const { searchParams } = req.nextUrl;
-  const imageURL = searchParams.get("imageURL");
   const org_name = searchParams.get("org_name");
   const repo_name = searchParams.get("repo_name");
-  if (!imageURL) {
+
+  const host = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://localhost:3000";
+
+  const request = await fetch(
+    `${host}/api/get_data_url?org_name=${org_name}&repo_name=${repo_name}&type=Radar`,
+    {
+      method: "GET",
+    }
+  );
+
+  const { data } = await request.json();
+
+  if (!data.data_url) {
     return new ImageResponse(<>Visit repoanalyzer.com</>, {
       width: 1000,
       height: 1000,
@@ -57,7 +70,7 @@ export default async function handler(req: NextRequest) {
             >
               Adoption
             </p>
-            <img width="600" height="530" src={imageURL} />
+            <img width="600" height="530" src={data.data_url} />
             <p style={{ fontSize: "30", marginTop: "-50", marginLeft: "20" }}>
               Community
             </p>

@@ -12,7 +12,8 @@ import { checks_texts as diversity_texts } from "../../utils/diversity";
 import { checks_texts as community_texts } from "../../utils/community";
 import { verdicts } from "../../utils/consts";
 import RadarChart from "./RadarChart";
-import convertTextInSvgStringIntoPath from "../../utils/textToPath";
+import { MdShare } from "react-icons/md";
+import TwitterButton from "../Social/twitter";
 
 // results framework
 // key format: adoption+contribution-diversity+community+growth-
@@ -103,6 +104,7 @@ const sample_insights_from_checks = (checks: Record<string, any>) => {
 
 const OverviewSection = ({ section_id = "Overview" }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpenShare, setIsOpenShare] = useState<boolean>(false);
   const router = useRouter();
   const { org_name, repo_name } = router.query;
 
@@ -145,6 +147,22 @@ const OverviewSection = ({ section_id = "Overview" }) => {
     "github.get_community_health",
     { owner: org_name as string, repo: repo_name as string },
   ]);
+
+  const saveDataURL = trpc.useMutation("dataURL.upsert");
+
+  const save_data_url = async () => {
+    const node = document.getElementById("radar-chart");
+    const svg = node?.getElementsByTagName("svg")[0];
+    const imageURL =
+      "data:image/svg+xml;base64," +
+      Buffer.from(svg?.outerHTML as string).toString("base64");
+    await saveDataURL.mutateAsync({
+      data_url: imageURL,
+      owner: org_name as string,
+      repo: repo_name as string,
+      type: "Radar",
+    });
+  };
 
   const isLoading =
     rank.isLoading ||
@@ -234,6 +252,27 @@ const OverviewSection = ({ section_id = "Overview" }) => {
           insights={get_all_checks?.insights}
         />
         <div className="flex flex-col" id="radar-chart">
+          <span className="self-end">
+            <button
+              onClick={async () => {
+                setIsOpenShare(true);
+                save_data_url();
+              }}
+            >
+              <MdShare size={24} />
+            </button>
+            <Modal
+              isOpen={isOpenShare}
+              setIsOpen={setIsOpenShare}
+              content={
+                <TwitterButton
+                  org_name={org_name as string}
+                  repo_name={repo_name as string}
+                  text="Learn more about this repo"
+                />
+              }
+            />
+          </span>
           <div className="container flex flex-1">
             <div className="w-96 h-80">
               <RadarChart score_data={get_all_checks?.scores} />
@@ -252,21 +291,6 @@ const OverviewSection = ({ section_id = "Overview" }) => {
           {get_all_checks?.verdict}
         </div>
       </div>
-      <button
-        onClick={async () => {
-          const node = document.getElementById("radar-chart");
-          const svg = node?.getElementsByTagName("svg")[0];
-          const imageURL =
-            "data:image/svg+xml;base64," +
-            Buffer.from(svg?.outerHTML as string).toString("base64");
-          router.push({
-            pathname: "/api/og_radar",
-            query: { imageURL, org_name, repo_name },
-          });
-        }}
-      >
-        RENDER
-      </button>
     </section>
   );
 };
