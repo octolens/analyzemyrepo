@@ -251,7 +251,7 @@ const OverviewSection = ({ section_id = "Overview" }) => {
           data={get_all_checks?.checks}
           insights={get_all_checks?.insights}
         />
-        <div className="flex flex-col" id="radar-chart">
+        <div className="flex flex-col">
           <span className="self-end">
             <button
               onClick={async () => {
@@ -273,7 +273,7 @@ const OverviewSection = ({ section_id = "Overview" }) => {
               }
             />
           </span>
-          <div className="container flex flex-1">
+          <div className="container flex flex-1" id="radar-chart">
             <div className="w-96 h-80">
               <RadarChart score_data={get_all_checks?.scores} />
             </div>
