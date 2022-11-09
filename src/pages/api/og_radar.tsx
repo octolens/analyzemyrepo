@@ -10,8 +10,8 @@ export default async function handler(req: NextRequest) {
   const org_name = searchParams.get("org_name");
   const repo_name = searchParams.get("repo_name");
 
-  const host = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
+  const host = process.env.NEXT_PUBLIC_VERCEL_URL
+    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
     : "http://localhost:3000";
 
   const request = await fetch(
