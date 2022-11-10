@@ -255,8 +255,8 @@ const OverviewSection = ({ section_id = "Overview" }) => {
           <span className="self-end">
             <button
               onClick={async () => {
-                setIsOpenShare(true);
                 save_data_url();
+                setIsOpenShare(true);
               }}
             >
               <MdShare size={24} />

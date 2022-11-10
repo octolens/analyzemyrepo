@@ -3,7 +3,7 @@ import { useQuery, UseQueryResult } from "react-query";
 import { trpc } from "../../utils/trpc";
 import { useRouter } from "next/router";
 import StarChart from "./StarChart";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import InsightCard from "../Cards/InsightCard";
 import RadioHorizontal from "../Radio/RadioHorizontal";
 

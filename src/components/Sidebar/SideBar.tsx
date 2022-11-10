@@ -15,21 +15,6 @@ interface SideBarItem {
 // if click is fired I want to make this item active immediately and igore intersection observer
 // otherwise do debouncing as usuall
 
-const debounce = <T extends (...args: any[]) => any>(
-  callback: T,
-  waitFor: number
-) => {
-  let timeout: ReturnType<typeof setTimeout>;
-  return (...args: Parameters<T>): ReturnType<T> => {
-    let result: any;
-    timeout && clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      result = callback(...args);
-    }, waitFor);
-    return result;
-  };
-};
-
 export default function Sidebar({ sections, className }: SideBarProps) {
   const [active, setActive] = useState<string | null>("Overview");
 

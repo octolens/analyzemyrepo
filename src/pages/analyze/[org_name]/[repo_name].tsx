@@ -11,6 +11,82 @@ import CompletenessSection from "../../../components/Completeness/Completeness";
 import ErrorBoundary from "../../../components/Errors/ErrorBoundary";
 import OverviewSection from "../../../components/Overview/NewOverview";
 import AdoptionSection from "../../../components/Adoption/Adoption";
+import { createSSGHelpers } from "@trpc/react/ssg";
+import { GetServerSidePropsContext } from "next";
+import { appRouter } from "../../../server/router";
+import superjson from "superjson";
+import { createContextInner } from "../../../server/router/context";
+
+export async function getServerSideProps(
+  context: GetServerSidePropsContext<{ org_name: string; repo_name: string }>
+) {
+  const ssg = createSSGHelpers({
+    router: appRouter,
+    ctx: await createContextInner({ session: null }),
+    transformer: superjson,
+  });
+  const org_name = context.params?.org_name as string;
+  const repo_name = context.params?.repo_name as string;
+  /*
+   * Prefetching the `post.byId` query here.
+   * `prefetchQuery` does not return the result - if you need that, use `fetchQuery` instead.
+   */
+
+  await ssg.prefetchQuery("postgres.get_repo_rank", {
+    owner: org_name as string,
+    repo: repo_name as string,
+  });
+
+  await ssg.prefetchQuery("github.get_github_repo", {
+    owner: org_name as string,
+    repo: repo_name as string,
+  });
+
+  await ssg.prefetchQuery("github.get_github_repo_contributors", {
+    owner: org_name as string,
+    repo: repo_name as string,
+  });
+
+  await ssg.prefetchQuery("postgres.get_serious_contributors", {
+    owner: org_name as string,
+    repo: repo_name as string,
+  });
+
+  await ssg.prefetchQuery("github.get_contributions_count", {
+    owner: org_name as string,
+    repo: repo_name as string,
+  });
+
+  await ssg.prefetchQuery("postgres.get_repo_contributors_countries", {
+    owner: org_name as string,
+    repo: repo_name as string,
+  });
+
+  await ssg.prefetchQuery("postgres.get_repo_contributors_companies", {
+    owner: org_name as string,
+    repo: repo_name as string,
+  });
+
+  await ssg.prefetchQuery("github.get_community_health", {
+    owner: org_name as string,
+    repo: repo_name as string,
+  });
+
+  const ONE_DAY = 60 * 60 * 24;
+  context.res.setHeader(
+    "Cache-Control",
+    `s-maxage=${ONE_DAY}, stale-while-revalidate=${ONE_DAY}`
+  );
+
+  // Make sure to return { props: { trpcState: ssg.dehydrate() } }
+  return {
+    props: {
+      trpcState: ssg.dehydrate(),
+      org_name,
+      repo_name,
+    },
+  };
+}
 
 const RepoPage = () => {
   const router = useRouter();
