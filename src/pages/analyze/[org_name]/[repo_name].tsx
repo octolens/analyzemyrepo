@@ -20,6 +20,12 @@ import { createContextInner } from "../../../server/router/context";
 export async function getServerSideProps(
   context: GetServerSidePropsContext<{ org_name: string; repo_name: string }>
 ) {
+  const ONE_DAY = 60 * 60 * 24;
+  context.res.setHeader(
+    "Cache-Control",
+    `public, s-maxage=${ONE_DAY}, stale-while-revalidate=${ONE_DAY * 7}`
+  );
+
   const ssg = createSSGHelpers({
     router: appRouter,
     ctx: await createContextInner({ session: null }),
@@ -27,10 +33,6 @@ export async function getServerSideProps(
   });
   const org_name = context.params?.org_name as string;
   const repo_name = context.params?.repo_name as string;
-  /*
-   * Prefetching the `post.byId` query here.
-   * `prefetchQuery` does not return the result - if you need that, use `fetchQuery` instead.
-   */
 
   await ssg.prefetchQuery("postgres.get_repo_rank", {
     owner: org_name as string,
@@ -72,18 +74,10 @@ export async function getServerSideProps(
     repo: repo_name as string,
   });
 
-  const ONE_DAY = 60 * 60 * 24;
-  context.res.setHeader(
-    "Cache-Control",
-    `s-maxage=${ONE_DAY}, stale-while-revalidate=${ONE_DAY}`
-  );
-
   // Make sure to return { props: { trpcState: ssg.dehydrate() } }
   return {
     props: {
       trpcState: ssg.dehydrate(),
-      org_name,
-      repo_name,
     },
   };
 }

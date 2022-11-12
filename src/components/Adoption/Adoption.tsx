@@ -1,11 +1,14 @@
 import { GoStar, GoIssueOpened, GoRepoForked } from "react-icons/go";
-import { useQuery, UseQueryResult } from "react-query";
+import { UseQueryResult } from "react-query";
 import { trpc } from "../../utils/trpc";
 import { useRouter } from "next/router";
 import StarChart from "./StarChart";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import InsightCard from "../Cards/InsightCard";
 import RadioHorizontal from "../Radio/RadioHorizontal";
+import { MdShare } from "react-icons/md";
+import Modal from "../Modal/Modal";
+import ShareCard from "../Social/all";
 
 interface RepoDistributionMap {
   [name: string]: number;
@@ -87,22 +90,56 @@ const AdoptionSection = ({ section_id = "Adoption" }) => {
     "stargazers_count"
   );
 
-  // const router = useRouter();
+  const [isOpenShare, setIsOpenShare] = useState(false);
 
-  // const { org_name, repo_name } = router.query;
+  const router = useRouter();
+  const { org_name, repo_name } = router.query;
 
-  // const data = trpc.useQuery([
-  //   "postgres.get_repo_history",
-  //   { owner: org_name as string, repo: repo_name as string },
-  // ]);
+  const saveDataURL = trpc.useMutation("dataURL.upsert");
+
+  const save_data_url = async () => {
+    const node = document.getElementById("star-chart");
+    const svg = node?.getElementsByTagName("svg")[0];
+    const imageURL =
+      "data:image/svg+xml;base64," +
+      Buffer.from(svg?.outerHTML as string).toString("base64");
+    await saveDataURL.mutateAsync({
+      data_url: imageURL,
+      owner: org_name as string,
+      repo: repo_name as string,
+      type: "StarChart",
+    });
+  };
+
   return (
     <section
       className="p-4 mt-4 flex flex-col items-center rounded-md border border-black"
       id={section_id}
     >
-      <h2 className="text-center font-extrabold text-3xl pb-2 text-primary">
-        Adoption
-      </h2>
+      <div className="flex flex-row items-center gap-2">
+        <h2 className="text-center font-extrabold text-3xl text-primary self-center pb-2">
+          Adoption
+        </h2>
+        <MdShare
+          className="hover:text-primary text-black cursor-pointer"
+          onClick={async () => {
+            save_data_url();
+            setIsOpenShare(true);
+          }}
+        />
+        <Modal
+          isOpen={isOpenShare}
+          setIsOpen={setIsOpenShare}
+          content={
+            <ShareCard
+              org_name={org_name as string}
+              repo_name={repo_name as string}
+              twitter_text="Share on Twitter"
+              chart_type="StarChart"
+            />
+          }
+        />
+      </div>
       <p className="text-center text-gray-500 pt-2">
         Adoption metrics of the repo
       </p>
@@ -117,7 +154,7 @@ const AdoptionSection = ({ section_id = "Adoption" }) => {
             setRadioName={setField}
             id_modifier="adoption"
           />
-          <div className="container mx-auto h-96 w-full">
+          <div className="container mx-auto h-96 w-full" id="star-chart">
             <StarChart field={field} />
           </div>
         </div>

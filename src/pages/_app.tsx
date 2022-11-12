@@ -37,7 +37,7 @@ export default withTRPC<AppRouter>({
     const ONE_DAY_SECONDS = 60 * 60 * 24;
     ctx?.res?.setHeader(
       "Cache-Control",
-      `s-maxage=${ONE_DAY_SECONDS}, stale-while-revalidate=${ONE_DAY_SECONDS}`
+      `public, s-maxage=${ONE_DAY_SECONDS}, stale-while-revalidate=${ONE_DAY_SECONDS}`
     );
 
     return {

@@ -13,7 +13,7 @@ import { checks_texts as community_texts } from "../../utils/community";
 import { verdicts } from "../../utils/consts";
 import RadarChart from "./RadarChart";
 import { MdShare } from "react-icons/md";
-import TwitterButton from "../Social/twitter";
+import ShareCard from "../Social/all";
 
 // results framework
 // key format: adoption+contribution-diversity+community+growth-
@@ -235,9 +235,30 @@ const OverviewSection = ({ section_id = "Overview" }) => {
       className="p-4 mt-[26px] flex flex-col items-center rounded-md border border-black"
       id={section_id}
     >
-      <h2 className="text-center font-extrabold text-3xl text-primary">
-        Overview
-      </h2>
+      <div className="flex flex-row items-center gap-2">
+        <h2 className="text-center font-extrabold text-3xl text-primary self-center">
+          Overview
+        </h2>
+        <MdShare
+          className="hover:text-primary text-black cursor-pointer mt-[0.4rem]"
+          onClick={async () => {
+            save_data_url();
+            setIsOpenShare(true);
+          }}
+        />
+        <Modal
+          isOpen={isOpenShare}
+          setIsOpen={setIsOpenShare}
+          content={
+            <ShareCard
+              org_name={org_name as string}
+              repo_name={repo_name as string}
+              twitter_text="Share on Twitter"
+              chart_type="Radar"
+            />
+          }
+        />
+      </div>
       <div className="text-center w-fit py-2">
         <p className="text-center pt-1 text-gray-500">
           Main stats about the repo
@@ -252,27 +273,6 @@ const OverviewSection = ({ section_id = "Overview" }) => {
           insights={get_all_checks?.insights}
         />
         <div className="flex flex-col">
-          <span className="self-end">
-            <button
-              onClick={async () => {
-                save_data_url();
-                setIsOpenShare(true);
-              }}
-            >
-              <MdShare size={24} />
-            </button>
-            <Modal
-              isOpen={isOpenShare}
-              setIsOpen={setIsOpenShare}
-              content={
-                <TwitterButton
-                  org_name={org_name as string}
-                  repo_name={repo_name as string}
-                  text="Learn more about this repo"
-                />
-              }
-            />
-          </span>
           <div className="container flex flex-1" id="radar-chart">
             <div className="w-96 h-80">
               <RadarChart score_data={get_all_checks?.scores} />
