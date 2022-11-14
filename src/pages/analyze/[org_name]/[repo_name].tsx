@@ -16,6 +16,7 @@ import { GetServerSidePropsContext } from "next";
 import { appRouter } from "../../../server/router";
 import superjson from "superjson";
 import { createContextInner } from "../../../server/router/context";
+import Head from "next/head";
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext<{ org_name: string; repo_name: string }>
@@ -87,81 +88,120 @@ const RepoPage = () => {
   const { org_name, repo_name } = router.query;
 
   const full_name = org_name + "/" + repo_name;
+  const host = process.env.NEXT_PUBLIC_VERCEL_URL
+    ? "https://" + process.env.NEXT_PUBLIC_GLOBAL_URL
+    : "http://localhost:3000";
 
   return (
-    <div className="min-h-screen flex flex-col bg-neutral">
-      <HeaderSecondary />
-      <ErrorBoundary>
-        <main className="container mx-auto p-4 flex max-w-screen-xl">
-          <div className="container mx-auto flex flex-col">
-            <div className="flex flex-cols">
-              <div className="hidden lg:block">
-                <Sidebar
-                  className="pt-24"
-                  sections={[
-                    { section_name: "Overview", logo: <GrOverview /> },
-                    { section_name: "Adoption", logo: <GoRocket /> },
-                    {
-                      section_name: "Contributions Health",
-                      logo: <GoGraph />,
-                    },
-                    {
-                      section_name: "Diversity",
-                      logo: <GoGlobe />,
-                    },
-                    {
-                      section_name: "Community Guidelines",
-                      logo: <MdChecklist />,
-                    },
-                    // { section_name: "More Insights", logo: <MdInsights /> },
-                  ]}
-                />
-              </div>
-              <div className="container mx-auto px-4">
-                <a
-                  href={`https://github.com/${full_name}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="max-w-full w-fit px-4 py-5 bg-white rounded-lg shadow mx-auto flex flex-row items-center gap-2 cursor-pointer"
-                >
-                  <span className="flex items-center">
-                    <Image
-                      src={`https://github.com/${org_name}.png`}
-                      width="30"
-                      height="30"
-                      alt={full_name}
-                      priority={true}
-                    />
-                  </span>
-                  <span className="text-xl text-gray-900 truncate max-w-sm">
-                    {full_name}
-                  </span>
-                  <GoLinkExternal className="mt-1 hover:fill-primary" />
-                </a>
-                <div
-                  id="sections"
-                  className="container mx-auto flex flex-col gap-2"
-                >
-                  <OverviewSection />
-                  <AdoptionSection />
-                  <ContributionSection section_id="Contributions Health" />
-                  <GeoSection section_id="Diversity" />
-                  <CompletenessSection section_id="Community Guidelines" />
-                  <footer className="flex justify-center my-4">
-                    powered by&nbsp;
-                    <a href="https://crowd.dev" className="text-primary">
-                      crowd.dev
-                    </a>
-                    &nbsp;&mdash;&nbsp;the community-led developer growth engine
-                  </footer>
+    <>
+      <Head>
+        <meta
+          name="og:url"
+          content={`${host}/analyze/${org_name}${repo_name}`}
+        />
+        <meta name="og:type" content="website" />
+        <meta
+          name="og:title"
+          content={`repoanalyzer.com | ${org_name}/${repo_name}`}
+        />
+        <meta
+          name="og:description"
+          content={`Insights and analytics into ${org_name}/${repo_name} repository`}
+        />
+        <meta
+          name="og:image"
+          content={`${host}/api/og_whole_page?org_name=${org_name}&repo_name=${repo_name}`}
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@CrowdDotDev" />
+        <meta
+          name="twitter:title"
+          content={`repoanalyzer.com | ${org_name}/${repo_name}`}
+        />
+        <meta
+          name="twitter:description"
+          content={`Insights and analytics into ${org_name}/${repo_name} repository`}
+        />
+        <meta
+          name="twitter:image"
+          content={`${host}/api/og_whole_page?org_name=${org_name}&repo_name=${repo_name}`}
+        />
+      </Head>
+      <div className="min-h-screen flex flex-col bg-neutral">
+        <HeaderSecondary />
+        <ErrorBoundary>
+          <main className="container mx-auto p-4 flex max-w-screen-xl">
+            <div className="container mx-auto flex flex-col">
+              <div className="flex flex-cols">
+                <div className="hidden lg:block">
+                  <Sidebar
+                    className="pt-24"
+                    sections={[
+                      { section_name: "Overview", logo: <GrOverview /> },
+                      { section_name: "Adoption", logo: <GoRocket /> },
+                      {
+                        section_name: "Contributions Health",
+                        logo: <GoGraph />,
+                      },
+                      {
+                        section_name: "Diversity",
+                        logo: <GoGlobe />,
+                      },
+                      {
+                        section_name: "Community Guidelines",
+                        logo: <MdChecklist />,
+                      },
+                      // { section_name: "More Insights", logo: <MdInsights /> },
+                    ]}
+                  />
+                </div>
+                <div className="container mx-auto px-4">
+                  <a
+                    href={`https://github.com/${full_name}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="max-w-full w-fit px-4 py-5 bg-white rounded-lg shadow mx-auto flex flex-row items-center gap-2 cursor-pointer"
+                  >
+                    <span className="flex items-center">
+                      <Image
+                        src={`https://github.com/${org_name}.png`}
+                        width="30"
+                        height="30"
+                        alt={full_name}
+                        priority={true}
+                      />
+                    </span>
+                    <span className="text-xl text-gray-900 truncate max-w-sm">
+                      {full_name}
+                    </span>
+                    <GoLinkExternal className="mt-1 hover:fill-primary" />
+                  </a>
+                  <div
+                    id="sections"
+                    className="container mx-auto flex flex-col gap-2"
+                  >
+                    <OverviewSection />
+                    <AdoptionSection />
+                    <ContributionSection section_id="Contributions Health" />
+                    <GeoSection section_id="Diversity" />
+                    <CompletenessSection section_id="Community Guidelines" />
+                    <footer className="flex justify-center my-4">
+                      powered by&nbsp;
+                      <a href="https://crowd.dev" className="text-primary">
+                        crowd.dev
+                      </a>
+                      &nbsp;&mdash;&nbsp;the community-led developer growth
+                      engine
+                    </footer>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div id="modal"></div>
-        </main>
-      </ErrorBoundary>
-    </div>
+            <div id="modal"></div>
+          </main>
+        </ErrorBoundary>
+      </div>
+    </>
   );
 };
 
