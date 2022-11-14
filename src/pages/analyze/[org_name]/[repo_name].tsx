@@ -147,6 +147,13 @@ const RepoPage = () => {
                   <ContributionSection section_id="Contributions Health" />
                   <GeoSection section_id="Diversity" />
                   <CompletenessSection section_id="Community Guidelines" />
+                  <footer className="flex justify-center my-4">
+                    powered by&nbsp;
+                    <a href="https://crowd.dev" className="text-primary">
+                      crowd.dev
+                    </a>
+                    &nbsp;&mdash;&nbsp;the community-led developer growth engine
+                  </footer>
                 </div>
               </div>
             </div>

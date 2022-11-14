@@ -42,6 +42,7 @@ const Home: NextPage = () => {
           <a href="https://crowd.dev" className="text-primary">
             crowd.dev
           </a>
+          &nbsp;&mdash;&nbsp;the community-led developer growth engine
         </footer>
       </div>
     </>
