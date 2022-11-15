@@ -30,6 +30,7 @@
     "dom-to-image": "^2.6.0",
     "flowbite": "^1.5.3",
     "flowbite-react": "^0.1.11",
+    "hast-util-to-html": "^8.0.3",
     "next": "^13.0.1",
     "next-auth": "^4.10.3",
     "react": "^18.2.0",
@@ -42,6 +43,7 @@
     "react-tiny-popover": "^7.1.0",
     "react-toastify": "^9.0.8",
     "superjson": "^1.9.1",
+    "svg-parser": "^2.0.4",
     "zod": "^3.18.0"
   },
   "devDependencies": {
@@ -52,6 +54,7 @@
     "@types/react-dom": "18.0.5",
     "@types/react-instantsearch-dom": "^6.12.3",
     "@types/react-modal": "^3.13.1",
+    "@types/svg-parser": "^2.0.3",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
     "autoprefixer": "^10.4.8",

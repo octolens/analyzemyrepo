@@ -1,5 +1,6 @@
 import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
+import { convertTextWithoutDom } from "../../utils/textToPath";
 
 export const config = {
   runtime: "experimental-edge",
@@ -30,6 +31,10 @@ export default async function handler(req: NextRequest) {
     });
   }
 
+  const svg_string = atob(data.data_url.split(",")[1]);
+  const converted_svg_string =
+    "data:image/svg+xml;base64," + convertTextWithoutDom(svg_string);
+
   return new ImageResponse(
     (
       <div
@@ -46,9 +51,28 @@ export default async function handler(req: NextRequest) {
           fontFamily: "monospace",
         }}
       >
-        <img width="500" height="430" src={data.data_url} />
-        <p style={{ marginTop: "0" }}>
-          <span style={{ color: "#e94f2e" }}>repoanalyzer.com</span>
+        <p
+          style={{
+            fontSize: "20",
+            margin: "0",
+            padding: "0",
+            color: "#e94f2e",
+          }}
+        >
+          Star Growth
+        </p>
+        <p
+          style={{
+            fontSize: "20",
+            maxWidth: "600",
+            textAlign: "center",
+            margin: "0",
+            padding: "0",
+          }}
+        >{`${org_name}/${repo_name}`}</p>
+        <img width="645" height="430" src={converted_svg_string} />
+        <p style={{ marginTop: "0", fontSize: "30", marginRight: "-40" }}>
+          <span style={{ color: "#e94f2e" }}>analyzemyrepo.com</span>
         </p>
       </div>
     ),

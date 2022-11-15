@@ -46,6 +46,27 @@ export default async function handler(req: NextRequest) {
           fontFamily: "monospace",
         }}
       >
+        <p
+          style={{
+            fontSize: "20",
+            margin: "0",
+            padding: "0",
+            marginRight: "-40",
+            color: "#e94f2e",
+          }}
+        >
+          Community Health Summary
+        </p>
+        <p
+          style={{
+            fontSize: "20",
+            maxWidth: "600",
+            textAlign: "center",
+            margin: "0",
+            padding: "0",
+            marginRight: "-40px",
+          }}
+        >{`${org_name}/${repo_name}`}</p>
         <div
           style={{
             display: "flex",
@@ -66,7 +87,13 @@ export default async function handler(req: NextRequest) {
             }}
           >
             <p
-              style={{ fontSize: "30", marginBottom: "-20", marginLeft: "30" }}
+              style={{
+                fontSize: "30",
+                marginBottom: "-20",
+                marginLeft: "30",
+                marginTop: "10",
+                paddingTop: "0",
+              }}
             >
               Adoption
             </p>
@@ -94,16 +121,8 @@ export default async function handler(req: NextRequest) {
             alignItems: "center",
           }}
         >
-          <p
-            style={{
-              fontSize: "40",
-              margin: "0",
-              maxWidth: "600",
-              textAlign: "center",
-            }}
-          >{`${org_name}/${repo_name}`}</p>
-          <p style={{ marginTop: "0" }}>
-            <span style={{ color: "#e94f2e" }}>repoanalyzer.com</span>
+          <p style={{ marginTop: "0", fontSize: "30", marginRight: "-40" }}>
+            <span style={{ color: "#e94f2e" }}>analyzemyrepo.com</span>
           </p>
         </div>
       </div>

@@ -1,3 +1,6 @@
+import { ElementNode, parse } from "svg-parser";
+import { toHtml } from "hast-util-to-html";
+
 const character_array: Record<string, string> = {
   0: "m3.6 0.1c-0.9 0-1.6-0.4-2-1.1s-0.7-1.9-0.7-3.3c0-2.9 0.9-4.4 2.7-4.4 0.9 0 1.6 0.4 2.1 1.1s0.7 1.8 0.7 3.3c-0.1 2.9-1 4.4-2.8 4.4zm0-0.9c0.6 0 1-0.3 1.3-0.8s0.4-1.4 0.4-2.7c0-1.2-0.1-2.1-0.4-2.7s-0.7-0.8-1.3-0.8c-0.6 0-1 0.3-1.3 0.8s-0.4 1.5-0.4 2.7c0 1.2 0.1 2.1 0.4 2.7s0.7 0.8 1.3 0.8z",
   1: "m4.4 0h-1v-5.3-2.1c-0.1 0.1-0.3 0.3-0.7 0.6l-0.8 0.7-0.6-0.7 2.2-1.8h0.9v8.6z",
@@ -119,6 +122,8 @@ const textToPath = (
       // copy text-anchor to path
       path.push(`M${x} ${y} ${charPath}`);
       x += fontSize * letterSpacing;
+    } else if (char === " ") {
+      x += (fontSize * letterSpacing) / 2;
     } else if (char === "   ") {
       x += fontSize * letterSpacing * 3;
     } else if (char === "   ") {
@@ -130,29 +135,80 @@ const textToPath = (
   return path.join(" ");
 };
 
-// const textToPath = (text: string) => {
-//   const path = [];
-//   for (let i = 0; i < text.length; i++) {
-//     const char = text[i] as string;
-//     path.push(character_array[char]);
-//   }
-//   return path.join(" ");
-// };
-
-export default function convertTextInSvgStringIntoPath(svgString: string) {
-  const svg = new DOMParser().parseFromString(svgString, "image/svg+xml");
-  const textElements = svg.getElementsByTagName("text");
-  while (textElements.length > 0) {
-    const textElement = textElements[0];
-    const text = textElement?.textContent;
-    if (text) {
-      const path = svg.createElementNS("http://www.w3.org/2000/svg", "path");
-      path.setAttribute(
-        "d",
-        textToPath(text, textElement.getAttribute("text-anchor") as any)
-      );
-      textElement.parentNode?.replaceChild(path, textElement);
+function changeTextToPath(child5: ElementNode) {
+  if (child5.tagName === "text") {
+    const text = child5.children[0] as ElementNode;
+    const textAnchor = child5.properties
+      ? (child5.properties["text-anchor"] as string)
+      : "";
+    const path = textToPath(text.value as string, textAnchor as any);
+    child5.tagName = "path";
+    if (child5.properties) {
+      const transform = child5.properties["transform"];
+      child5.value = undefined;
+      child5.properties = {
+        d: path,
+        xmlns: "http://www.w3.org/2000/svg",
+        transform: transform as string,
+        fill: "#333333",
+      };
+      child5.children = [];
+      child5.tagName = "path";
+      child5.metadata = undefined;
     }
   }
-  return svg.documentElement.outerHTML;
 }
+
+export function convertTextWithoutDom(svgString: string) {
+  const obj = parse(svgString);
+  // max depth is 5
+  // it is possible to do it with recursion but it is not necessary
+  // it is is easier to increase the depth if needed
+  for (let i = 0; i < obj.children.length; i++) {
+    const child = obj.children[i] as ElementNode;
+    for (let i = 0; i < child.children.length; i++) {
+      const child2 = child.children[i] as ElementNode;
+      changeTextToPath(child2);
+      for (let i = 0; i < child2.children.length; i++) {
+        const child3 = child2.children[i] as ElementNode;
+        changeTextToPath(child3);
+        for (let i = 0; i < child3.children.length; i++) {
+          const child4 = child3.children[i] as ElementNode;
+          changeTextToPath(child4);
+          for (let i = 0; i < child4.children.length; i++) {
+            const child5 = child4.children[i] as ElementNode;
+            changeTextToPath(child5);
+          }
+        }
+      }
+    }
+  }
+  // we need to convert the object to svg string
+  return btoa(toHtml(obj.children as any));
+}
+
+// export default function convertTextInSvgStringIntoPath(svgString: string) {
+//   const svg = new DOMParser().parseFromString(svgString, "image/svg+xml");
+//   const textElements = svg.getElementsByTagName("text");
+//   while (textElements.length > 0) {
+//     const textElement = textElements[0];
+//     const text = textElement?.textContent;
+//     if (text) {
+//       const path = svg.createElementNS("http://www.w3.org/2000/svg", "path");
+//       path.setAttribute(
+//         "d",
+//         textToPath(text, textElement.getAttribute("text-anchor") as any)
+//       );
+//       textElement.parentNode?.replaceChild(path, textElement);
+//     }
+//   }
+//   return svg.documentElement.outerHTML;
+// }
+
+// export function test() {
+//   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="592" height="384" role="img"><rect width="592" height="384" fill="transparent"></rect><g transform="translate(50,10)"><g><line opacity="1" x1="43.57446808510638" x2="43.57446808510638" y1="0" y2="334" stroke="#dddddd" stroke-width="1"></line><line opacity="1" x1="119.82978723404256" x2="119.82978723404256" y1="0" y2="334" stroke="#dddddd" stroke-width="1"></line><line opacity="1" x1="196.08510638297872" x2="196.08510638297872" y1="0" y2="334" stroke="#dddddd" stroke-width="1"></line><line opacity="1" x1="272.3404255319149" x2="272.3404255319149" y1="0" y2="334" stroke="#dddddd" stroke-width="1"></line><line opacity="1" x1="348.59574468085106" x2="348.59574468085106" y1="0" y2="334" stroke="#dddddd" stroke-width="1"></line><line opacity="1" x1="424.8510638297872" x2="424.8510638297872" y1="0" y2="334" stroke="#dddddd" stroke-width="1"></line><line opacity="1" x1="501.1063829787234" x2="501.1063829787234" y1="0" y2="334" stroke="#dddddd" stroke-width="1"></line></g><g><line opacity="1" x1="0" x2="512" y1="319" y2="319" stroke="#dddddd" stroke-width="1"></line><line opacity="1" x1="0" x2="512" y1="293" y2="293" stroke="#dddddd" stroke-width="1"></line><line opacity="1" x1="0" x2="512" y1="267" y2="267" stroke="#dddddd" stroke-width="1"></line><line opacity="1" x1="0" x2="512" y1="242" y2="242" stroke="#dddddd" stroke-width="1"></line><line opacity="1" x1="0" x2="512" y1="216" y2="216" stroke="#dddddd" stroke-width="1"></line><line opacity="1" x1="0" x2="512" y1="191" y2="191" stroke="#dddddd" stroke-width="1"></line><line opacity="1" x1="0" x2="512" y1="165" y2="165" stroke="#dddddd" stroke-width="1"></line><line opacity="1" x1="0" x2="512" y1="139" y2="139" stroke="#dddddd" stroke-width="1"></line><line opacity="1" x1="0" x2="512" y1="114" y2="114" stroke="#dddddd" stroke-width="1"></line><line opacity="1" x1="0" x2="512" y1="88" y2="88" stroke="#dddddd" stroke-width="1"></line><line opacity="1" x1="0" x2="512" y1="63" y2="63" stroke="#dddddd" stroke-width="1"></line><line opacity="1" x1="0" x2="512" y1="37" y2="37" stroke="#dddddd" stroke-width="1"></line><line opacity="1" x1="0" x2="512" y1="12" y2="12" stroke="#dddddd" stroke-width="1"></line></g><g transform="translate(0,334)"><g transform="translate(43.57446808510638,0)" style="opacity: 1;"><line x1="0" x2="0" y1="0" y2="5" style="stroke: rgb(119, 119, 119); stroke-width: 1;"></line><text dominant-baseline="central" text-anchor="start" transform="translate(0,10) rotate(45)" style="font-family: sans-serif; font-size: 11px; fill: rgb(51, 51, 51);">Oct 02</text></g><g transform="translate(119.82978723404256,0)" style="opacity: 1;"><line x1="0" x2="0" y1="0" y2="5" style="stroke: rgb(119, 119, 119); stroke-width: 1;"></line><text dominant-baseline="central" text-anchor="start" transform="translate(0,10) rotate(45)" style="font-family: sans-serif; font-size: 11px; fill: rgb(51, 51, 51);">Oct 09</text></g><g transform="translate(196.08510638297872,0)" style="opacity: 1;"><line x1="0" x2="0" y1="0" y2="5" style="stroke: rgb(119, 119, 119); stroke-width: 1;"></line><text dominant-baseline="central" text-anchor="start" transform="translate(0,10) rotate(45)" style="font-family: sans-serif; font-size: 11px; fill: rgb(51, 51, 51);">Oct 16</text></g><g transform="translate(272.3404255319149,0)" style="opacity: 1;"><line x1="0" x2="0" y1="0" y2="5" style="stroke: rgb(119, 119, 119); stroke-width: 1;"></line><text dominant-baseline="central" text-anchor="start" transform="translate(0,10) rotate(45)" style="font-family: sans-serif; font-size: 11px; fill: rgb(51, 51, 51);">Oct 23</text></g><g transform="translate(348.59574468085106,0)" style="opacity: 1;"><line x1="0" x2="0" y1="0" y2="5" style="stroke: rgb(119, 119, 119); stroke-width: 1;"></line><text dominant-baseline="central" text-anchor="start" transform="translate(0,10) rotate(45)" style="font-family: sans-serif; font-size: 11px; fill: rgb(51, 51, 51);">Oct 30</text></g><g transform="translate(424.8510638297872,0)" style="opacity: 1;"><line x1="0" x2="0" y1="0" y2="5" style="stroke: rgb(119, 119, 119); stroke-width: 1;"></line><text dominant-baseline="central" text-anchor="start" transform="translate(0,10) rotate(45)" style="font-family: sans-serif; font-size: 11px; fill: rgb(51, 51, 51);">Nov 06</text></g><g transform="translate(501.1063829787234,0)" style="opacity: 1;"><line x1="0" x2="0" y1="0" y2="5" style="stroke: rgb(119, 119, 119); stroke-width: 1;"></line><text dominant-baseline="central" text-anchor="start" transform="translate(0,10) rotate(45)" style="font-family: sans-serif; font-size: 11px; fill: rgb(51, 51, 51);">Nov 13</text></g><line x1="0" x2="512" y1="0" y2="0" style="stroke: transparent; stroke-width: 1;"></line></g><g transform="translate(0,0)"><g transform="translate(0,319)" style="opacity: 1;"><line x1="0" x2="-5" y1="0" y2="0" style="stroke: rgb(119, 119, 119); stroke-width: 1;"></line><text dominant-baseline="central" text-anchor="end" transform="translate(-10,0) rotate(0)" style="font-family: sans-serif; font-size: 11px; fill: rgb(51, 51, 51);">12160</text></g><g transform="translate(0,293)" style="opacity: 1;"><line x1="0" x2="-5" y1="0" y2="0" style="stroke: rgb(119, 119, 119); stroke-width: 1;"></line><text dominant-baseline="central" text-anchor="end" transform="translate(-10,0) rotate(0)" style="font-family: sans-serif; font-size: 11px; fill: rgb(51, 51, 51);">12180</text></g><g transform="translate(0,267)" style="opacity: 1;"><line x1="0" x2="-5" y1="0" y2="0" style="stroke: rgb(119, 119, 119); stroke-width: 1;"></line><text dominant-baseline="central" text-anchor="end" transform="translate(-10,0) rotate(0)" style="font-family: sans-serif; font-size: 11px; fill: rgb(51, 51, 51);">12200</text></g><g transform="translate(0,242)" style="opacity: 1;"><line x1="0" x2="-5" y1="0" y2="0" style="stroke: rgb(119, 119, 119); stroke-width: 1;"></line><text dominant-baseline="central" text-anchor="end" transform="translate(-10,0) rotate(0)" style="font-family: sans-serif; font-size: 11px; fill: rgb(51, 51, 51);">12220</text></g><g transform="translate(0,216)" style="opacity: 1;"><line x1="0" x2="-5" y1="0" y2="0" style="stroke: rgb(119, 119, 119); stroke-width: 1;"></line><text dominant-baseline="central" text-anchor="end" transform="translate(-10,0) rotate(0)" style="font-family: sans-serif; font-size: 11px; fill: rgb(51, 51, 51);">12240</text></g><g transform="translate(0,191)" style="opacity: 1;"><line x1="0" x2="-5" y1="0" y2="0" style="stroke: rgb(119, 119, 119); stroke-width: 1;"></line><text dominant-baseline="central" text-anchor="end" transform="translate(-10,0) rotate(0)" style="font-family: sans-serif; font-size: 11px; fill: rgb(51, 51, 51);">12260</text></g><g transform="translate(0,165)" style="opacity: 1;"><line x1="0" x2="-5" y1="0" y2="0" style="stroke: rgb(119, 119, 119); stroke-width: 1;"></line><text dominant-baseline="central" text-anchor="end" transform="translate(-10,0) rotate(0)" style="font-family: sans-serif; font-size: 11px; fill: rgb(51, 51, 51);">12280</text></g><g transform="translate(0,139)" style="opacity: 1;"><line x1="0" x2="-5" y1="0" y2="0" style="stroke: rgb(119, 119, 119); stroke-width: 1;"></line><text dominant-baseline="central" text-anchor="end" transform="translate(-10,0) rotate(0)" style="font-family: sans-serif; font-size: 11px; fill: rgb(51, 51, 51);">12300</text></g><g transform="translate(0,114)" style="opacity: 1;"><line x1="0" x2="-5" y1="0" y2="0" style="stroke: rgb(119, 119, 119); stroke-width: 1;"></line><text dominant-baseline="central" text-anchor="end" transform="translate(-10,0) rotate(0)" style="font-family: sans-serif; font-size: 11px; fill: rgb(51, 51, 51);">12320</text></g><g transform="translate(0,88)" style="opacity: 1;"><line x1="0" x2="-5" y1="0" y2="0" style="stroke: rgb(119, 119, 119); stroke-width: 1;"></line><text dominant-baseline="central" text-anchor="end" transform="translate(-10,0) rotate(0)" style="font-family: sans-serif; font-size: 11px; fill: rgb(51, 51, 51);">12340</text></g><g transform="translate(0,63)" style="opacity: 1;"><line x1="0" x2="-5" y1="0" y2="0" style="stroke: rgb(119, 119, 119); stroke-width: 1;"></line><text dominant-baseline="central" text-anchor="end" transform="translate(-10,0) rotate(0)" style="font-family: sans-serif; font-size: 11px; fill: rgb(51, 51, 51);">12360</text></g><g transform="translate(0,37)" style="opacity: 1;"><line x1="0" x2="-5" y1="0" y2="0" style="stroke: rgb(119, 119, 119); stroke-width: 1;"></line><text dominant-baseline="central" text-anchor="end" transform="translate(-10,0) rotate(0)" style="font-family: sans-serif; font-size: 11px; fill: rgb(51, 51, 51);">12380</text></g><g transform="translate(0,12)" style="opacity: 1;"><line x1="0" x2="-5" y1="0" y2="0" style="stroke: rgb(119, 119, 119); stroke-width: 1;"></line><text dominant-baseline="central" text-anchor="end" transform="translate(-10,0) rotate(0)" style="font-family: sans-serif; font-size: 11px; fill: rgb(51, 51, 51);">12400</text></g><line x1="0" x2="0" y1="0" y2="334" style="stroke: transparent; stroke-width: 1;"></line></g><g><path d="M512,0L490.21276595744683,15L413.9574468085106,68L348.59574468085106,104L272.3404255319149,148L185.19148936170214,186L119.82978723404256,232L43.57446808510638,279L0,334L0,334L43.57446808510638,334L119.82978723404256,334L185.19148936170214,334L272.3404255319149,334L348.59574468085106,334L413.9574468085106,334L490.21276595744683,334L512,334Z" fill="rgba(232, 193, 160, 1)" fill-opacity="0.2" stroke-width="0" style="mix-blend-mode: normal;"></path></g><path d="M512,0L490.21276595744683,15L413.9574468085106,68L348.59574468085106,104L272.3404255319149,148L185.19148936170214,186L119.82978723404256,232L43.57446808510638,279L0,334" fill="none" stroke-width="2" stroke="#e8c1a0"></path><g><g transform="translate(0, 334)" style="pointer-events: none;"><circle r="3" fill="#e8c1a0" stroke="transparent" stroke-width="0" style="pointer-events: none;"></circle></g><g transform="translate(43.57446808510638, 279)" style="pointer-events: none;"><circle r="3" fill="#e8c1a0" stroke="transparent" stroke-width="0" style="pointer-events: none;"></circle></g><g transform="translate(119.82978723404256, 232)" style="pointer-events: none;"><circle r="3" fill="#e8c1a0" stroke="transparent" stroke-width="0" style="pointer-events: none;"></circle></g><g transform="translate(185.19148936170214, 186)" style="pointer-events: none;"><circle r="3" fill="#e8c1a0" stroke="transparent" stroke-width="0" style="pointer-events: none;"></circle></g><g transform="translate(272.3404255319149, 148)" style="pointer-events: none;"><circle r="3" fill="#e8c1a0" stroke="transparent" stroke-width="0" style="pointer-events: none;"></circle></g><g transform="translate(348.59574468085106, 104)" style="pointer-events: none;"><circle r="3" fill="#e8c1a0" stroke="transparent" stroke-width="0" style="pointer-events: none;"></circle></g><g transform="translate(413.9574468085106, 68)" style="pointer-events: none;"><circle r="3" fill="#e8c1a0" stroke="transparent" stroke-width="0" style="pointer-events: none;"></circle></g><g transform="translate(490.21276595744683, 15)" style="pointer-events: none;"><circle r="3" fill="#e8c1a0" stroke="transparent" stroke-width="0" style="pointer-events: none;"></circle></g><g transform="translate(512, 0)" style="pointer-events: none;"><circle r="3" fill="#e8c1a0" stroke="transparent" stroke-width="0" style="pointer-events: none;"></circle></g></g></g></svg>`;
+
+//   console.log(convertTextWithoutDom(svg));
+
+//   return Buffer.from(convertTextWithoutDom(svg)).toString("base64");
+// }

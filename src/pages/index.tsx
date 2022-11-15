@@ -17,7 +17,6 @@ const Home: NextPage = () => {
 
       <div className="min-h-screen flex flex-col bg-neutral">
         <Header />
-
         <main className="container mx-auto flex flex-col items-center p-12 flex-grow max-w-screen-xl">
           <h1 className="text-[1.5rem] md:text-[3rem] leading-normal font-extrabold text-black text-center">
             <span className="text-primary">Community insights</span> for Github
@@ -36,7 +35,6 @@ const Home: NextPage = () => {
             </div>
           </div>
         </main>
-
         <footer className="flex justify-center mb-2">
           powered by&nbsp;
           <a href="https://crowd.dev" className="text-primary">
