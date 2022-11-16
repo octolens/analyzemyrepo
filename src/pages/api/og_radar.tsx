@@ -75,7 +75,7 @@ export default async function handler(req: NextRequest) {
             alignItems: "center",
           }}
         >
-          <p style={{ fontSize: "30", marginRight: "-75", marginBottom: "5" }}>
+          <p style={{ fontSize: "30", marginRight: "-75", marginBottom: "55" }}>
             Contribution
           </p>
           <div
@@ -109,7 +109,7 @@ export default async function handler(req: NextRequest) {
               Community
             </p>
           </div>
-          <p style={{ fontSize: "30", marginLeft: "-40", marginBottom: "5" }}>
+          <p style={{ fontSize: "30", marginLeft: "-40", marginBottom: "55" }}>
             Diversity
           </p>
         </div>

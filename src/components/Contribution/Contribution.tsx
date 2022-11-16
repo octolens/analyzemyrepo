@@ -10,7 +10,10 @@ import TemplateCard from "../Cards/TemplateCard";
 import SmallCardTooltip from "../Cards/SmallCard";
 import { handle_data_and_calculate_factor } from "../../utils/contributions";
 import { calculate_bus_factor } from "../../utils/contributions";
-// import { MdCancel, MdCheckCircle } from "react-icons/md";
+import { MdShare } from "react-icons/md";
+import { useState } from "react";
+import Modal from "../Modal/Modal";
+import ShareCard from "../Social/all";
 
 const CONTRIBUTORS_COUNT = 10;
 
@@ -35,6 +38,9 @@ const ContributionSection = ({
 }: ContributionSectionProps) => {
   const router = useRouter();
   const { org_name, repo_name } = router.query;
+
+  const [isOpenShare, setIsOpenShare] = useState(false);
+
   const response = trpc.useQuery([
     "github.get_github_repo_contributors",
     { owner: org_name as string, repo: repo_name as string },
@@ -44,6 +50,22 @@ const ContributionSection = ({
     { owner: org_name as string, repo: repo_name as string },
   ]);
 
+  const saveDataURL = trpc.useMutation("dataURL.upsert");
+
+  const save_data_url = async () => {
+    const node = document.getElementById("contributors-chart");
+    const svg = node?.getElementsByTagName("svg")[0];
+    const imageURL =
+      "data:image/svg+xml;base64," +
+      Buffer.from(svg?.outerHTML as string).toString("base64");
+    await saveDataURL.mutateAsync({
+      data_url: imageURL,
+      owner: org_name as string,
+      repo: repo_name as string,
+      type: "ContributorsChart",
+    });
+  };
+
   return (
     <section
       className="container p-4 mt-4 flex flex-col items-center border border-black rounded-md"
@@ -52,16 +74,40 @@ const ContributionSection = ({
       <h2 className="font-extrabold text-3xl py-2 text-center text-primary">
         Contributions Health
       </h2>
-      <h3 className="font-extrabold text-2xl pb-2 pt-2">
-        Commits Distribution
-      </h3>
+      <div className="flex flex-row items-center gap-2">
+        <h3 className="font-extrabold text-2xl pb-2 pt-2">
+          Commits Distribution
+        </h3>
+        <MdShare
+          className="hover:text-primary text-black cursor-pointer mt-[0.3rem]"
+          onClick={async () => {
+            save_data_url();
+            setIsOpenShare(true);
+          }}
+        />
+        <Modal
+          isOpen={isOpenShare}
+          setIsOpen={setIsOpenShare}
+          content={
+            <ShareCard
+              org_name={org_name as string}
+              repo_name={repo_name as string}
+              twitter_text="Share on Twitter"
+              chart_type="ContributorsChart"
+            />
+          }
+        />
+      </div>
       <p className="text-center pt-1 text-gray-500 text-sm">
         Top 10 contibutors to the repo and their shares
       </p>
       {response.isLoading && response_2.isLoading ? (
         <div className="h-96 container px-4 mx-auto overflow-hidden bg-gray-200 animate-pulse"></div>
       ) : (
-        <div className="h-96 container px-4 mx-auto overflow-hidden">
+        <div
+          className="h-96 container px-4 mx-auto overflow-hidden"
+          id="contributors-chart"
+        >
           <ResponsivePie
             data={prepareData(
               response.data,

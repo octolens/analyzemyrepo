@@ -46,7 +46,7 @@ const StarChartShare: NextPage<MyProps> = (props: MyProps) => {
         />
         <meta
           name="og:image"
-          content={`${host}/api/og_star?org_name=${org_name}&repo_name=${repo_name}`}
+          content={`${host}/api/og_starchart?org_name=${org_name}&repo_name=${repo_name}`}
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@CrowdDotDev" />
@@ -60,7 +60,7 @@ const StarChartShare: NextPage<MyProps> = (props: MyProps) => {
         />
         <meta
           name="twitter:image"
-          content={`${host}/api/og_star?org_name=${org_name}&repo_name=${repo_name}`}
+          content={`${host}/api/og_starchart?org_name=${org_name}&repo_name=${repo_name}`}
         />
       </Head>
       <div>{router.isReady && <h1>Redirecting...</h1>}</div>

@@ -16,7 +16,7 @@ export const getServerSideProps: GetServerSideProps<MyProps> = async (
   };
 };
 
-const ForksChartShare: NextPage<MyProps> = (props: MyProps) => {
+const ContributorsChartShare: NextPage<MyProps> = (props: MyProps) => {
   const host = process.env.NEXT_PUBLIC_GLOBAL_URL
     ? "https://" + process.env.NEXT_PUBLIC_GLOBAL_URL
     : "http://localhost:3000";
@@ -46,7 +46,7 @@ const ForksChartShare: NextPage<MyProps> = (props: MyProps) => {
         />
         <meta
           name="og:image"
-          content={`${host}/api/og_forkschart?org_name=${org_name}&repo_name=${repo_name}`}
+          content={`${host}/api/og_contributorschart?org_name=${org_name}&repo_name=${repo_name}`}
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@CrowdDotDev" />
@@ -60,7 +60,7 @@ const ForksChartShare: NextPage<MyProps> = (props: MyProps) => {
         />
         <meta
           name="twitter:image"
-          content={`${host}/api/og_forkschart?org_name=${org_name}&repo_name=${repo_name}`}
+          content={`${host}/api/og_contributorschart?org_name=${org_name}&repo_name=${repo_name}`}
         />
       </Head>
       <div>{router.isReady && <h1>Redirecting...</h1>}</div>
@@ -68,4 +68,4 @@ const ForksChartShare: NextPage<MyProps> = (props: MyProps) => {
   );
 };
 
-export default ForksChartShare;
+export default ContributorsChartShare;
