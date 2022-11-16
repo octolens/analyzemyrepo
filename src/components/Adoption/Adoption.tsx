@@ -107,7 +107,7 @@ const AdoptionSection = ({ section_id = "Adoption" }) => {
       data_url: imageURL,
       owner: org_name as string,
       repo: repo_name as string,
-      type: "StarChart",
+      type: field == "stargazers_count" ? "StarChart" : "ForksChart",
     });
   };
 
@@ -135,7 +135,9 @@ const AdoptionSection = ({ section_id = "Adoption" }) => {
               org_name={org_name as string}
               repo_name={repo_name as string}
               twitter_text="Share on Twitter"
-              chart_type="StarChart"
+              chart_type={
+                field == "stargazers_count" ? "StarChart" : "ForksChart"
+              }
             />
           }
         />
