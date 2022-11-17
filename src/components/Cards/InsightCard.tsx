@@ -20,9 +20,9 @@ const InsightCard = ({
   };
   return (
     <div
-      className={`rounded-lg ${width} ${height} border boder-solid border-black px-2 flex flex-row items-center ${color_dict[color]} justify-evenly gap-2`}
+      className={`rounded-lg ${width} ${height} h-fit border boder-solid border-black px-2 flex flex-row items-center ${color_dict[color]} justify-evenly gap-2`}
     >
-      <p className="align-middle text-center">{text}</p>
+      <p className="align-middle text-center flex-1 text-ellipsis">{text}</p>
       <div className="flex">
         {color == "negative" ? (
           <MdCancel color="red" size={size} />

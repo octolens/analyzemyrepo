@@ -146,7 +146,7 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
 
   const saveDataURL = trpc.useMutation("dataURL.upsert");
 
-  const save_data_url = async (chartId: string = "geodistribution-chart") => {
+  const save_data_url = async (chartId = "geodistribution-chart") => {
     const node = document.getElementById(chartId);
     const svg = node?.getElementsByTagName("svg")[0];
     const imageURL =

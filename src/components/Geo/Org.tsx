@@ -63,7 +63,7 @@ const OrgSubSection = () => {
   const [isOpenShare, setIsOpenShare] = useState(false);
 
   const saveDataURL = trpc.useMutation("dataURL.upsert");
-  const save_data_url = async (chartId: string = "org-chart") => {
+  const save_data_url = async (chartId = "org-chart") => {
     const node = document.getElementById(chartId);
     const svg = node?.getElementsByTagName("svg")[0];
     const imageURL =

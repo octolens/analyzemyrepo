@@ -14,6 +14,7 @@ import { MdShare } from "react-icons/md";
 import { useState } from "react";
 import Modal from "../Modal/Modal";
 import ShareCard from "../Social/all";
+import InsightCard from "../Cards/InsightCard";
 
 const CONTRIBUTORS_COUNT = 10;
 
@@ -52,10 +53,14 @@ const ContributionSection = ({
     "github.get_contributions_count",
     { owner: org_name as string, repo: repo_name as string },
   ]);
+  const response_serious = trpc.useQuery([
+    "postgres.get_serious_contributors",
+    { owner: org_name as string, repo: repo_name as string },
+  ]);
 
   const saveDataURL = trpc.useMutation("dataURL.upsert");
 
-  const save_data_url = async (chartId: string = "contributors-chart") => {
+  const save_data_url = async (chartId = "contributors-chart") => {
     const node = document.getElementById(chartId);
     const svg = node?.getElementsByTagName("svg")[0];
     const imageURL =
@@ -78,9 +83,7 @@ const ContributionSection = ({
         Contributions Health
       </h2>
       <div className="flex flex-row items-center gap-2">
-        <h3 className="font-extrabold text-2xl pb-2 pt-2">
-          Commits Distribution
-        </h3>
+        <h3 className="font-extrabold text-2xl pb-2 pt-2">Top Contributors</h3>
         <MdShare
           className="hover:text-primary text-black cursor-pointer mt-[0.3rem]"
           onClick={async () => {
@@ -149,6 +152,10 @@ const ContributionSection = ({
           />
         </div>
       )}
+      <h3 className="font-extrabold text-2xl pb-2">Commits Characteristics</h3>
+      <p className="text-center pt-1 text-gray-500 text-sm">
+        Metrics showing quality of commits distribution
+      </p>
       <div className="flex flex-col gap-2 mx-auto">
         <div className="flex flex-row items-center">
           <BusFactorBullet response={response} response_2={response_2} />
@@ -171,6 +178,60 @@ const ContributionSection = ({
               setIsOpenShare(true);
             }}
           />
+        </div>
+        <div className="flex flex-col items-center mt-4 gap-2">
+          {response.isLoading || response_2.isLoading ? (
+            <TemplateCard />
+          ) : (
+            <InsightCard
+              color={
+                (calculate_bus_factor(
+                  response.data,
+                  response_2.data?.total_contributions as number
+                ).bus_factor as number) >= 10
+                  ? "positive"
+                  : "negative"
+              }
+              text={
+                (calculate_bus_factor(
+                  response.data,
+                  response_2.data?.total_contributions as number
+                ).bus_factor as number) >= 10
+                  ? "Bus factor is greater than or equal to 10"
+                  : "Bus factor is less than 10"
+              }
+              width="w-72"
+              height="h-12"
+              size={20}
+            />
+          )}
+          {response_serious.isLoading || response.isLoading ? (
+            <TemplateCard />
+          ) : (
+            <InsightCard
+              color={
+                (handle_data_and_calculate_factor({
+                  data_db: response_serious.data,
+                  data_gh: response.data,
+                  format: false,
+                }) as number) >= 50
+                  ? "positive"
+                  : "negative"
+              }
+              text={
+                (handle_data_and_calculate_factor({
+                  data_db: response_serious.data,
+                  data_gh: response.data,
+                  format: false,
+                }) as number) >= 50
+                  ? "More than 50% of contributors are serious"
+                  : "Less than 50% of contributors are serious"
+              }
+              width="w-72"
+              height="h-12"
+              size={20}
+            />
+          )}
         </div>
       </div>
     </section>
@@ -207,23 +268,24 @@ const BusFactorCard = () => {
           Bus Factor
         </h3>
         <p>
-          Bus Factor shows the number of contributors who authored more than 50%
-          of all commits. For instance, Bus Factor of one means that one person
-          wrote more than 50% of all code in the repo. A low Bus Factor usually
-          indicates that repo is heavily dependent on a small number of people,
-          which could become a big problem if one of the maintainers leaves.
+          The Bus Factor shows the number of contributors who authored more than
+          50% of all commits. For instance, a Bus Factor of one means that one
+          person wrote more than 50% of all the code in the repo. A low Bus
+          Factor may indicate that the repo is heavily dependent on a small
+          number of people, which could become a big problem if one of the
+          maintainers leaves.
         </p>
         <h3 className="font-semibold text-gray-900 dark:text-white">
           Calculation
         </h3>
         <p>
-          We analyze top 100 contributors of the repo and calculate their
-          commits to the repo. Then we calculate a total number of commits to
-          the repo. Finally, we sort top contributors in an descending order by
-          number of commits and add up these numbers until we get more that 50%
-          of all commits.
+          We analyze the top 100 contributors of the repo and calculate their
+          commits to the repo. Then we calculate the total number of commits to
+          the repo. Finally, we sort the top contributors in descending order by
+          number of commits and add up the numbers until we get more that 50% of
+          all commits.
         </p>
-        <a href="#" className="flex items-center font-medium text-primary">
+        {/* <a href="#" className="flex items-center font-medium text-primary">
           Read more{" "}
           <svg
             className="ml-1 w-4 h-4"
@@ -238,7 +300,7 @@ const BusFactorCard = () => {
               clipRule="evenodd"
             ></path>
           </svg>
-        </a>
+        </a> */}
       </div>
     </div>
   );

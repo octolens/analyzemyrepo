@@ -143,12 +143,12 @@ const AdoptionSection = ({ section_id = "Adoption" }) => {
         />
       </div>
       <p className="text-center text-gray-500 pt-2">
-        Adoption metrics of the repo
+        Metrics on how many people know and interact with the repo
       </p>
       <div className="grid grid-cols-[2fr_1fr] gap-2">
         <div className="flex flex-col items-center justify-center gap-1">
           <h3 className="font-bold text-2xl self-start">
-            {field == "stargazers_count" ? "Stars Growth" : "Forks Growth"}
+            {field == "stargazers_count" ? "Star Growth" : "Fork Growth"}
           </h3>
           <RadioHorizontal
             radio_names={["stargazers_count", "forks_count"]}
@@ -161,7 +161,6 @@ const AdoptionSection = ({ section_id = "Adoption" }) => {
           </div>
         </div>
         <div className="flex flex-col items-center gap-2 justify-center">
-          <h3 className="font-bold text-2xl">Metrics</h3>
           <AdoptionTable />
         </div>
       </div>
@@ -250,7 +249,7 @@ const Card = ({ response, data, response_data_name }: CardProps) => {
         {response.isLoading ? (
           <TemplateCard />
         ) : (
-          <div className="rounded-lg w-28 bg-white h-8 border boder-solid border-black px-2 flex flex-row justify-end items-center">
+          <div className="rounded-lg w-28 bg-white text-xl h-8 border boder-solid border-black px-2 flex flex-row justify-end items-center">
             {response_data_name
               ? (response.data[response_data_name] as number).toLocaleString()
               : response.data}
