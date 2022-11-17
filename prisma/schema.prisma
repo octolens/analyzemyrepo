@@ -341,7 +341,9 @@ enum DataURLType {
   ContributorsChart
   BusFactorChart
   SeriousFactorChart
-  GeoDistributionChart
-  CompanyDistributionChart
+  GeoChartCommits
+  GeoChartContributors
+  CompanyChartCommits
+  CompanyChartContributors
   CommunityGuidelinesChart
 }

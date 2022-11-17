@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { trpc } from "../../utils/trpc";
 import { UseQueryResult } from "react-query";
 import { ResponsiveChoropleth } from "@nivo/geo";
-import { useState } from "react";
 import Tooltip from "../Tooltip/Tooltip";
 import SimpleTable from "../Table/Table";
 import GeoToolTip from "./GeoTootip";
@@ -12,6 +11,10 @@ import TeaseCard from "../Cards/TeaseCard";
 import { useSession, signIn } from "next-auth/react";
 import OrgSubSection from "./Org";
 import RadioHorizontal from "../Radio/RadioHorizontal";
+import { MdShare } from "react-icons/md";
+import { useState } from "react";
+import Modal from "../Modal/Modal";
+import ShareCard from "../Social/all";
 
 const GeoChart = ({
   data,
@@ -132,6 +135,8 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
     "commits_count" | "contributors_count"
   >("commits_count");
 
+  const [isOpenShare, setIsOpenShare] = useState(false);
+
   const geo_query = trpc.useQuery([
     "postgres.get_repo_contributors_countries",
     { owner: org_name as string, repo: repo_name as string },
@@ -139,17 +144,59 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
 
   const json_query = trpc.useQuery(["postgres.get_static_json"]);
 
+  const saveDataURL = trpc.useMutation("dataURL.upsert");
+
+  const save_data_url = async (chartId: string = "geodistribution-chart") => {
+    const node = document.getElementById(chartId);
+    const svg = node?.getElementsByTagName("svg")[0];
+    const imageURL =
+      "data:image/svg+xml;base64," +
+      Buffer.from(svg?.outerHTML as string).toString("base64");
+    await saveDataURL.mutateAsync({
+      data_url: imageURL,
+      owner: org_name as string,
+      repo: repo_name as string,
+      type:
+        geoCalcType == "commits_count"
+          ? "GeoChartCommits"
+          : "GeoChartContributors",
+    });
+  };
+
   return (
     <section
-      className="container p-4 flex flex-col border border-black rounded-md mt-4"
+      className="container p-4 flex flex-col items-center border border-black rounded-md mt-4"
       id={section_id}
     >
       <h2 className="font-extrabold text-3xl py-2 text-center text-primary">
         Diversity
       </h2>
-      <h3 className="font-extrabold text-2xl pb-2 pt-2 text-center">
-        Geo Distribution
-      </h3>
+      <div className="flex flex-row items-center gap-2">
+        <h3 className="font-extrabold text-2xl pb-2 pt-2">Geo Distribution</h3>
+        <MdShare
+          className="hover:text-primary text-black cursor-pointer mt-[0.3rem]"
+          onClick={async () => {
+            save_data_url();
+            setIsOpenShare(true);
+          }}
+        />
+        <Modal
+          isOpen={isOpenShare}
+          setIsOpen={setIsOpenShare}
+          content={
+            <ShareCard
+              org_name={org_name as string}
+              repo_name={repo_name as string}
+              twitter_text="Share on Twitter"
+              chart_type={
+                geoCalcType == "commits_count"
+                  ? "GeoChartCommits"
+                  : "GeoChartContributors"
+              }
+            />
+          }
+        />
+      </div>
       <p className="text-center text-gray-500 mb-5">
         Top locations by number of contributors and commits{" "}
         <div className="inline align-middle">
@@ -167,7 +214,7 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
         <div className="container h-80 mx-auto animate-pulse bg-gray-200 rounded-lg mt-4"></div>
       ) : (
         <div className="flex flex-col md:flex-row mt-4">
-          <div className="container h-80 mx-auto">
+          <div className="container h-80 mx-auto" id="geodistribution-chart">
             <GeoChart
               features={json_query.data["features"]}
               data={geo_query.data as Record<string, any>[]}

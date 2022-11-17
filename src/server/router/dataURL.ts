@@ -1,32 +1,13 @@
 import { createRouter } from "./context";
 import { z } from "zod";
-
-// Radar;
-// StarChart;
-// ForksChart;
-// ContributorsChart;
-// BusFactorChart;
-// SeriousFactorChart;
-// GeoDistributionChart;
-// CompanyDistributionChart;
-// CommunityGuidelinesChart;
+import { DataURLType } from "@prisma/client";
 
 export const dataURLRouter = createRouter()
   .mutation("upsert", {
     input: z.object({
       owner: z.string(),
       repo: z.string(),
-      type: z.enum([
-        "Radar",
-        "StarChart",
-        "ForksChart",
-        "ContributorsChart",
-        "BusFactorChart",
-        "SeriousFactorChart",
-        "GeoDistributionChart",
-        "CompanyDistributionChart",
-        "CommunityGuidelinesChart",
-      ]),
+      type: z.nativeEnum(DataURLType),
       data_url: z.string(),
     }),
     async resolve({ input, ctx }) {
@@ -55,17 +36,7 @@ export const dataURLRouter = createRouter()
     input: z.object({
       owner: z.string(),
       repo: z.string(),
-      type: z.enum([
-        "Radar",
-        "StarChart",
-        "ForksChart",
-        "ContributorsChart",
-        "BusFactorChart",
-        "SeriousFactorChart",
-        "GeoDistributionChart",
-        "CompanyDistributionChart",
-        "CommunityGuidelinesChart",
-      ]),
+      type: z.nativeEnum(DataURLType),
     }),
     async resolve({ input, ctx }) {
       const { owner, repo, type } = input;

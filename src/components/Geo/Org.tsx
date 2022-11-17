@@ -5,6 +5,9 @@ import RadioHorizontal from "../Radio/RadioHorizontal";
 import { useState } from "react";
 import InsightCard from "../Cards/InsightCard";
 import TemplateCard from "../Cards/TemplateCard";
+import { MdShare } from "react-icons/md";
+import Modal from "../Modal/Modal";
+import ShareCard from "../Social/all";
 
 const OrgChart = ({
   value,
@@ -51,14 +54,61 @@ const OrgChart = ({
 };
 
 const OrgSubSection = () => {
+  const router = useRouter();
+  const { org_name, repo_name } = router.query;
+
   const [orgCalcType, setOrgCalcType] = useState<
     "commits_count" | "contributors_count"
   >("commits_count");
+  const [isOpenShare, setIsOpenShare] = useState(false);
+
+  const saveDataURL = trpc.useMutation("dataURL.upsert");
+  const save_data_url = async (chartId: string = "org-chart") => {
+    const node = document.getElementById(chartId);
+    const svg = node?.getElementsByTagName("svg")[0];
+    const imageURL =
+      "data:image/svg+xml;base64," +
+      Buffer.from(svg?.outerHTML as string).toString("base64");
+    await saveDataURL.mutateAsync({
+      data_url: imageURL,
+      owner: org_name as string,
+      repo: repo_name as string,
+      type:
+        orgCalcType == "commits_count"
+          ? "CompanyChartCommits"
+          : "CompanyChartContributors",
+    });
+  };
   return (
     <div className="container mx-auto pt-4 items-center flex flex-col">
-      <h3 className="font-extrabold text-2xl pb-2 pt-2 text-center">
-        Org Distribution
-      </h3>
+      <div className="flex flex-row items-center gap-2">
+        <h3 className="font-extrabold text-2xl pb-2 pt-2 text-center">
+          Org Distribution
+        </h3>
+        <MdShare
+          className="hover:text-primary text-black cursor-pointer mt-[0.3rem]"
+          onClick={async () => {
+            save_data_url();
+            setIsOpenShare(true);
+          }}
+        />
+        <Modal
+          isOpen={isOpenShare}
+          setIsOpen={setIsOpenShare}
+          content={
+            <ShareCard
+              org_name={org_name as string}
+              repo_name={repo_name as string}
+              twitter_text="Share on Twitter"
+              chart_type={
+                orgCalcType == "commits_count"
+                  ? "CompanyChartCommits"
+                  : "CompanyChartContributors"
+              }
+            />
+          }
+        />
+      </div>
       <p className="text-center text-gray-500 mb-4">
         Top organizations contributing to the repo
       </p>
@@ -69,7 +119,7 @@ const OrgSubSection = () => {
         id_modifier="org"
       />
       {/* this div only for the chart - don't insert anything inside */}
-      <div className="container h-96 mx-auto pt-2">
+      <div className="container h-96 mx-auto pt-2" id="org-chart">
         <OrgChart value={orgCalcType} />
       </div>
       <div className="flex flex-col gap-3 pt-4 items-center justify-center">
