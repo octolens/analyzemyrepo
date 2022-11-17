@@ -40,6 +40,9 @@ const ContributionSection = ({
   const { org_name, repo_name } = router.query;
 
   const [isOpenShare, setIsOpenShare] = useState(false);
+  const [chartShareType, setChartShareType] = useState<
+    "ContributorsChart" | "BusFactorChart" | "SeriousFactorChart"
+  >("ContributorsChart");
 
   const response = trpc.useQuery([
     "github.get_github_repo_contributors",
@@ -52,8 +55,8 @@ const ContributionSection = ({
 
   const saveDataURL = trpc.useMutation("dataURL.upsert");
 
-  const save_data_url = async () => {
-    const node = document.getElementById("contributors-chart");
+  const save_data_url = async (chartId: string = "contributors-chart") => {
+    const node = document.getElementById(chartId);
     const svg = node?.getElementsByTagName("svg")[0];
     const imageURL =
       "data:image/svg+xml;base64," +
@@ -62,7 +65,7 @@ const ContributionSection = ({
       data_url: imageURL,
       owner: org_name as string,
       repo: repo_name as string,
-      type: "ContributorsChart",
+      type: chartShareType,
     });
   };
 
@@ -81,6 +84,7 @@ const ContributionSection = ({
         <MdShare
           className="hover:text-primary text-black cursor-pointer mt-[0.3rem]"
           onClick={async () => {
+            setChartShareType("ContributorsChart");
             save_data_url();
             setIsOpenShare(true);
           }}
@@ -93,7 +97,7 @@ const ContributionSection = ({
               org_name={org_name as string}
               repo_name={repo_name as string}
               twitter_text="Share on Twitter"
-              chart_type="ContributorsChart"
+              chart_type={chartShareType}
             />
           }
         />
@@ -146,8 +150,28 @@ const ContributionSection = ({
         </div>
       )}
       <div className="flex flex-col gap-2 mx-auto">
-        <BusFactorBullet response={response} response_2={response_2} />
-        <SeriousCountBullet response_hack={response} />
+        <div className="flex flex-row items-center">
+          <BusFactorBullet response={response} response_2={response_2} />
+          <MdShare
+            className="hover:text-primary text-black cursor-pointer "
+            onClick={async () => {
+              setChartShareType("BusFactorChart");
+              save_data_url("busfactor-chart");
+              setIsOpenShare(true);
+            }}
+          />
+        </div>
+        <div className="flex flex-row items-center">
+          <SeriousCountBullet response_hack={response} />
+          <MdShare
+            className="hover:text-primary text-black cursor-pointer "
+            onClick={async () => {
+              setChartShareType("SeriousFactorChart");
+              save_data_url("seriousfactor-chart");
+              setIsOpenShare(true);
+            }}
+          />
+        </div>
       </div>
     </section>
   );
@@ -234,6 +258,7 @@ const BusFactorBullet = ({
         <TemplateCard width="w-80" height="h-20" />
       ) : (
         <BulletChart
+          chartId="busfactor-chart"
           className="h-20 w-72 md:w-80"
           title={
             calculate_bus_factor(
@@ -257,7 +282,7 @@ const BusFactorBullet = ({
           maxValue={20}
           minValue={1}
           titlePosition="before"
-          margin={{ left: 40, right: 10, top: 20, bottom: 20 }}
+          margin={{ left: 45, right: 10, top: 20, bottom: 20 }}
         />
       )}
     </div>
@@ -288,6 +313,7 @@ const SeriousCountBullet = ({
         <TemplateCard width="w-80" height="h-20" />
       ) : (
         <BulletChart
+          chartId="seriousfactor-chart"
           className="h-20 w-72 md:w-80"
           title={`${handle_data_and_calculate_factor({
             data_db: response.data,
@@ -312,7 +338,7 @@ const SeriousCountBullet = ({
           maxValue={100}
           minValue={1}
           titlePosition="before"
-          margin={{ left: 40, right: 10, top: 20, bottom: 20 }}
+          margin={{ left: 45, right: 10, top: 20, bottom: 20 }}
         />
       )}
     </div>

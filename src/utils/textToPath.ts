@@ -101,7 +101,8 @@ const character_array: Record<string, string> = {
 
 const textToPath = (
   text: string,
-  textAnchor: "start" | "end" | "middle" = "start"
+  textAnchor: "start" | "end" | "middle" = "start",
+  dominantBaseline: string
 ) => {
   const path = [];
   const fontSize = 11;
@@ -109,6 +110,11 @@ const textToPath = (
   const lineHeight = 1;
   let x = 0;
   let y = 0;
+  if (dominantBaseline == "text-before-edge") {
+    y = (fontSize * lineHeight) / 2;
+  } else if (dominantBaseline == "text-after-edge") {
+    y = (-fontSize * lineHeight) / 2;
+  }
   if (textAnchor === "end") {
     x = -text.length * letterSpacing * fontSize;
   } else if (textAnchor === "middle") {
@@ -147,7 +153,10 @@ function parseStyles(styles: string) {
 
 function changeTextToPath(child5: ElementNode) {
   if (child5.tagName === "text") {
-    const text = child5.children[0] as ElementNode;
+    let text = child5.children[0] as ElementNode;
+    if (text.tagName === "tspan") {
+      text = text.children[0] as ElementNode;
+    }
     const textAnchor = child5.properties
       ? (child5.properties["text-anchor"] as string)
       : "";
@@ -161,13 +170,20 @@ function changeTextToPath(child5: ElementNode) {
         ? parseInt(child5.properties["y"] as string)
         : 0
       : 0;
+    const dominantBaseline = child5.properties
+      ? (child5.properties["dominant-baseline"] as string)
+      : "";
     const style = child5.properties
       ? child5.properties["style"]
         ? parseStyles(child5.properties["style"] as string)
         : {}
       : {};
     const fill = style.fill ? style.fill : "#333333";
-    const path = textToPath(text.value as string, textAnchor as any);
+    const path = textToPath(
+      text.value as string,
+      textAnchor as any,
+      dominantBaseline
+    );
     child5.tagName = "path";
     if (child5.properties) {
       const transform = child5.properties["transform"] ?? "";
@@ -189,7 +205,7 @@ function changeTextToPath(child5: ElementNode) {
 
 export function convertTextWithoutDom(svgString: string) {
   const obj = parse(svgString);
-  // max depth is 5
+  // max depth is 7
   // it is possible to do it with recursion but it is not necessary
   // it is is easier to increase the depth if needed
   for (let i = 0; i < obj.children.length; i++) {
@@ -206,6 +222,14 @@ export function convertTextWithoutDom(svgString: string) {
           for (let i = 0; i < child4.children.length; i++) {
             const child5 = child4.children[i] as ElementNode;
             changeTextToPath(child5);
+            for (let i = 0; i < child5.children.length; i++) {
+              const child6 = child5.children[i] as ElementNode;
+              changeTextToPath(child6);
+              for (let i = 0; i < child6.children.length; i++) {
+                const child7 = child6.children[i] as ElementNode;
+                changeTextToPath(child7);
+              }
+            }
           }
         }
       }

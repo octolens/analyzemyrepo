@@ -191,7 +191,7 @@ const RepoPage = () => {
                         crowd.dev
                       </a>
                       &nbsp;&mdash;&nbsp;the community-led growth platform for
-                      devtools engine
+                      devtools
                     </footer>
                   </div>
                 </div>

@@ -2,6 +2,9 @@ import { ResponsiveBullet } from "@nivo/bullet";
 
 const calculate_title_offset = (value: number | string) => {
   const str = value.toString();
+  if (str.indexOf("%") > 0) {
+    return -42;
+  }
   if (str.length == 1) {
     return -30;
   }
@@ -14,7 +17,7 @@ const calculate_title_offset = (value: number | string) => {
     return -37;
   }
 
-  return -42;
+  return -45;
 };
 
 const BulletChart = ({
@@ -29,6 +32,7 @@ const BulletChart = ({
   titlePosition = "before",
   margin = { right: 30, bottom: 20, left: 10, top: 20 },
   titleOffsetX,
+  chartId,
 }: {
   title: string | number;
   measures: number[];
@@ -41,9 +45,10 @@ const BulletChart = ({
   titlePosition?: "before" | "after";
   margin?: Record<string, number>;
   titleOffsetX?: number;
+  chartId: string;
 }) => {
   return (
-    <div className={className}>
+    <div className={className} id={chartId}>
       <ResponsiveBullet
         data={[
           {
