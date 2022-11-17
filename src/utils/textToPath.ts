@@ -103,7 +103,6 @@ const textToPath = (
   text: string,
   textAnchor: "start" | "end" | "middle" = "start"
 ) => {
-  //   const { font, fontSize, letterSpacing, lineHeight } = options;
   const path = [];
   const fontSize = 11;
   const letterSpacing = 0.7;
@@ -135,22 +134,51 @@ const textToPath = (
   return path.join(" ");
 };
 
+function parseStyles(styles: string) {
+  const style: Record<string, string | undefined> = {};
+  styles.split(";").forEach((s) => {
+    const [key, value] = s.split(":");
+    const cleanKey = key?.trim();
+    const cleanValue = value?.trim();
+    style[cleanKey ?? "error"] = cleanValue;
+  });
+  return style;
+}
+
 function changeTextToPath(child5: ElementNode) {
   if (child5.tagName === "text") {
     const text = child5.children[0] as ElementNode;
     const textAnchor = child5.properties
       ? (child5.properties["text-anchor"] as string)
       : "";
+    const x = child5.properties
+      ? child5.properties["x"]
+        ? parseInt(child5.properties["x"] as string)
+        : 0
+      : 0;
+    const y = child5.properties
+      ? child5.properties["y"]
+        ? parseInt(child5.properties["y"] as string)
+        : 0
+      : 0;
+    const style = child5.properties
+      ? child5.properties["style"]
+        ? parseStyles(child5.properties["style"] as string)
+        : {}
+      : {};
+    const fill = style.fill ? style.fill : "#333333";
     const path = textToPath(text.value as string, textAnchor as any);
     child5.tagName = "path";
     if (child5.properties) {
-      const transform = child5.properties["transform"];
+      const transform = child5.properties["transform"] ?? "";
       child5.value = undefined;
       child5.properties = {
         d: path,
         xmlns: "http://www.w3.org/2000/svg",
-        transform: transform as string,
-        fill: "#333333",
+        transform:
+          (transform as string) +
+          (x !== 0 && y !== 0 ? ` translate(${x},${y})` : ""),
+        fill: fill,
       };
       child5.children = [];
       child5.tagName = "path";
