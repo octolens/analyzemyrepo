@@ -42,9 +42,9 @@ const Home: NextPage = () => {
               </a>
             </p>
             <p>
-              Please don't take seriously <i>verdicts</i> that we show at the
-              top of the page. This is just to summarize the data and give you a
-              quick overview of the repo. The data is more useful when you
+              Please don&#39;t take seriously <i>verdicts</i> that we show at
+              the top of the page. This is just to summarize the data and give
+              you a quick overview of the repo. The data is more useful when you
               explore it yourself.
             </p>
             <p>
@@ -67,7 +67,7 @@ const Home: NextPage = () => {
             <hr />
             <h2>Shoutout to technologies</h2>
             <p>
-              This project is open-source and it's built with these amazing
+              This project is open-source and it&#39;s built with these amazing
               technologies:
             </p>
             <ul>
