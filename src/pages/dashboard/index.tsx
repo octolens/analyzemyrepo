@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import HeaderDashboard from "../../components/Headers/HeaderDashboard";
 import { FormEvent, useState } from "react";
 import { trpc } from "../../utils/trpc";
@@ -56,6 +56,26 @@ export default function Page() {
 
   const [open, setOpen] = useState(false);
 
+  if (status === "unauthenticated") {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen py-2">
+        <div className="flex flex-col items-center justify-center w-full max-w-md px-4 py-8 space-y-4 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+          <h1 className="text-2xl font-bold text-gray-700 dark:text-gray-200">
+            Sign in to your account
+          </h1>
+          <div className="flex flex-col items-center justify-center w-full space-y-4">
+            <button
+              className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-primary rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+              onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
+            >
+              <span>Sign in with GitHub</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <HeaderDashboard />
@@ -63,8 +83,6 @@ export default function Page() {
         <div className="flex justify-center p-10">
           <UserPlaceHolder />
         </div>
-      ) : status == "unauthenticated" ? (
-        <p>Access Denied</p>
       ) : (
         <main className="flex justify-center p-10">
           <div className="w-full max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
