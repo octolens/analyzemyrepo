@@ -11,7 +11,7 @@ import { checks_texts as adoption_texts } from "../../utils/adoption";
 import { checks_texts as diversity_texts } from "../../utils/diversity";
 import { checks_texts as community_texts } from "../../utils/community";
 import { verdicts } from "../../utils/consts";
-import RadarChart from "./RadarChart";
+import RadarChart, { RadarSkeleton } from "./RadarChart";
 import { MdShare } from "react-icons/md";
 import ShareCard from "../Social/all";
 
@@ -275,7 +275,14 @@ const OverviewSection = ({ section_id = "Overview" }) => {
         <div className="flex flex-col">
           <div className="container flex flex-1" id="radar-chart">
             <div className="w-96 h-80">
-              <RadarChart score_data={get_all_checks?.scores} />
+              {isLoading ? (
+                <RadarSkeleton />
+              ) : (
+                <RadarChart
+                  score_data={get_all_checks?.scores}
+                  checks={get_all_checks?.checks}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -382,7 +389,7 @@ const NoDataListItem = ({ text }: { text: string }) => {
   );
 };
 
-type ChecksType = {
+export type ChecksType = {
   adoption: {
     forks: boolean | null;
     stars: boolean | null;

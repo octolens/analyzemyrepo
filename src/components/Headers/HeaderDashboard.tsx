@@ -8,7 +8,7 @@ const HeaderDashboard = () => {
           <div className="flex items-center justify-between h-16">
             <div className="flex-1 md:flex md:items-center md:gap-12">
               <Link href="/" className="block text-primary font-bold text-xl">
-                <span className="sr-only">Home</span>repoanalyzer.com
+                <span className="sr-only">Home</span>analyzemyrepo.com
               </Link>
             </div>
           </div>

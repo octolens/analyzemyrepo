@@ -9,7 +9,6 @@ const CustomSearchBox = () => {
   const keydownHandler = (e: KeyboardEvent) => {
     if (e.key === "k" && e.ctrlKey) {
       e.preventDefault();
-      inputRef?.current?.focus();
       setIsOpen(true);
     }
   };
@@ -51,13 +50,17 @@ const CustomSearchBox = () => {
         <input
           type="search"
           name="search"
-          className="block py-2.5 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary focus:border-primary dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary caret-transparent"
+          className="block py-2.5 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 focus:ring-0 focus:border-gray-300 caret-transparent"
           placeholder="Search"
           autoComplete="off"
           ref={inputRef}
           readOnly
           onClick={() => setIsOpen(true)}
         />
+        <div className="flex absolute inset-y-0 right-0 items-center pr-3 pointer-events-none gap-1">
+          <kbd className="kbd kbd-xs">ctrl</kbd>
+          <kbd className="kbd kbd-xs">K</kbd>
+        </div>
       </div>
       <Modal isOpen={isOpen} setIsOpen={setIsOpen} />
     </form>

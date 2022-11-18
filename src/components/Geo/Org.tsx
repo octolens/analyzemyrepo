@@ -79,6 +79,19 @@ const OrgSubSection = () => {
           : "CompanyChartContributors",
     });
   };
+
+  const data = trpc.useQuery([
+    "postgres.get_repo_contributors_companies",
+    {
+      owner: org_name as string,
+      repo: repo_name as string,
+    },
+  ]);
+
+  if (!data.isLoading && data.data?.length == 0) {
+    return null;
+  }
+
   return (
     <div className="container mx-auto pt-4 items-center flex flex-col">
       <div className="flex flex-row items-center gap-2">

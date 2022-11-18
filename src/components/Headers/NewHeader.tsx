@@ -1,25 +1,14 @@
 import Link from "next/link";
 import { useState } from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 function LoginButton() {
-  const { data: session } = useSession();
-  if (session) {
-    return (
-      <button
-        onClick={() => signOut()}
-        className="px-5 py-2.5 mr-3 md:mr-0 text-sm font-medium text-white bg-black rounded-md shadow"
-      >
-        Sign out
-      </button>
-    );
-  }
   return (
     <button
       onClick={() => signIn(undefined, { callbackUrl: "/dashboard" })}
       className="px-5 py-2.5 text-sm mr-3 md:mr-0 font-medium text-white bg-black rounded-md shadow"
     >
-      Sign in
+      Sign Up
     </button>
   );
 }
@@ -33,7 +22,7 @@ const Header = () => {
           href="/"
           className="flex flex-1 items-center text-primary font-bold text-md md:text-xl"
         >
-          <span className="sr-only">Home</span>repoanalyzer.com
+          <span className="sr-only">Home</span>analyzemyrepo.com
         </Link>
         <div className="flex flex-1 md:order-2 justify-end">
           <LoginButton />

@@ -163,6 +163,25 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
     });
   };
 
+  if (!geo_query.isLoading && geo_query.data?.length == 0) {
+    return (
+      <section
+        className="container p-4 flex flex-col items-center border border-black rounded-md mt-4"
+        id={section_id}
+      >
+        <h2 className="font-extrabold text-3xl py-2 text-center text-primary">
+          Diversity
+        </h2>
+        <div className="pt-2 flex flex-col">
+          <TeaseCard />
+          <div className="pt-2 mx-auto flex">
+            <LoginButton />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section
       className="container p-4 flex flex-col items-center border border-black rounded-md mt-4"
@@ -229,14 +248,6 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
                 key: mapping[geoCalcType],
               })}
             />
-            {(geo_query.data?.length ?? 0) == 0 ? (
-              <div className="pt-2 flex flex-col">
-                <TeaseCard />
-                <div className="pt-2 mx-auto flex">
-                  <LoginButton />
-                </div>
-              </div>
-            ) : null}
           </div>
         </div>
       )}
@@ -358,16 +369,12 @@ const InsightShareCard = ({
 };
 
 function LoginButton() {
-  const { data: session } = useSession();
-  if (session) {
-    return null;
-  }
   return (
     <button
       onClick={() => signIn(undefined, { callbackUrl: "/dashboard" })}
       className="px-5 py-2.5 text-sm font-medium text-white bg-black rounded-md shadow"
     >
-      Sign Up
+      Request to collect more data
     </button>
   );
 }

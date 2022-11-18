@@ -111,6 +111,11 @@ const AdoptionSection = ({ section_id = "Adoption" }) => {
     });
   };
 
+  const history = trpc.useQuery([
+    "postgres.get_repo_history",
+    { owner: org_name as string, repo: repo_name as string },
+  ]);
+
   return (
     <section
       className="p-4 mt-4 flex flex-col items-center rounded-md border border-black"
@@ -120,50 +125,60 @@ const AdoptionSection = ({ section_id = "Adoption" }) => {
         <h2 className="text-center font-extrabold text-3xl text-primary self-center pb-2">
           Adoption
         </h2>
-        <MdShare
-          className="hover:text-primary text-black cursor-pointer"
-          onClick={async () => {
-            save_data_url();
-            setIsOpenShare(true);
-          }}
-        />
-        <Modal
-          isOpen={isOpenShare}
-          setIsOpen={setIsOpenShare}
-          content={
-            <ShareCard
-              org_name={org_name as string}
-              repo_name={repo_name as string}
-              twitter_text="Share on Twitter"
-              chart_type={
-                field == "stargazers_count" ? "StarChart" : "ForksChart"
+        {history.data && history.data.length > 0 && (
+          <>
+            <MdShare
+              className="hover:text-primary text-black cursor-pointer"
+              onClick={async () => {
+                save_data_url();
+                setIsOpenShare(true);
+              }}
+            />
+            <Modal
+              isOpen={isOpenShare}
+              setIsOpen={setIsOpenShare}
+              content={
+                <ShareCard
+                  org_name={org_name as string}
+                  repo_name={repo_name as string}
+                  twitter_text="Share on Twitter"
+                  chart_type={
+                    field == "stargazers_count" ? "StarChart" : "ForksChart"
+                  }
+                />
               }
             />
-          }
-        />
+          </>
+        )}
       </div>
       <p className="text-center text-gray-500 pt-2">
         Metrics on how many people know and interact with the repo
       </p>
-      <div className="grid grid-cols-[2fr_1fr] gap-2">
-        <div className="flex flex-col items-center justify-center gap-1">
-          <h3 className="font-bold text-2xl self-start">
-            {field == "stargazers_count" ? "Star Growth" : "Fork Growth"}
-          </h3>
-          <RadioHorizontal
-            radio_names={["stargazers_count", "forks_count"]}
-            active_radio_name={field}
-            setRadioName={setField}
-            id_modifier="adoption"
-          />
-          <div className="container mx-auto h-96 w-full" id="star-chart">
-            <StarChart field={field} />
+      {history.data && history.data.length > 0 ? (
+        <div className="grid grid-cols-[2fr_1fr] gap-2">
+          <div className="flex flex-col items-center justify-center gap-1">
+            <h3 className="font-bold text-2xl self-start">
+              {field == "stargazers_count" ? "Star Growth" : "Fork Growth"}
+            </h3>
+            <RadioHorizontal
+              radio_names={["stargazers_count", "forks_count"]}
+              active_radio_name={field}
+              setRadioName={setField}
+              id_modifier="adoption"
+            />
+            <div className="container mx-auto h-96 w-full" id="star-chart">
+              <StarChart field={field} />
+            </div>
+          </div>
+          <div className="flex flex-col items-center gap-2 justify-center">
+            <AdoptionTable />
           </div>
         </div>
-        <div className="flex flex-col items-center gap-2 justify-center">
+      ) : (
+        <div className="flex flex-col items-center gap-2 justify-center mt-6">
           <AdoptionTable />
         </div>
-      </div>
+      )}
       <Insights />
     </section>
   );

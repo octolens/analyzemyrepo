@@ -23,6 +23,10 @@ const StarChart = ({
     return <div className="w-full h-full bg-gray-200 animate-pulse"></div>;
   }
 
+  if (history.data.length === 0) {
+    return null;
+  }
+
   const get_min = (data: inferQueryOutput<"postgres.get_repo_history">) => {
     return Math.min(...data.map((value) => value[field] as number));
   };

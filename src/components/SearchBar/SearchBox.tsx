@@ -79,6 +79,10 @@ const CustomSearchBox = ({
           autoFocus
           ref={inputRef}
         />
+        <div className="flex absolute inset-y-0 right-0 items-center pr-3 pointer-events-none gap-1">
+          <kbd className="kbd">ctrl</kbd>
+          <kbd className="kbd">K</kbd>
+        </div>
       </div>
     </form>
   );
