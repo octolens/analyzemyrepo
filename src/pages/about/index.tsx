@@ -2,7 +2,6 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { GoMarkGithub } from "react-icons/go";
 import Link from "next/link";
-import { signIn } from "next-auth/react";
 import Header from "../../components/Headers/NewHeader";
 import { useRouter } from "next/router";
 
