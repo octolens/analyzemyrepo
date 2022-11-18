@@ -14,7 +14,7 @@ const CompletenessSection = ({ section_id = "Repo Checklist" }) => {
         Community guidelines docs{" "}
         <div className="inline align-middle">
           <Tooltip
-            tip={<>Here will be a tooltip</>}
+            tip={<>Presence of important community docs in the repo </>}
             position_priority={"right"}
           />
         </div>

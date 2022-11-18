@@ -261,7 +261,7 @@ const OverviewSection = ({ section_id = "Overview" }) => {
       </div>
       <div className="text-center w-fit py-2">
         <p className="text-center pt-1 text-gray-500">
-          Main stats about the repo
+          Summary of vverall repo health
         </p>
       </div>
       <div className="container flex flex-row">
@@ -294,8 +294,9 @@ const OverviewSection = ({ section_id = "Overview" }) => {
         >
           See all checks
         </button>
-        <div className="max-w-md text-center font-semibold">
-          {get_all_checks?.verdict}
+        <div className="max-w-md text-center">
+          <p className="text-lg font-semibold">Our overall assessment</p>
+          <p className="text-md text-center">{get_all_checks?.verdict}</p>
         </div>
       </div>
     </section>
