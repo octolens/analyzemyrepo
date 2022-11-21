@@ -1,5 +1,6 @@
 // pages/_document.js
 import { Html, Head, Main, NextScript } from "next/document";
+import Script from "next/script";
 
 export default function Document() {
   return (
@@ -24,6 +25,13 @@ export default function Document() {
           href="/favicon-16x16.png"
         />
         <link rel="manifest" href="/site.webmanifest" />
+        <Script>
+          <script
+            defer
+            data-domain="analyzemyrepo.com"
+            src="https://plausible.io/js/script.js"
+          ></script>
+        </Script>
       </Head>
       <body>
         <Main />
