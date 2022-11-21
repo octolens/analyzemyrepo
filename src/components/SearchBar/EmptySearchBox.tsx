@@ -58,8 +58,8 @@ const CustomSearchBox = () => {
           onClick={() => setIsOpen(true)}
         />
         <div className="flex absolute inset-y-0 right-0 items-center pr-3 pointer-events-none gap-1">
-          <kbd className="kbd kbd-xs">ctrl</kbd>
-          <kbd className="kbd kbd-xs">K</kbd>
+          <kbd className="kbd kbd-xs hidden lg:block">ctrl</kbd>
+          <kbd className="kbd kbd-xs hidden lg:block">K</kbd>
         </div>
       </div>
       <Modal isOpen={isOpen} setIsOpen={setIsOpen} />

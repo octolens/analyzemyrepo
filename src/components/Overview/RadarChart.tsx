@@ -73,8 +73,7 @@ const RadarSkeleton = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={384}
-      height={320}
+      viewBox="0 0 384 320"
       className="animate-pulse"
     >
       <rect width={384} height={320} fill="transparent" />

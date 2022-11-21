@@ -155,9 +155,9 @@ const AdoptionSection = ({ section_id = "Adoption" }) => {
         Metrics on how many people know and interact with the repo
       </p>
       {history.data && history.data.length > 0 ? (
-        <div className="grid grid-cols-[2fr_1fr] gap-2">
+        <div className="flex flex-col md:grid md:grid-cols-[2fr_1fr] md:grid-rows-none gap-2">
           <div className="flex flex-col items-center justify-center gap-1">
-            <h3 className="font-bold text-2xl self-start">
+            <h3 className="font-bold text-2xl self-center md:self-start pt-4 md:pt-0">
               {field == "stargazers_count" ? "Star Growth" : "Fork Growth"}
             </h3>
             <RadioHorizontal
@@ -170,7 +170,7 @@ const AdoptionSection = ({ section_id = "Adoption" }) => {
               <StarChart field={field} />
             </div>
           </div>
-          <div className="flex flex-col items-center gap-2 justify-center">
+          <div className="flex flex-col items-center gap-2 justify-center pt-4 md:pt-0">
             <AdoptionTable />
           </div>
         </div>

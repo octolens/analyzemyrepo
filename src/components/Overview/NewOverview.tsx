@@ -264,7 +264,7 @@ const OverviewSection = ({ section_id = "Overview" }) => {
           Summary of overall repo health
         </p>
       </div>
-      <div className="container flex flex-row">
+      <div className="container flex flex-col md:flex-row">
         <Summary
           modalIsOpen={isOpen}
           modalSetIsOpen={setIsOpen}
@@ -272,9 +272,10 @@ const OverviewSection = ({ section_id = "Overview" }) => {
           data={get_all_checks?.checks}
           insights={get_all_checks?.insights}
         />
-        <div className="flex flex-col">
+        <div className="flex flex-col order-first md:order-none">
           <div className="container flex flex-1" id="radar-chart">
-            <div className="w-96 h-80">
+            <div className="md:w-96 md:h-80 w-72 h-52">
+              {/* make skeleton responsive */}
               {isLoading ? (
                 <RadarSkeleton />
               ) : (
@@ -287,7 +288,7 @@ const OverviewSection = ({ section_id = "Overview" }) => {
           </div>
         </div>
       </div>
-      <div className="flex flex-row w-full justify-between pt-4 items-center">
+      <div className="flex flex-col md:flex-row w-full justify-between pt-4 items-center">
         <button
           className="w-fit h-fit px-2 py-1 text-sm font-medium text-white bg-black rounded-md shadow bg-opacity-80 hover:bg-opacity-100"
           onClick={() => setIsOpen(true)}
@@ -295,7 +296,7 @@ const OverviewSection = ({ section_id = "Overview" }) => {
           See all checks
         </button>
         {get_all_checks?.verdict && (
-          <div className="max-w-md text-center">
+          <div className="max-w-md text-center order-first pb-4 md:pb-0 md:order-none">
             <p className="text-lg font-semibold">Our overall assessment</p>
             <p className="text-md text-center">{get_all_checks?.verdict}</p>
           </div>
@@ -327,7 +328,7 @@ const Summary = ({
   }
 
   return (
-    <div className="flex-1 flex flex-col gap-2">
+    <div className="flex-1 flex flex-row md:flex-col gap-2">
       <div>
         <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
           Highs

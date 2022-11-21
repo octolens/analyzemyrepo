@@ -195,8 +195,10 @@ const RepoPage = () => {
                       <a href="https://crowd.dev" className="text-primary">
                         crowd.dev
                       </a>
-                      &nbsp;&mdash;&nbsp;the community-led growth platform for
-                      devtools
+                      <span className="hidden md:block">
+                        &nbsp;&mdash;&nbsp;the community-led growth platform for
+                        devtools
+                      </span>
                     </footer>
                   </div>
                 </div>

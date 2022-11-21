@@ -21,7 +21,7 @@ const Header = () => {
       <div className="container flex flex-wrap justify-between items-center mx-auto px-2 sm:px-6 lg:px-8 max-w-screen-xl">
         <Link
           href="/"
-          className="flex items-center text-primary font-bold text-md md:text-xl"
+          className="flex items-center mx-auto py-2 text-primary font-bold text-md md:text-xl"
         >
           <span className="sr-only">Home</span>analyzemyrepo.com
         </Link>

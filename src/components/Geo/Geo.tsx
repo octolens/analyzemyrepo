@@ -8,11 +8,11 @@ import GeoToolTip from "./GeoTootip";
 import InsightCard from "../Cards/InsightCard";
 import TemplateCard from "../Cards/TemplateCard";
 import TeaseCard from "../Cards/TeaseCard";
-import { useSession, signIn } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import OrgSubSection from "./Org";
 import RadioHorizontal from "../Radio/RadioHorizontal";
 import { MdShare } from "react-icons/md";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "../Modal/Modal";
 import ShareCard from "../Social/all";
 
@@ -25,6 +25,24 @@ const GeoChart = ({
   features: any[];
   value: string;
 }) => {
+  const [projectionScale, setProjectionScale] = useState(100);
+  const [projectionTranslation, setProjectionTranslation] = useState<
+    [number, number]
+  >([0.5, 0.5]);
+
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setProjectionScale(50);
+      setProjectionTranslation([0.3, 0.5]);
+    } else if (window.innerWidth < 1024) {
+      setProjectionScale(90);
+      setProjectionTranslation([0.4, 0.6]);
+    } else {
+      setProjectionScale(100);
+      setProjectionTranslation([0.5, 0.5]);
+    }
+  }, []);
+
   return (
     <ResponsiveChoropleth
       data={data.map((value) => ({ ...value, id: value["country"] }))}
@@ -36,8 +54,8 @@ const GeoChart = ({
       unknownColor="#ffffff"
       label="properties.name"
       valueFormat=".0f"
-      projectionScale={100}
-      projectionTranslation={[0.5, 0.5]}
+      projectionScale={projectionScale}
+      projectionTranslation={projectionTranslation}
       projectionRotation={[0, 0, 0]}
       enableGraticule={true}
       graticuleLineColor="#dddddd"
@@ -232,8 +250,11 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
         // skeleton
         <div className="container h-80 mx-auto animate-pulse bg-gray-200 rounded-lg mt-4"></div>
       ) : (
-        <div className="flex flex-col md:flex-row mt-4">
-          <div className="container h-80 mx-auto" id="geodistribution-chart">
+        <div className="flex flex-col lg:flex-row mt-4 mx-auto">
+          <div
+            className="container w-72 h-64 md:h-96 md:w-full mx-auto pb-4 md:pb-0"
+            id="geodistribution-chart"
+          >
             <GeoChart
               features={json_query.data["features"]}
               data={geo_query.data as Record<string, any>[]}

@@ -152,15 +152,15 @@ const ContributionSection = ({
           />
         </div>
       )}
-      <h3 className="font-extrabold text-2xl pb-2">Commits Characteristics</h3>
-      <p className="text-center pt-1 text-gray-500 text-sm">
+      <h3 className="font-extrabold text-2xl pb-2">Commits Properties</h3>
+      <p className="text-center pt-1 text-gray-500 text-sm pb-4 md:pb-0">
         Metrics showing quality of commits distribution
       </p>
-      <div className="flex flex-col gap-2 mx-auto">
-        <div className="flex flex-row items-center">
+      <div className="flex flex-col gap-2 md:mx-auto">
+        <div className="flex flex-row items-center justify-center">
           <BusFactorBullet response={response} response_2={response_2} />
           <MdShare
-            className="hover:text-primary text-black cursor-pointer "
+            className="hover:text-primary text-black cursor-pointer hidden md:block"
             onClick={async () => {
               setChartShareType("BusFactorChart");
               save_data_url("busfactor-chart");
@@ -168,10 +168,10 @@ const ContributionSection = ({
             }}
           />
         </div>
-        <div className="flex flex-row items-center">
+        <div className="flex flex-row items-center pt-4 md:pt-0 md:mx-auto justify-center">
           <SeriousCountBullet response_hack={response} />
           <MdShare
-            className="hover:text-primary text-black cursor-pointer "
+            className="hover:text-primary text-black cursor-pointer hidden md:block"
             onClick={async () => {
               setChartShareType("SeriousFactorChart");
               save_data_url("seriousfactor-chart");
@@ -314,14 +314,14 @@ const BusFactorBullet = ({
   response_2: UseQueryResult<any>;
 }) => {
   return (
-    <div className="flex flex-col md:flex-row gap-2 items-center">
+    <div className="flex flex-col md:flex-row gap-2 items-center justify-center">
       <SmallCardTooltip text="Bus Factor" tip={<BusFactorCard />} />
       {response.isLoading && response_2.isLoading ? (
         <TemplateCard width="w-80" height="h-20" />
       ) : (
         <BulletChart
           chartId="busfactor-chart"
-          className="h-20 w-72 md:w-80"
+          className="h-20 w-64 md:w-80"
           title={
             calculate_bus_factor(
               response.data,
@@ -376,7 +376,7 @@ const SeriousCountBullet = ({
       ) : (
         <BulletChart
           chartId="seriousfactor-chart"
-          className="h-20 w-72 md:w-80"
+          className="h-20 w-64 md:w-80"
           title={`${handle_data_and_calculate_factor({
             data_db: response.data,
             data_gh: response_hack.data,
