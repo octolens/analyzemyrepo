@@ -7,7 +7,7 @@ const CustomSearchBox = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const keydownHandler = (e: KeyboardEvent) => {
-    if (e.key === "k" && e.ctrlKey) {
+    if ((e.key === "k" && e.metaKey) || (e.key === "k" && e.ctrlKey)) {
       e.preventDefault();
       setIsOpen(true);
     }

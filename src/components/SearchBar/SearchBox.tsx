@@ -12,7 +12,7 @@ const CustomSearchBox = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   const keydownHandler = (e: KeyboardEvent) => {
-    if (e.key === "k" && e.ctrlKey) {
+    if ((e.key === "k" && e.metaKey) || (e.key === "k" && e.ctrlKey)) {
       e.preventDefault();
       inputRef?.current?.focus();
     }
