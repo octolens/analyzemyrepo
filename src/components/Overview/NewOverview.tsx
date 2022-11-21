@@ -468,7 +468,7 @@ const ModalContents = ({ data }: { data: ChecksType }) => {
         </ul>
       </div>
       <div className="flex flex-col gap-3">
-        <h3 className="text-xl font-extrabold">Community</h3>
+        <h3 className="text-xl font-extrabold">Governance</h3>
         <ul>
           {Object.entries(data.community).map((value) =>
             value[1] ? (

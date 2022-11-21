@@ -106,7 +106,7 @@ export default async function handler(req: NextRequest) {
                 marginBottom: "10",
               }}
             >
-              Community
+              Governance
             </p>
           </div>
           <p style={{ fontSize: "30", marginLeft: "-40", marginBottom: "55" }}>

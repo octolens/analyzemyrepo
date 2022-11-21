@@ -140,7 +140,7 @@ const RepoPage = () => {
                       { section_name: "Overview", logo: <GrOverview /> },
                       { section_name: "Adoption", logo: <GoRocket /> },
                       {
-                        section_name: "Contributions Health",
+                        section_name: "Contribution",
                         logo: <GoGraph />,
                       },
                       {
@@ -148,7 +148,7 @@ const RepoPage = () => {
                         logo: <GoGlobe />,
                       },
                       {
-                        section_name: "Community Guidelines",
+                        section_name: "Governance",
                         logo: <MdChecklist />,
                       },
                       // { section_name: "More Insights", logo: <MdInsights /> },
@@ -182,9 +182,9 @@ const RepoPage = () => {
                   >
                     <OverviewSection />
                     <AdoptionSection />
-                    <ContributionSection section_id="Contributions Health" />
+                    <ContributionSection section_id="Contribution" />
                     <GeoSection section_id="Diversity" />
-                    <CompletenessSection section_id="Community Guidelines" />
+                    <CompletenessSection section_id="Governance" />
                     <footer className="flex justify-center my-4">
                       powered by&nbsp;
                       <a href="https://crowd.dev" className="text-primary">

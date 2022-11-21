@@ -80,7 +80,7 @@ const ContributionSection = ({
       id={section_id}
     >
       <h2 className="font-extrabold text-3xl py-2 text-center text-primary">
-        Contributions Health
+        Contribution
       </h2>
       <div className="flex flex-row items-center gap-2">
         <h3 className="font-extrabold text-2xl pb-2 pt-2">Top Contributors</h3>

@@ -8,10 +8,10 @@ const CompletenessSection = ({ section_id = "Repo Checklist" }) => {
       id={section_id}
     >
       <h2 className="text-center font-extrabold text-3xl py-2 text-primary">
-        Community Guidelines
+        Governance
       </h2>
       <p className="text-center text-gray-500">
-        Community guidelines docs{" "}
+        Community governance docs{" "}
         <div className="inline align-middle">
           <Tooltip
             tip={<>Presence of important community docs in the repo </>}

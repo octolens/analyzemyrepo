@@ -13,7 +13,7 @@ const Home: NextPage = () => {
         <title>analyzemyrepo.com | about</title>
         <meta
           name="description"
-          content="Community Insights for Github repo | about"
+          content="Community Insights for GitHub repo | about"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -86,7 +86,7 @@ const Home: NextPage = () => {
               </li>
             </ul>
             <div className="flex flex-row items-center">
-              Source code is available on Github{"  "}
+              Source code is available on GitHub{"  "}
               <Link href="https://github.com">
                 <span className="flex items-center pl-2">
                   <GoMarkGithub size={20} />

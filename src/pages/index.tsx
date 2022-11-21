@@ -19,7 +19,7 @@ const Home: NextPage = () => {
         <Header />
         <main className="container mx-auto flex flex-col items-center p-12 flex-grow max-w-screen-xl">
           <h1 className="text-[1.5rem] md:text-[3rem] leading-normal font-extrabold text-black text-center">
-            <span className="text-primary">Community insights</span> for Github
+            <span className="text-primary">Community insights</span> for GitHub
             repos
           </h1>
           <h2 className="text-[1rem] md:text-[2rem] leading-normal text-black py-3 text-center">
