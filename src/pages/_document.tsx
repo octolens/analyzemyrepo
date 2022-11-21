@@ -25,13 +25,11 @@ export default function Document() {
           href="/favicon-16x16.png"
         />
         <link rel="manifest" href="/site.webmanifest" />
-        <Script>
-          <script
-            defer
-            data-domain="analyzemyrepo.com"
-            src="https://plausible.io/js/script.js"
-          ></script>
-        </Script>
+        <Script
+          defer
+          data-domain="analyzemyrepo.com"
+          src="https://plausible.io/js/script.js"
+        ></Script>
       </Head>
       <body>
         <Main />
