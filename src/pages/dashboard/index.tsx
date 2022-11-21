@@ -147,8 +147,8 @@ const AdditionalInfo = () => {
       user_id: session?.user?.id as string,
     });
 
-    toast("Request submitted succesfully", {
-      position: "top-right",
+    toast("Request submitted succesfully. Data should be ready in 1-2 days.", {
+      position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,

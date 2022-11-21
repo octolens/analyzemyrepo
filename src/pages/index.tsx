@@ -7,12 +7,11 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Community Insights for GitHub repos</title>
+        <title>analyzemyrepo.com | Community Insights for GitHub repos</title>
         <meta
           name="description"
           content="Discover usefull insights about your repo"
         />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <div className="min-h-screen flex flex-col bg-neutral">

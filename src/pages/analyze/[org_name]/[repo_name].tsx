@@ -95,6 +95,11 @@ const RepoPage = () => {
   return (
     <>
       <Head>
+        <title>analyzemyrepo.com | {`${org_name}/${repo_name}`}</title>
+        <meta
+          name="description"
+          content={`Discover usefull insights about ${org_name}/${repo_name}`}
+        />
         <meta
           name="og:url"
           content={`${host}/analyze/${org_name}${repo_name}`}
@@ -102,7 +107,7 @@ const RepoPage = () => {
         <meta name="og:type" content="website" />
         <meta
           name="og:title"
-          content={`repoanalyzer.com | ${org_name}/${repo_name}`}
+          content={`analyzemyrepo.com | ${org_name}/${repo_name}`}
         />
         <meta
           name="og:description"
@@ -116,7 +121,7 @@ const RepoPage = () => {
         <meta name="twitter:site" content="@CrowdDotDev" />
         <meta
           name="twitter:title"
-          content={`repoanalyzer.com | ${org_name}/${repo_name}`}
+          content={`analyzemyrepo.com | ${org_name}/${repo_name}`}
         />
         <meta
           name="twitter:description"

@@ -38,7 +38,7 @@ const CompanyChartCommitsShare: NextPage<MyProps> = (props: MyProps) => {
         <meta name="og:type" content="website" />
         <meta
           name="og:title"
-          content={`repoanalyzer.com | ${org_name}/${repo_name}`}
+          content={`analyzemyrepo.com | ${org_name}/${repo_name}`}
         />
         <meta
           name="og:description"
@@ -52,7 +52,7 @@ const CompanyChartCommitsShare: NextPage<MyProps> = (props: MyProps) => {
         <meta name="twitter:site" content="@CrowdDotDev" />
         <meta
           name="twitter:title"
-          content={`repoanalyzer.com | ${org_name}/${repo_name}`}
+          content={`analyzemyrepo.com | ${org_name}/${repo_name}`}
         />
         <meta
           name="twitter:description"
