@@ -25,7 +25,7 @@ const RadarChart = ({
         repo: normalize(score_data?.adoption_score ?? 0, 4),
       },
       {
-        metric: "Community",
+        metric: "Governance",
         repo: normalize(score_data?.community_score ?? 0, 8),
       },
       {

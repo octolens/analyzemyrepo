@@ -4,63 +4,63 @@ export const verdicts = {
   "adoption+contribution+diversity+community+growth-":
     "Excelent repo with a bit slow growth",
   "adoption+contribution+diversity+community-growth+":
-    "Outstanding repo with some issues in community docs",
+    "Outstanding repo with some governance issues",
   "adoption+contribution+diversity+community-growth-":
-    "Good repo lacking some community docs and with a bit slow growth",
+    "Outstanding repo with some governance issues",
   "adoption+contribution+diversity-community+growth+":
     "Almost perfect repo lacking some diversity",
   "adoption+contribution+diversity-community+growth-":
-    "Good repo lacking some diversity and with a bit slow growth",
+    "Almost perfect repo lacking some diversity",
   "adoption+contribution+diversity-community-growth+":
-    "Good repo lacking some diversity and community docs",
+    "Good repo with some governance issues and lacking some diversity",
   "adoption+contribution+diversity-community-growth-":
-    "Good work with adoption and contributions, but lacking some growth and community docs",
+    "Good work with adoption and contributions, but there is room for improvement with diversity and governance",
   "adoption+contribution-diversity+community+growth+":
     "Almost perfect repo, but keep and eye on contributions",
   "adoption+contribution-diversity+community+growth-":
-    "Good repo, but lacking some growth and contributions",
+    "Almost perfect repo, but keep and eye on contributions",
   "adoption+contribution-diversity+community-growth+":
-    "Good repo, but lacking some community docs and contributions",
+    "Cool repo, but there are some issues with contributions and governance",
   "adoption+contribution-diversity+community-growth-":
-    "Good work with adoption and diversity, but lacking some growth and community docs",
+    "Nice job with adoption and diversity, but there is room for improvement with governance",
   "adoption+contribution-diversity-community+growth+":
     "Good repo, but lacking some diversity and contributions",
   "adoption+contribution-diversity-community+growth-":
-    "Good work with adoption and community docs, but keep an eye on growth and diversity",
+    "Nice job with adoption and governance, but it's worth to work on diversity",
   "adoption+contribution-diversity-community-growth+":
-    "Good work with adoption and growth, but lacking diversity and community docs",
+    "Good work with adoption, but keep an eye on diversity and governance",
   "adoption+contribution-diversity-community-growth-":
-    "Good work with adoption, but problems with all other aspects",
+    "Nice job with adoption, but problems with all other aspects",
   "adoption-contribution+diversity+community+growth+":
     "Almost perfect, but there is a room for progress in adoption",
   "adoption-contribution+diversity+community+growth-":
-    "Good repo, but lacking some adoption and growth",
+    "Nice repo, but it's worth to improve adoption",
   "adoption-contribution+diversity+community-growth+":
-    "Good repo, but lacking some community docs and adoption",
+    "Good repo, but there are some issues with governance and adoption",
   "adoption-contribution+diversity+community-growth-":
-    "Good community and contributions, problems with adoption and growth",
+    "Good job with governance and contributions, problems with adoption",
   "adoption-contribution+diversity-community+growth+":
     "Good repo, but lacking some diversity and adoption",
   "adoption-contribution+diversity-community+growth-":
-    "Good community and contributions, problems with adoption and diversity",
+    "Nice job with governance and contributions, problems with adoption and diversity",
   "adoption-contribution+diversity-community-growth+":
-    "Good growth and contributions, problems with adoption and diversity",
+    "Good job with contributions, problems with adoption and diversity",
   "adoption-contribution+diversity-community-growth-":
     "Good work with contributions, but problems in all other ascpects",
   "adoption-contribution-diversity+community+growth+":
-    "Good repo, but lacking some adoption",
+    "Good repo, but lacking adoption",
   "adoption-contribution-diversity+community+growth-":
-    "Good work with community docs and diversity, but lacking some adoption and growth",
+    "Good work with governance and diversity, but lacking some adoption",
   "adoption-contribution-diversity+community-growth+":
-    "Good work with growth and diversity, though lacking some adoption",
+    "Good work with diversity, though lacking some adoption",
   "adoption-contribution-diversity+community-growth-":
     "Good work with diversity, but problems with everything else",
   "adoption-contribution-diversity-community+growth+":
-    "Good work with community docs and growth, but it's worth to focus a bit on adoption and contributions",
+    "Good work with governance, but it's worth to focus a bit on adoption and contributions",
   "adoption-contribution-diversity-community+growth-":
-    "Good work with community docs, but problems in all other ascpects",
+    "Good work with governance, but problems in all other ascpects",
   "adoption-contribution-diversity-community-growth+":
-    "Good growth and not good with all other aspects",
+    "Well, this repo is not really alive",
   "adoption-contribution-diversity-community-growth-":
     "Well, this repo is not really alive",
   lacking:

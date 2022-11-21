@@ -1,4 +1,5 @@
 import { MdSentimentNeutral, MdCancel, MdCheckCircle } from "react-icons/md";
+import { RiErrorWarningFill } from "react-icons/ri";
 
 const InsightCard = ({
   color,
@@ -15,7 +16,7 @@ const InsightCard = ({
 }) => {
   const color_dict = {
     positive: "bg-green-200",
-    negative: "bg-red-200",
+    negative: "bg-amber-200",
     neutral: "bg-gray-200",
   };
   return (
@@ -25,7 +26,7 @@ const InsightCard = ({
       <p className="align-middle text-center flex-1 text-ellipsis">{text}</p>
       <div className="flex">
         {color == "negative" ? (
-          <MdCancel color="red" size={size} />
+          <RiErrorWarningFill color="orange" size={size} />
         ) : color == "positive" ? (
           <MdCheckCircle color="green" size={size} />
         ) : (
