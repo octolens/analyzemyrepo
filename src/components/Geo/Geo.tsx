@@ -29,17 +29,21 @@ const GeoChart = ({
   const [projectionTranslation, setProjectionTranslation] = useState<
     [number, number]
   >([0.5, 0.5]);
+  const [isBigScreen, setIsBigScreen] = useState(true);
 
   useEffect(() => {
     if (window.innerWidth < 768) {
       setProjectionScale(50);
       setProjectionTranslation([0.3, 0.5]);
+      setIsBigScreen(false);
     } else if (window.innerWidth < 1024) {
       setProjectionScale(90);
-      setProjectionTranslation([0.4, 0.6]);
+      setProjectionTranslation([0.43, 0.6]);
+      setIsBigScreen(false);
     } else {
       setProjectionScale(100);
       setProjectionTranslation([0.5, 0.5]);
+      setIsBigScreen(true);
     }
   }, []);
 
@@ -62,7 +66,7 @@ const GeoChart = ({
       borderWidth={0.5}
       borderColor="#152538"
       legends={
-        data.length > 0
+        data.length > 0 && isBigScreen
           ? [
               {
                 anchor: "bottom-left",
@@ -248,11 +252,11 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
       />
       {json_query.isLoading || geo_query.isLoading ? (
         // skeleton
-        <div className="container h-80 mx-auto animate-pulse bg-gray-200 rounded-lg mt-4"></div>
+        <div className="container h-64 md:h-96 mx-auto animate-pulse bg-gray-200 rounded-lg mt-4"></div>
       ) : (
         <div className="flex flex-col lg:flex-row mt-4 mx-auto">
           <div
-            className="container w-72 h-64 md:h-96 md:w-full mx-auto pb-4 md:pb-0"
+            className="container w-72 h-64 md:w-[700px] md:h-96 lg:w-full lg:h-96 mx-auto pb-4 md:pb-0"
             id="geodistribution-chart"
           >
             <GeoChart

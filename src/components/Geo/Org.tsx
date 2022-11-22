@@ -25,7 +25,9 @@ const OrgChart = ({
   ]);
 
   if (data.isLoading) {
-    return null;
+    return (
+      <div className="container h-96 mx-auto animate-pulse bg-gray-200 rounded-lg mt-4"></div>
+    );
   }
 
   return (
