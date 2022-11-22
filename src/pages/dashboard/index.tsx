@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import { trpc } from "../../utils/trpc";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link";
 
 const UserPlaceHolder = () => {
   return (
@@ -45,7 +46,10 @@ const UserPlaceHolder = () => {
           <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-2"></div>
           <div className="w-48 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
         </div>
-        <div className="inline-flex items-center px-4 text-sm font-medium text-center text-white bg-gray-200 rounded-lg w-48 h-10"></div>
+        <div className="flex flex-col space-y-3">
+          <div className="inline-flex items-center px-4 text-sm font-medium text-center text-white bg-gray-200 rounded-lg w-48 h-10"></div>
+          <div className="inline-flex items-center px-4 text-sm font-medium text-center text-white bg-gray-200 rounded-lg w-48 h-10"></div>
+        </div>
       </div>
     </div>
   );
@@ -117,9 +121,17 @@ export default function Page() {
               <span className="text-sm text-gray-500 dark:text-gray-400">
                 Github User
               </span>
-              <div className="flex mt-4 space-x-3 md:mt-6">
+              <div className="flex flex-col mt-4 md:mt-6 space-y-3">
+                <Link
+                  className="inline-flex items-center justify-center py-2 px-4 text-sm font-medium text-center text-white bg-primary rounded-lg hover:bg-black focus:ring-4 focus:outline-none"
+                  href="https://forms.gle/nv1UB5tJtsCh7V15A"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  Leave a feedback
+                </Link>
                 <a
-                  className="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white bg-primary rounded-lg hover:bg-black focus:ring-4 focus:outline-none"
+                  className="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white bg-primary rounded-lg hover:bg-black focus:ring-4 focus:outline-none cursor-pointer"
                   onClick={() => setOpen(!open)}
                 >
                   {open ? "Close" : "Request to parse a repo"}
