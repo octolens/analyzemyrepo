@@ -26,7 +26,8 @@ class ErrorBoundary extends React.Component<any, any> {
       return (
         <main className="flex flex-col flex-grow items-center justify-center gap-4">
           <h2 className="text-3xl font-extrabold">
-            Seems like this repo does not exist
+            Seems like this repo does not exist or something went wrong on our
+            end. You can try again or go back to the home page.
           </h2>
           <button
             type="button"
