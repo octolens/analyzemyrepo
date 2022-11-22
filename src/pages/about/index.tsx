@@ -66,10 +66,7 @@ const Home: NextPage = () => {
             </p>
             <hr />
             <h2>Shoutout to technologies</h2>
-            <p>
-              This project is open-source and it&#39;s built with these amazing
-              technologies:
-            </p>
+            <p>This project is built with these amazing technologies:</p>
             <ul>
               <li>
                 <strong>creat-t3-app</strong> for the Next.js app with Prisma,
@@ -85,14 +82,6 @@ const Home: NextPage = () => {
                 and <strong>Prefect</strong> for data scripts and cron jobs
               </li>
             </ul>
-            <div className="flex flex-row items-center">
-              Source code is available on GitHub{"  "}
-              <Link href="https://github.com">
-                <span className="flex items-center pl-2">
-                  <GoMarkGithub size={20} />
-                </span>
-              </Link>
-            </div>
             <p>
               <em>All the best,</em>
             </p>
