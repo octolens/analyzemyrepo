@@ -3,6 +3,8 @@ import { z } from "zod";
 
 const commitsRegExp = /&page=(\d+)>; rel="last"/;
 
+// get_github_repo, get_github_repo_contributors, get_contributions_count, get_community_health
+
 // const store_in_redis = async ({
 //   key,
 //   data,

@@ -2,8 +2,44 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Header from "../components/Headers/NewHeader";
 import SearchBar from "../components/SearchBar/SearchBar";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { RadarSkeleton } from "../components/Overview/RadarChart";
 
 const Home: NextPage = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  useEffect(() => {
+    const handleRouteChange = (url: string) => {
+      setIsLoading(true);
+    };
+
+    const handleRouteComplete = (url: string) => {
+      setIsLoading(false);
+    };
+
+    router.events.on("routeChangeStart", handleRouteChange);
+    router.events.on("routeChangeComplete", handleRouteComplete);
+
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChange);
+      router.events.off("routeChangeComplete", handleRouteComplete);
+    };
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-screen flex flex-col justify-center items-center">
+        <div className="w-96 h-96 animate-bounce mx-auto">
+          <RadarSkeleton />
+        </div>
+        <p className="text-center text-xl text-primary">
+          Analyzing your repo<span className="">...</span>
+        </p>
+      </div>
+    );
+  }
+
   return (
     <>
       <Head>

@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { connectSearchBox } from "react-instantsearch-dom";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
 const CustomSearchBox = ({
   currentRefinement,

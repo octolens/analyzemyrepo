@@ -11,79 +11,85 @@ import CompletenessSection from "../../../components/Completeness/Completeness";
 import ErrorBoundary from "../../../components/Errors/ErrorBoundary";
 import OverviewSection from "../../../components/Overview/NewOverview";
 import AdoptionSection from "../../../components/Adoption/Adoption";
-// import { createSSGHelpers } from "@trpc/react/ssg";
-// import { GetServerSidePropsContext } from "next";
-// import { appRouter } from "../../../server/router";
-// import superjson from "superjson";
-// import { createContextInner } from "../../../server/router/context";
+import { createSSGHelpers } from "@trpc/react/ssg";
+import {
+  GetStaticPropsContext,
+  GetStaticPaths,
+  InferGetStaticPropsType,
+} from "next";
+import { appRouter } from "../../../server/router";
+import superjson from "superjson";
+import { createContextInner } from "../../../server/router/context";
 import Head from "next/head";
+import { useEffect, useState } from "react";
+import { RadarSkeleton } from "../../../components/Overview/RadarChart";
 
-// export async function getServerSideProps(
-//   context: GetServerSidePropsContext<{ org_name: string; repo_name: string }>
-// ) {
-//   const ONE_DAY = 60 * 60 * 24;
-//   context.res.setHeader(
-//     "Cache-Control",
-//     `public, s-maxage=${ONE_DAY}, stale-while-revalidate=${ONE_DAY * 7}`
-//   );
+export async function getStaticProps(
+  context: GetStaticPropsContext<{ org_name: string; repo_name: string }>
+) {
+  const ssg = createSSGHelpers({
+    router: appRouter,
+    ctx: await createContextInner({ session: null }),
+    transformer: superjson,
+  });
+  const org_name = context.params?.org_name as string;
+  const repo_name = context.params?.repo_name as string;
 
-//   const ssg = createSSGHelpers({
-//     router: appRouter,
-//     ctx: await createContextInner({ session: null }),
-//     transformer: superjson,
-//   });
-//   const org_name = context.params?.org_name as string;
-//   const repo_name = context.params?.repo_name as string;
+  await ssg.prefetchQuery("postgres.get_repo_rank", {
+    owner: org_name as string,
+    repo: repo_name as string,
+  });
 
-//   await ssg.prefetchQuery("postgres.get_repo_rank", {
-//     owner: org_name as string,
-//     repo: repo_name as string,
-//   });
+  await ssg.prefetchQuery("github.get_github_repo", {
+    owner: org_name as string,
+    repo: repo_name as string,
+  });
 
-//   await ssg.prefetchQuery("github.get_github_repo", {
-//     owner: org_name as string,
-//     repo: repo_name as string,
-//   });
+  await ssg.prefetchQuery("github.get_github_repo_contributors", {
+    owner: org_name as string,
+    repo: repo_name as string,
+  });
 
-//   await ssg.prefetchQuery("github.get_github_repo_contributors", {
-//     owner: org_name as string,
-//     repo: repo_name as string,
-//   });
+  await ssg.prefetchQuery("postgres.get_serious_contributors", {
+    owner: org_name as string,
+    repo: repo_name as string,
+  });
 
-//   await ssg.prefetchQuery("postgres.get_serious_contributors", {
-//     owner: org_name as string,
-//     repo: repo_name as string,
-//   });
+  await ssg.prefetchQuery("github.get_contributions_count", {
+    owner: org_name as string,
+    repo: repo_name as string,
+  });
 
-//   await ssg.prefetchQuery("github.get_contributions_count", {
-//     owner: org_name as string,
-//     repo: repo_name as string,
-//   });
+  await ssg.prefetchQuery("postgres.get_repo_contributors_countries", {
+    owner: org_name as string,
+    repo: repo_name as string,
+  });
 
-//   await ssg.prefetchQuery("postgres.get_repo_contributors_countries", {
-//     owner: org_name as string,
-//     repo: repo_name as string,
-//   });
+  await ssg.prefetchQuery("postgres.get_repo_contributors_companies", {
+    owner: org_name as string,
+    repo: repo_name as string,
+  });
 
-//   await ssg.prefetchQuery("postgres.get_repo_contributors_companies", {
-//     owner: org_name as string,
-//     repo: repo_name as string,
-//   });
+  await ssg.prefetchQuery("github.get_community_health", {
+    owner: org_name as string,
+    repo: repo_name as string,
+  });
 
-//   await ssg.prefetchQuery("github.get_community_health", {
-//     owner: org_name as string,
-//     repo: repo_name as string,
-//   });
+  // Make sure to return { props: { trpcState: ssg.dehydrate() } }
+  return {
+    props: {
+      trpcState: ssg.dehydrate(),
+      org_name,
+      repo_name,
+    },
+  };
+}
 
-//   // Make sure to return { props: { trpcState: ssg.dehydrate() } }
-//   return {
-//     props: {
-//       trpcState: ssg.dehydrate(),
-//     },
-//   };
-// }
+export const getStaticPaths: GetStaticPaths = () => {
+  return { paths: [], fallback: true };
+};
 
-const RepoPage = () => {
+const RepoPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
   const { org_name, repo_name } = router.query;
 
@@ -91,6 +97,38 @@ const RepoPage = () => {
   const host = process.env.NEXT_PUBLIC_VERCEL_URL
     ? "https://" + process.env.NEXT_PUBLIC_GLOBAL_URL
     : "http://localhost:3000";
+
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    const handleRouteChange = (url: string) => {
+      setIsLoading(true);
+    };
+
+    const handleRouteComplete = (url: string) => {
+      setIsLoading(false);
+    };
+
+    router.events.on("routeChangeStart", handleRouteChange);
+    router.events.on("routeChangeComplete", handleRouteComplete);
+
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChange);
+      router.events.off("routeChangeComplete", handleRouteComplete);
+    };
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-screen flex flex-col justify-center items-center">
+        <div className="w-96 h-96 animate-bounce mx-auto">
+          <RadarSkeleton />
+        </div>
+        <p className="text-center text-xl text-primary">
+          Analyzing your repo<span className="">...</span>
+        </p>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -161,26 +199,30 @@ const RepoPage = () => {
                   />
                 </div>
                 <div className="container mx-auto px-4">
-                  <a
-                    href={`https://github.com/${full_name}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="max-w-full w-fit px-4 py-5 bg-white rounded-lg shadow mx-auto flex flex-row items-center gap-2 cursor-pointer"
-                  >
-                    <span className="flex items-center">
-                      <Image
-                        src={`https://github.com/${org_name}.png`}
-                        width="30"
-                        height="30"
-                        alt={full_name}
-                        priority={true}
-                      />
-                    </span>
-                    <span className="text-xl text-gray-900 truncate max-w-sm">
-                      {full_name}
-                    </span>
-                    <GoLinkExternal className="mt-1 hover:fill-primary" />
-                  </a>
+                  {!router.isFallback ? (
+                    <a
+                      href={`https://github.com/${full_name}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="max-w-full w-fit px-4 py-5 bg-white rounded-lg shadow mx-auto flex flex-row items-center gap-2 cursor-pointer"
+                    >
+                      <span className="flex items-center">
+                        <Image
+                          src={`https://github.com/${org_name}.png`}
+                          width="30"
+                          height="30"
+                          alt={full_name}
+                          priority={true}
+                        />
+                      </span>
+                      <span className="text-xl text-gray-900 truncate max-w-sm">
+                        {full_name}
+                      </span>
+                      <GoLinkExternal className="mt-1 hover:fill-primary" />
+                    </a>
+                  ) : (
+                    <a className="max-w-full w-64 h-7 px-4 py-5 bg-white rounded-lg shadow mx-auto flex flex-row items-center gap-2 animate-pulse"></a>
+                  )}
                   <div
                     id="sections"
                     className="container mx-auto flex flex-col gap-2"
