@@ -82,9 +82,22 @@ const Header = () => {
             </li>
             <li>
               <Link
+                href="https://forms.gle/nv1UB5tJtsCh7V15A"
+                className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0"
+                aria-current="page"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                feedback
+              </Link>
+            </li>
+            <li>
+              <Link
                 href="https://crowd.dev"
                 className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0"
                 aria-current="page"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 crowd.dev
               </Link>

@@ -101,7 +101,9 @@ const RepoPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const handleRouteChange = (url: string) => {
-      setIsLoading(true);
+      if (url.includes("/analyze")) {
+        setIsLoading(true);
+      }
     };
 
     const handleRouteComplete = (url: string) => {
