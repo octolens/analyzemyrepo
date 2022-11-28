@@ -1,13 +1,11 @@
 import Head from "next/head";
-import Header from "../components/Headers/NewHeader";
-import SearchBar from "../components/SearchBar/SearchBar";
+import Header from "../../../components/Headers/NewHeader";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { RadarSkeleton } from "../components/Overview/RadarChart";
-import { prisma } from "../server/db/client";
+import { RadarSkeleton } from "../../../components/Overview/RadarChart";
+import { prisma } from "../../../server/db/client";
 import { InferGetStaticPropsType } from "next";
 import Image from "next/image";
-import Link from "next/link";
 
 export async function getStaticProps() {
   const data =
@@ -15,7 +13,7 @@ export async function getStaticProps() {
       orderBy: {
         weekly_star_growth_rate: "desc",
       },
-      take: 10,
+      take: 100,
       select: {
         full_name: true,
         this_week_stars: true,
@@ -67,6 +65,10 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     };
   }, []);
 
+  const host = process.env.NEXT_PUBLIC_VERCEL_URL
+    ? "https://" + process.env.NEXT_PUBLIC_GLOBAL_URL
+    : "http://localhost:3000";
+
   if (isLoading) {
     return (
       <div className="w-full h-screen flex flex-col justify-center items-center">
@@ -83,47 +85,61 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <>
       <Head>
-        <title>analyzemyrepo.com | Community Insights for GitHub repos</title>
+        <title>
+          analyzemyrepo.com | Fastest growing repos on GitHub last week
+        </title>
         <meta
           name="description"
-          content="Discover usefull insights about your repo"
+          content="Fastest growing repos on GitHub last week"
+        />
+        <meta
+          name="og:url"
+          content={`${host}/collections/fastest-growing-weekly`}
+        />
+        <meta name="og:type" content="website" />
+        <meta
+          name="og:title"
+          content={`analyzemyrepo.com | Fastest growing repos on GitHub last week`}
+        />
+        <meta
+          name="og:description"
+          content={`Fastest growing repos on GitHub last week`}
+        />
+        <meta
+          name="og:image"
+          content={`${host}/api/og_collections?text=${encodeURIComponent(
+            `Fastest growing repos on GitHub last week`
+          )}`}
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@CrowdDotDev" />
+        <meta
+          name="twitter:title"
+          content={`analyzemyrepo.com | Fastest growing repos on GitHub last week`}
+        />
+        <meta
+          name="twitter:description"
+          content={`Fastest growing repos on GitHub last week`}
+        />
+        <meta
+          name="twitter:image"
+          content={`${host}/api/og_collections?text=${encodeURIComponent(
+            `Fastest growing repos on GitHub last week`
+          )}`}
         />
       </Head>
 
       <div className="min-h-screen flex flex-col bg-neutral">
         <Header />
         <main className="container mx-auto flex flex-col items-center p-12 pt-28 flex-grow max-w-screen-xl">
-          <Announcement />
           <h1 className="mb-4 text-4xl font-bold tracking-tight text-gray-900 lg:font-extrabold lg:text-6xl lg:leading-none dark:text-white lg:text-center xl:px-36 lg:mb-7">
-            Discover usefull insights about your open-source project
+            The fastest growing repos on GitHub last week
           </h1>
           <p className="mb-10 text-lg font-normal text-gray-500 dark:text-gray-400 lg:text-center lg:text-xl xl:px-60">
-            A free tool to learn about adoption, contributions, diversity and
-            governance of your GitHub repo
-          </p>
-          <div className="flex w-full">
-            <div className="mx-auto flex flex-col w-4/5 md:w-1/2 mb-28">
-              <SearchBar />
-              <p className="hidden md:block text-center pt-2 text-gray-500">
-                Search for a GitHub repo or explore the trending projects below
-                👇
-              </p>
-            </div>
-          </div>
-          <h2 className="mb-6 text-3xl font-extrabold tracking-tight leading-tight text-gray-900 lg:text-center dark:text-white md:text-4xl">
-            The fastest growing repos last week
-          </h2>
-          <p className="mb-6 text-lg font-normal text-gray-500 dark:text-gray-400 lg:text-center lg:text-xl lg:px-64 lg:mb-10">
-            Top 10 fastest growing repos on GitHub with 1000+ stars from{" "}
-            {props.last_week} to {props.this_week}
+            Top 100 fastest growing repos on GitHub with 1000+ stars from{" "}
+            {props.last_week} to {props.this_week}. Updated every week.
           </p>
           <FastestGrowingRepos props={props} />
-          <Link
-            href="/collections/fastest-growing-weekly"
-            className="mt-6 underline underline-offset-2 decoration-primary"
-          >
-            See more
-          </Link>
         </main>
         <footer className="flex justify-center mb-2 flex-wrap">
           powered by&nbsp;
@@ -140,36 +156,6 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 };
 
 export default Home;
-
-const Announcement = () => {
-  return (
-    <Link
-      href="/collections/fastest-growing-weekly"
-      className="inline-flex justify-between items-center py-1 px-1 pr-4 mb-5 text-sm text-gray-700 bg-gray-100 rounded-full dark:bg-gray-800 dark:text-white hover:bg-gray-200"
-      role="alert"
-    >
-      <span className="text-xs bg-primary rounded-full text-white px-4 py-1.5 mr-3">
-        New{" "}
-      </span>
-      <span className="mr-2 text-sm font-medium">
-        We added fastest growing repos page, check it out!
-      </span>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        aria-hidden="true"
-        className="w-5 h-5"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-          clip-rule="evenodd"
-        ></path>
-      </svg>
-    </Link>
-  );
-};
 
 const FastestGrowingRepos = ({
   props,

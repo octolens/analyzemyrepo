@@ -7,7 +7,7 @@ function LoginButton() {
   return (
     <button
       onClick={() => signIn(undefined, { callbackUrl: "/dashboard" })}
-      className="px-5 py-2.5 text-sm mr-3 md:mr-0 font-medium text-white bg-black rounded-md shadow"
+      className="px-5 py-2.5 text-sm mr-3 md:mr-0 font-medium text-white bg-primary rounded-md shadow"
     >
       Sign Up
     </button>

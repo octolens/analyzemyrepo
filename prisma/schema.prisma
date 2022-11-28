@@ -314,6 +314,17 @@ model github_repos_contributors_companies {
   commits_perc       Float
 }
 
+// it's a view
+model github_repos_fastest_growing_weekly_by_stars {
+  repo_id                 Int      @unique
+  full_name               String
+  this_week_stars         Int
+  last_week_stars         Int
+  this_week_parsed_at     DateTime @db.Timestamp(6)
+  last_week_parsed_at     DateTime @db.Timestamp(6)
+  weekly_star_growth_rate Float
+}
+
 // END OF VIEWS
 
 model user_parse_request {

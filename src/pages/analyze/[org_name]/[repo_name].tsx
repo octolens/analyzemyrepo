@@ -241,7 +241,7 @@ const RepoPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                       </a>
                       <span className="hidden md:block">
                         &nbsp;&mdash;&nbsp;the community-led growth platform for
-                        devtools
+                        devtools 🚀
                       </span>
                     </footer>
                   </div>
