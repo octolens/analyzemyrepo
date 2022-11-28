@@ -108,7 +108,7 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         <meta
           name="og:image"
           content={`${host}/api/og_collections?text=${encodeURIComponent(
-            `Fastest growing repos on GitHub last week`
+            `The fastest growing repos on GitHub last week`
           )}`}
         />
         <meta name="twitter:card" content="summary_large_image" />
@@ -165,22 +165,22 @@ const FastestGrowingRepos = ({
   const router = useRouter();
   return (
     <div
-      className="overflow-x-auto relative shadow-md sm:rounded-lg"
+      className="relative shadow-md sm:rounded-lg"
       id="fastest-growing-section"
     >
-      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <table className="text-sm text-left text-gray-500 dark:text-gray-400 table-auto">
         <thead className="text-xs text-white bg-primary/90 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            <th scope="col" className="py-3 px-6 text-lg">
+            <th scope="col" className="py-3 px-1 md:px-6 text-lg">
               #
             </th>
-            <th scope="col" className="py-3 px-6">
+            <th scope="col" className="py-3 px-1 md:px-6">
               Repo
             </th>
-            <th scope="col" className="py-3 px-6">
+            <th scope="col" className="py-3 px-1 md:px-6">
               Stars
             </th>
-            <th scope="col" className="py-3 px-6">
+            <th scope="col" className="py-3 px-1 md:px-6">
               Growth
             </th>
           </tr>
@@ -192,14 +192,14 @@ const FastestGrowingRepos = ({
               key={repo.full_name}
               onClick={() => router.push(`/analyze/${repo.full_name}`)}
             >
-              <td>
-                <div className="flex items-center py-3 px-6">
+              <td className="">
+                <div className="flex items-center py-3 px-1 md:px-6">
                   <span className="font-medium">{index + 1}</span>
                 </div>
               </td>
               <th
                 scope="row"
-                className="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white"
+                className="flex items-center py-4 px-1 md:px-6 text-gray-900 whitespace-nowrap dark:text-white"
               >
                 <Image
                   className="w-10 h-10 rounded-full"
@@ -210,16 +210,16 @@ const FastestGrowingRepos = ({
                   width={40}
                   height={40}
                 />
-                <div className="pl-3">
-                  <div className="text-base font-semibold">
+                <div className="pl-3 pr-1 flex max-w-[110px] md:max-w-xs md:pr-0">
+                  <div className="text-base font-semibold whitespace-nowrap overflow-hidden text-ellipsis">
                     {repo.full_name}
                   </div>
                 </div>
               </th>
-              <td className="py-4 px-6">
+              <td className="py-4 px-1 md:px-6">
                 {repo.this_week_stars.toLocaleString()}
               </td>
-              <td className="py-4 px-6">
+              <td className="py-4 px-1 md:px-6">
                 <div className="flex items-center">
                   {repo.weekly_star_growth_rate.toPrecision(3)}%
                 </div>

@@ -27,7 +27,7 @@ export default async function handler(req: NextRequest) {
           alignItems: "center",
         }}
       >
-        <h1 className="mb-10 text-gray-900 font-extrabold text-6xl leading-none text-center">
+        <h1 tw="mb-10 text-gray-900 font-extrabold text-6xl leading-none text-center">
           {text}
         </h1>
         <p>
