@@ -88,6 +88,10 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
           name="description"
           content="Discover usefull insights about your repo"
         />
+        <meta
+          name="google-site-verification"
+          content="_NWIPHmW4OdNxK7VfZPl8RiuZj5zCmvtAtSLHiuensc"
+        />
       </Head>
 
       <div className="min-h-screen flex flex-col bg-neutral">
