@@ -232,7 +232,7 @@ const OverviewSection = ({ section_id = "Overview" }) => {
   }, [isLoading, org_name, repo_name]);
   return (
     <section
-      className="p-4 mt-[26px] flex flex-col items-center rounded-md border border-black"
+      className="p-4 flex flex-col items-center rounded-md border border-black"
       id={section_id}
     >
       <div className="flex flex-row items-center gap-2">

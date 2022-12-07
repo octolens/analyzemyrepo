@@ -25,7 +25,7 @@ const Header = () => {
         >
           <span className="sr-only">Home</span>analyzemyrepo.com
         </Link>
-        <div className="flex flex-1 gap-2 md:order-2 items-center justify-end">
+        <div className="flex flex-1 gap-2 md:order-3 items-center justify-end">
           <div className="w-40">
             <SearchBox />
           </div>
@@ -56,7 +56,7 @@ const Header = () => {
         </div>
         <div
           className={
-            "items-center w-full md:flex md:w-auto md:order-1 md:flex-1 md:mt-0.5 md:ml-4" +
+            "items-center w-full md:flex md:w-auto md:order-2 md:justify-center md:flex-1 md:mt-0.5 md:ml-4 lg:justify-start" +
             (isOpen ? "" : " hidden")
           }
           id="navbar-cta"

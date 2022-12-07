@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 
 interface SideBarProps {
   sections: SideBarItem[];
@@ -16,7 +16,7 @@ interface SideBarItem {
 // otherwise do debouncing as usuall
 
 export default function Sidebar({ sections, className }: SideBarProps) {
-  const [active, setActive] = useState<string | null>("Overview");
+  const [active, setActive] = useState<string | null>(null);
 
   useEffect(() => {
     const options: IntersectionObserverInit = {
@@ -43,7 +43,7 @@ export default function Sidebar({ sections, className }: SideBarProps) {
 
   return (
     <aside
-      className={"w-64 h-screen sticky top-0" + " " + className}
+      className={"w-64 h-screen sticky top-40" + " " + className}
       aria-label="Sidebar"
     >
       <div className="overflow-y-auto py-4 px-3 bg-white rounded dark:bg-gray-800 border border-solid border-black">
