@@ -26,7 +26,7 @@ export default function Sidebar({ sections, className }: SideBarProps) {
 
     const callback: IntersectionObserverCallback = (entries) => {
       entries.forEach((entry) => {
-        if (entry.intersectionRatio > 0.5) {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
           setActive(entry.target.id);
         }
       });
