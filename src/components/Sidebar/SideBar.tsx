@@ -21,7 +21,7 @@ export default function Sidebar({ sections, className }: SideBarProps) {
   useEffect(() => {
     const options: IntersectionObserverInit = {
       root: null, // all viewport
-      threshold: 0.44,
+      threshold: 0.5,
     };
 
     const callback: IntersectionObserverCallback = (entries) => {
