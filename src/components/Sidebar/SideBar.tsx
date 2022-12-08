@@ -21,13 +21,15 @@ export default function Sidebar({ sections, className }: SideBarProps) {
   useEffect(() => {
     const options: IntersectionObserverInit = {
       root: null, // all viewport
-      threshold: 0.5,
+      threshold: 0.44,
     };
 
     const callback: IntersectionObserverCallback = (entries) => {
-      entries.forEach(async (entry) => {
-        if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+      entries.forEach((entry) => {
+        console.log(entry);
+        if (entry.intersectionRatio > 0.5) {
           setActive(entry.target.id);
+          console.log(`${entry.target.id} is in view`);
         }
       });
     };

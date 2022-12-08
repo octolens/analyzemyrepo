@@ -102,6 +102,11 @@ const RepoPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
   const { org_name, repo_name } = router.query;
 
+  const repo = trpc.useQuery([
+    "github.get_github_repo",
+    { owner: org_name as string, repo: repo_name as string },
+  ]);
+
   const full_name = org_name + "/" + repo_name;
   const host = process.env.NEXT_PUBLIC_VERCEL_URL
     ? "https://" + process.env.NEXT_PUBLIC_GLOBAL_URL
@@ -141,11 +146,6 @@ const RepoPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     );
   }
 
-  const repo = trpc.useQuery([
-    "github.get_github_repo",
-    { owner: org_name as string, repo: repo_name as string },
-  ]);
-
   return (
     <>
       <Head>
@@ -159,7 +159,9 @@ const RepoPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         />
         <meta
           name="description"
-          content={`Insights and analytics about the GitHub repository ${org_name}/${repo_name}. ${repo.data.description}`}
+          content={`Insights and analytics about the GitHub repository ${org_name}/${repo_name}. ${
+            repo?.data?.description || ""
+          }`}
         />
         <meta
           name="og:url"
@@ -172,7 +174,9 @@ const RepoPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         />
         <meta
           name="og:description"
-          content={`Insights and analytics about the GitHub repository ${org_name}/${repo_name}. ${repo.data.description}`}
+          content={`Insights and analytics about the GitHub repository ${org_name}/${repo_name}. ${
+            repo?.data?.description || ""
+          }`}
         />
         <meta
           name="og:image"
@@ -186,7 +190,9 @@ const RepoPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         />
         <meta
           name="twitter:description"
-          content={`Insights and analytics about the GitHub repository ${org_name}/${repo_name}. ${repo.data.description}`}
+          content={`Insights and analytics about the GitHub repository ${org_name}/${repo_name}. ${
+            repo?.data?.description || ""
+          }`}
         />
         <meta
           name="twitter:image"
@@ -220,7 +226,7 @@ const RepoPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                     ]}
                   />
                 </div>
-                <div className="lg:row-start-1 lg:row-span-1 lg:col-start-2 lg:col-span-1 container w-full mx-auto px-4 flex flex-col pb-6">
+                <div className="lg:row-start-1 lg:row-span-1 lg:col-start-2 lg:col-span-1 container w-full mx-auto px-4 flex flex-col gap-4 pb-2 pt-3">
                   <h1 className="self-center text-xl lg:text-2xl font-semibold text-center">
                     Analyze{" "}
                     <Link
@@ -279,14 +285,14 @@ const RepoDescription = ({ full_name }: { full_name: string }) => {
     { owner: org_name as string, repo: repo_name as string },
   ]);
 
-  if (!repo.data) {
+  if (repo.isLoading) {
     return (
       <div className="w-full h-28 bg-gray-200 animate-pulse rounded-lg"></div>
     );
   }
 
   return (
-    <section className="lg:h-fit lg:max-h-40" id="repo-description">
+    <section className="lg:h-fit" id="repo-description">
       <div className="flex flex-col md:grid md:grid-cols-2 gap-2 max-w-full px-4 py-5 bg-white rounded-lg shadow mx-auto mt-4">
         <div className="flex flex-col self-center">
           <div className="flex flex-row items-center gap-2">
@@ -305,7 +311,7 @@ const RepoDescription = ({ full_name }: { full_name: string }) => {
             </span>
           </div>
           <span className="text-gray-700 max-w-[250px] lg:max-w-[400px] mt-2 break-words">
-            {repo.data?.description}
+            {repo.data?.description || "No description"}
           </span>
         </div>
         <div>
@@ -321,12 +327,12 @@ const RepoDescription = ({ full_name }: { full_name: string }) => {
                         {topic}
                       </span>
                     ))
-                  : "N/A"}
+                  : "No topics"}
               </div>
 
-              <div className="flex flex-row gap-2">
-                <div className="flex flex-row gap-2 items-center">
-                  <span className="text-gray-900 mt-1">
+              <div className="flex flex-row gap-4">
+                <div className="flex flex-row gap-2">
+                  <span className="text-gray-900 self-center">
                     <GoKeyboard size={20} />
                   </span>
                   <span className="text-gray-700">
@@ -339,7 +345,7 @@ const RepoDescription = ({ full_name }: { full_name: string }) => {
                     <GoLaw size={20} />
                   </span>
                   <span className="text-gray-700">
-                    {repo.data?.license?.name || "N/A"}
+                    {repo.data?.license?.name || "No license"}
                   </span>
                 </div>
               </div>
