@@ -141,6 +141,11 @@ const RepoPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     );
   }
 
+  const repo = trpc.useQuery([
+    "github.get_github_repo",
+    { owner: org_name as string, repo: repo_name as string },
+  ]);
+
   return (
     <>
       <Head>
@@ -154,7 +159,7 @@ const RepoPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         />
         <meta
           name="description"
-          content={`Insights and analytics about the GitHub repository ${org_name}/${repo_name}`}
+          content={`Insights and analytics about the GitHub repository ${org_name}/${repo_name}. ${repo.data.description}`}
         />
         <meta
           name="og:url"
@@ -167,7 +172,7 @@ const RepoPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         />
         <meta
           name="og:description"
-          content={`Insights and analytics about the GitHub repository ${org_name}/${repo_name}`}
+          content={`Insights and analytics about the GitHub repository ${org_name}/${repo_name}. ${repo.data.description}`}
         />
         <meta
           name="og:image"
@@ -181,7 +186,7 @@ const RepoPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         />
         <meta
           name="twitter:description"
-          content={`Insights and analytics about the GitHub repository ${org_name}/${repo_name}`}
+          content={`Insights and analytics about the GitHub repository ${org_name}/${repo_name}. ${repo.data.description}`}
         />
         <meta
           name="twitter:image"

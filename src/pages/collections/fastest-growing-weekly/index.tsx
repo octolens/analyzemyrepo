@@ -86,11 +86,11 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     <>
       <Head>
         <title>
-          analyzemyrepo.com | Fastest growing repos on GitHub last week
+          The fastest growing repos on GitHub last week | analyzemyrepo.com
         </title>
         <meta
           name="description"
-          content="Fastest growing repos on GitHub last week"
+          content="The fastest growing repos on GitHub last week"
         />
         <meta
           name="og:url"
@@ -99,11 +99,11 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         <meta name="og:type" content="website" />
         <meta
           name="og:title"
-          content={`analyzemyrepo.com | Fastest growing repos on GitHub last week`}
+          content={`The fastest growing repos on GitHub last week | analyzemyrepo.com`}
         />
         <meta
           name="og:description"
-          content={`Fastest growing repos on GitHub last week`}
+          content={`The fastest growing repos on GitHub last week`}
         />
         <meta
           name="og:image"
@@ -112,19 +112,19 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
           )}`}
         />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@CrowdDotDev" />
+        <meta name="twitter:site" content="@CrowdDotDev" />o
         <meta
           name="twitter:title"
-          content={`analyzemyrepo.com | Fastest growing repos on GitHub last week`}
+          content={`The fastest growing repos on GitHub last week | analyzemyrepo.com`}
         />
         <meta
           name="twitter:description"
-          content={`Fastest growing repos on GitHub last week`}
+          content={`The fastest growing repos on GitHub last week`}
         />
         <meta
           name="twitter:image"
           content={`${host}/api/og_collections?text=${encodeURIComponent(
-            `Fastest growing repos on GitHub last week`
+            `The fastest growing repos on GitHub last week`
           )}`}
         />
       </Head>
