@@ -180,7 +180,6 @@ const FastestGrowingRepos = ({
 }: {
   props: InferGetStaticPropsType<typeof getStaticProps>;
 }) => {
-  const router = useRouter();
   return (
     <div
       className="relative shadow-md sm:rounded-lg"
@@ -206,9 +205,8 @@ const FastestGrowingRepos = ({
         <tbody>
           {props.data.map((repo, index) => (
             <tr
-              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer"
+              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
               key={repo.full_name}
-              onClick={() => router.push(`/analyze/${repo.full_name}`)}
             >
               <td className="">
                 <div className="flex items-center py-3 px-1 md:px-6">
@@ -230,7 +228,12 @@ const FastestGrowingRepos = ({
                 />
                 <div className="pl-3 pr-1 flex max-w-[110px] md:max-w-xs md:pr-0">
                   <div className="text-base font-semibold whitespace-nowrap overflow-hidden text-ellipsis">
-                    {repo.full_name}
+                    <Link
+                      href={`/analyze/${repo.full_name}`}
+                      className="hover:underline"
+                    >
+                      {repo.full_name}
+                    </Link>
                   </div>
                 </div>
               </th>
