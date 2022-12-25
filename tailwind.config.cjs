@@ -10,6 +10,7 @@ module.exports = {
   },
   plugins: [
     require("@tailwindcss/typography"),
+    require("@tailwindcss/line-clamp"),
     require("flowbite/plugin"),
     require("daisyui"),
   ],

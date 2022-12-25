@@ -47,6 +47,7 @@
     "zod": "^3.18.0"
   },
   "devDependencies": {
+    "@tailwindcss/line-clamp": "^0.4.2",
     "@tailwindcss/typography": "^0.5.7",
     "@types/dom-to-image": "^2.6.4",
     "@types/node": "18.0.0",

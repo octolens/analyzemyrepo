@@ -1,18 +1,27 @@
 import { createRouter } from "./context";
 import { z } from "zod";
 
-export const embeddingsRouter = createRouter().query("search", {
+export type EmbeddingSearchResult = {
+  id: string;
+  score: number;
+  full_name: string;
+  description: string;
+  topics: string[];
+  stargazers_count: number;
+};
+
+export const embeddingsRouter = createRouter().mutation("search", {
   input: z.object({
     query: z.string().max(255),
     limit: z.number().min(1).max(100).default(10),
   }),
-  async resolve({ input, ctx }) {
+  async resolve({ input, ctx }): Promise<EmbeddingSearchResult[]> {
     const url = process.env.EMBEDDINGS_URL as string;
-    const request = await fetch(url, {
+    const request = await fetch(`${url}/search`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + process.env.EMBEDDINGS_TOKEN,
+        Authorization: ("Bearer " + process.env.EMBEDDINGS_TOKEN) as string,
       },
       body: JSON.stringify({
         query: input.query,
