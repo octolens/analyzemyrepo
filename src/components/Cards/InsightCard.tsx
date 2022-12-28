@@ -23,7 +23,9 @@ const InsightCard = ({
     <div
       className={`rounded-lg ${width} ${height} h-fit border boder-solid border-black px-2 flex flex-row items-center ${color_dict[color]} justify-evenly gap-2`}
     >
-      <p className="align-middle text-center flex-1 text-ellipsis">{text}</p>
+      <p className="align-middle text-center flex-1 text-ellipsis line-clamp-2">
+        {text}
+      </p>
       <div className="flex">
         {color == "negative" ? (
           <RiErrorWarningFill color="orange" size={size} />
