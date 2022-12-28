@@ -302,15 +302,17 @@ const OverviewSection = ({ section_id = "Overview" }) => {
       </div>
       <div className="flex flex-col md:flex-row w-full justify-between pt-4 items-center">
         <button
-          className="w-fit h-fit px-2 py-1 text-sm font-medium text-white bg-black rounded-md shadow bg-opacity-80 hover:bg-opacity-100"
+          className="w-fit h-fit px-2 py-2 text-sm font-medium text-white bg-black rounded-md shadow bg-opacity-80 hover:bg-opacity-100"
           onClick={() => setIsOpen(true)}
         >
           See all checks
         </button>
         {get_all_checks?.verdict && (
-          <div className="max-w-md text-center order-first pb-4 md:pb-0 md:order-none">
+          <div className="max-w-md text-center order-first pb-4 md:order-none border border-primary border-dashed md:px-4 md:py-2 mr-4">
             <p className="text-lg font-semibold">Our overall assessment</p>
-            <p className="text-md text-center">{get_all_checks?.verdict}</p>
+            <p className="text-md text-center line-clamp-2">
+              {get_all_checks?.verdict}
+            </p>
           </div>
         )}
       </div>
