@@ -79,7 +79,7 @@ analyzemyrepo.com can also work without Meilisearch - one would need to submit r
    ```js
    GITHUB_ACCESS_TOKEN_2="YOUR API KEY"
    ```
-5. Set your GitHub API key in `.env` (optional)
+5. Set your Meilisearch credentials in `.env` (optional)
    ```js
    NEXT_PUBLIC_MEILI_URL="YOUR MEILI INSTANCE URL"
    NEXT_PUBLIC_MEILI_SEARCH_KEY="YOUR MEILI PUBLIC KEY"
