@@ -86,7 +86,12 @@ export const githubRouter = createRouter()
         }
       );
 
-      return { commits: checkHeaders(response.headers) };
+      const data = await response.json();
+
+      return {
+        commits: checkHeaders(response.headers),
+        last_commit_at: data[0]?.commit?.author?.date as Date,
+      };
     },
   })
   .query("get_github_open_prs", {

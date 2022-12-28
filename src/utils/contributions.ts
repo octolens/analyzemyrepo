@@ -2,6 +2,10 @@ import { inferQueryOutput } from "./trpc";
 import { count_true } from "./common";
 
 export const checks_texts: Record<string, any> = {
+  last_commit_at: {
+    good: "The last commit was made less than 3 months ago",
+    bad: "The last commit was made more than 3 months ago",
+  },
   bus_factor: {
     good: "More than 10 contributors constitute 50% of commits to the repo",
     bad: "Less than 10 contributors constitute 50% of commits to the repo",
@@ -154,10 +158,40 @@ export const calculate_bus_factor = (
   };
 };
 
+export const calculate_last_commit_at_diff = (
+  data: inferQueryOutput<"github.get_github_commits">,
+  format = true
+) => {
+  const last_commit_at = data["last_commit_at"];
+  const last_commit_at_date = new Date(last_commit_at);
+  const now = new Date();
+  const diff = Math.abs(now.getTime() - last_commit_at_date.getTime());
+  const diff_days = Math.ceil(diff / (1000 * 3600 * 24));
+
+  if (format) {
+    return diff_days.toLocaleString("en-US", {
+      maximumFractionDigits: 1,
+      maximumSignificantDigits: 2,
+      minimumFractionDigits: 0,
+      minimumSignificantDigits: 2,
+    });
+  }
+
+  return diff_days;
+};
+
+export const check_last_commit_at = (
+  data: inferQueryOutput<"github.get_github_commits">
+) => {
+  const diff_days = calculate_last_commit_at_diff(data, false);
+  return diff_days < 90;
+};
+
 export const calculate_contribution_verdict = ({
   contributors_data,
   serious_data,
   contributions_count_data,
+  commits_data,
 }: {
   contributors_data: inferQueryOutput<"github.get_github_repo_contributors">;
   serious_data:
@@ -166,6 +200,7 @@ export const calculate_contribution_verdict = ({
   contributions_count_data:
     | inferQueryOutput<"github.get_contributions_count">
     | undefined;
+  commits_data: inferQueryOutput<"github.get_github_commits"> | undefined;
 }) => {
   const total_contributions =
     contributions_count_data?.total_contributions ?? 1;
@@ -181,11 +216,20 @@ export const calculate_contribution_verdict = ({
     contributors_data
   );
 
-  const score = count_true([bus_factor, serious_factor, contributors_count]);
+  const last_commit_at = check_last_commit_at(
+    commits_data as inferQueryOutput<"github.get_github_commits">
+  );
+
+  const score = count_true([
+    bus_factor,
+    serious_factor,
+    contributors_count,
+    last_commit_at,
+  ]);
 
   return {
     verdict: score > 2,
     score: score,
-    results: { bus_factor, serious_factor, contributors_count },
+    results: { bus_factor, serious_factor, contributors_count, last_commit_at },
   };
 };

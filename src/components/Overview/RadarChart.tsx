@@ -30,7 +30,7 @@ const RadarChart = ({
       },
       {
         metric: "Contribution",
-        repo: normalize(score_data?.contribution_score ?? 0, 3),
+        repo: normalize(score_data?.contribution_score ?? 0, 4),
       },
     ];
   } else {
@@ -49,7 +49,7 @@ const RadarChart = ({
       },
       {
         metric: "Contribution",
-        repo: normalize(score_data?.contribution_score ?? 0, 3),
+        repo: normalize(score_data?.contribution_score ?? 0, 4),
       },
     ];
   }

@@ -24,9 +24,9 @@ const sample_insights_from_checks = (checks: Record<string, any>) => {
   const MAX_PER_CATEGORY = 2; // this is in both good and bad
 
   const CATEGORY_PRIORITIES: (keyof ChecksType)[] = [
-    "diversity",
-    "adoption",
     "contribution",
+    "adoption",
+    "diversity",
     "community",
   ];
 
@@ -50,8 +50,13 @@ const sample_insights_from_checks = (checks: Record<string, any>) => {
 
   const PRIORITIES = {
     adoption: ["rating", "stars", "issues", "forks"],
+    contribution: [
+      "last_commit_at",
+      "bus_factor",
+      "serious_factor",
+      "contributors_count",
+    ],
     diversity: ["geo_diversity", "org_diversity", "geo_density", "org_density"],
-    contribution: ["bus_factor", "serious_factor", "contributors_count"],
     community: [
       "code_of_conduct",
       "contributing",
@@ -148,6 +153,11 @@ const OverviewSection = ({ section_id = "Overview" }) => {
     { owner: org_name as string, repo: repo_name as string },
   ]);
 
+  const commits = trpc.useQuery([
+    "github.get_github_commits",
+    { owner: org_name as string, repo: repo_name as string },
+  ]);
+
   const saveDataURL = trpc.useMutation("dataURL.upsert");
 
   const save_data_url = async () => {
@@ -172,7 +182,8 @@ const OverviewSection = ({ section_id = "Overview" }) => {
     total_contributions.isLoading ||
     geo.isLoading ||
     org.isLoading ||
-    community.isLoading;
+    community.isLoading ||
+    commits.isLoading;
 
   const get_all_checks = useMemo(() => {
     if (isLoading) {
@@ -187,6 +198,7 @@ const OverviewSection = ({ section_id = "Overview" }) => {
       contributors_data: gh_contributors.data,
       serious_data: serious_contributors.data,
       contributions_count_data: total_contributions.data,
+      commits_data: commits.data,
     });
 
     const diversity_checks = checks.diversity.calculate_verdict({
