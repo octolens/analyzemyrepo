@@ -86,9 +86,7 @@ const count_percent_rank = (stars: number, include_zeros = false) => {
 };
 
 const AdoptionSection = ({ section_id = "Adoption" }) => {
-  const [field, setField] = useState<"stargazers_count" | "forks_count">(
-    "stargazers_count"
-  );
+  const [field, setField] = useState<"stargazers" | "forks">("stargazers");
 
   const [isOpenShare, setIsOpenShare] = useState(false);
 
@@ -107,7 +105,7 @@ const AdoptionSection = ({ section_id = "Adoption" }) => {
       data_url: imageURL,
       owner: org_name as string,
       repo: repo_name as string,
-      type: field == "stargazers_count" ? "StarChart" : "ForksChart",
+      type: field == "stargazers" ? "StarChart" : "ForksChart",
     });
   };
 
@@ -143,7 +141,7 @@ const AdoptionSection = ({ section_id = "Adoption" }) => {
                   repo_name={repo_name as string}
                   twitter_text="Share on Twitter"
                   chart_type={
-                    field == "stargazers_count" ? "StarChart" : "ForksChart"
+                    field == "stargazers" ? "StarChart" : "ForksChart"
                   }
                 />
               }
@@ -158,10 +156,10 @@ const AdoptionSection = ({ section_id = "Adoption" }) => {
         <div className="flex flex-col md:grid md:grid-cols-[2fr_1fr] md:grid-rows-none gap-2">
           <div className="flex flex-col items-center justify-center gap-1">
             <h3 className="font-bold text-2xl self-center md:self-start pt-4 md:pt-0">
-              {field == "stargazers_count" ? "Star Growth" : "Fork Growth"}
+              {field == "stargazers" ? "Stargazers Growth" : "Forks Growth"}
             </h3>
             <RadioHorizontal
-              radio_names={["stargazers_count", "forks_count"]}
+              radio_names={["stargazers", "forks"]}
               active_radio_name={field}
               setRadioName={setField}
               id_modifier="adoption"

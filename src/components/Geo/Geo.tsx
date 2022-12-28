@@ -145,17 +145,17 @@ const cook_data_for_the_table = ({
 };
 
 const mapping = {
-  contributors_count: "contributors_perc",
-  commits_count: "commits_perc",
+  contributors: "contributors_perc",
+  commits: "commits_perc",
 };
 
 const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
   const router = useRouter();
   const { org_name, repo_name } = router.query;
 
-  const [geoCalcType, setGeoCalcType] = useState<
-    "commits_count" | "contributors_count"
-  >("commits_count");
+  const [geoCalcType, setGeoCalcType] = useState<"commits" | "contributors">(
+    "commits"
+  );
 
   const [isOpenShare, setIsOpenShare] = useState(false);
 
@@ -179,9 +179,7 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
       owner: org_name as string,
       repo: repo_name as string,
       type:
-        geoCalcType == "commits_count"
-          ? "GeoChartCommits"
-          : "GeoChartContributors",
+        geoCalcType == "commits" ? "GeoChartCommits" : "GeoChartContributors",
     });
   };
 
@@ -230,7 +228,7 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
               repo_name={repo_name as string}
               twitter_text="Share on Twitter"
               chart_type={
-                geoCalcType == "commits_count"
+                geoCalcType == "commits"
                   ? "GeoChartCommits"
                   : "GeoChartContributors"
               }
@@ -245,7 +243,7 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
         </div>
       </p>
       <RadioHorizontal
-        radio_names={["commits_count", "contributors_count"]}
+        radio_names={["commits", "contributors"]}
         active_radio_name={geoCalcType}
         setRadioName={setGeoCalcType}
         id_modifier="geo"
@@ -262,7 +260,11 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
             <GeoChart
               features={json_query.data["features"]}
               data={geo_query.data as Record<string, any>[]}
-              value={geoCalcType}
+              value={
+                geoCalcType == "commits"
+                  ? "commits_count"
+                  : "contributors_count"
+              }
             />
           </div>
           <div className="mx-auto">

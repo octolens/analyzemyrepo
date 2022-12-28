@@ -2,11 +2,14 @@ import { ResponsiveLine } from "@nivo/line";
 import { inferQueryOutput, trpc } from "../../utils/trpc";
 import { useRouter } from "next/router";
 
-const StarChart = ({
-  field,
-}: {
-  field: "stargazers_count" | "forks_count";
-}) => {
+// map from postgres column name to github api name
+const nameMap = (value: "stargazers" | "forks") => {
+  if (value === "stargazers") {
+    return "stargazers_count";
+  } else return "forks_count";
+};
+
+const StarChart = ({ field }: { field: "stargazers" | "forks" }) => {
   const router = useRouter();
   const { org_name, repo_name } = router.query;
   const history = trpc.useQuery([
@@ -28,7 +31,7 @@ const StarChart = ({
   }
 
   const get_min = (data: inferQueryOutput<"postgres.get_repo_history">) => {
-    return Math.min(...data.map((value) => value[field] as number));
+    return Math.min(...data.map((value) => value[nameMap(field)] as number));
   };
 
   return (
@@ -39,11 +42,11 @@ const StarChart = ({
           data: [
             {
               x: new Date(recent.data["updated_at"]),
-              y: recent.data[field],
+              y: recent.data[nameMap(field)],
             },
             ...history.data.map((value) => ({
               x: value.updated_at,
-              y: value[field],
+              y: value[nameMap(field)],
             })),
           ],
         },

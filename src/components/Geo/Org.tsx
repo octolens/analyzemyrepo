@@ -59,9 +59,9 @@ const OrgSubSection = () => {
   const router = useRouter();
   const { org_name, repo_name } = router.query;
 
-  const [orgCalcType, setOrgCalcType] = useState<
-    "commits_count" | "contributors_count"
-  >("commits_count");
+  const [orgCalcType, setOrgCalcType] = useState<"commits" | "contributors">(
+    "commits"
+  );
   const [isOpenShare, setIsOpenShare] = useState(false);
 
   const saveDataURL = trpc.useMutation("dataURL.upsert");
@@ -76,7 +76,7 @@ const OrgSubSection = () => {
       owner: org_name as string,
       repo: repo_name as string,
       type:
-        orgCalcType == "commits_count"
+        orgCalcType == "commits"
           ? "CompanyChartCommits"
           : "CompanyChartContributors",
     });
@@ -116,7 +116,7 @@ const OrgSubSection = () => {
               repo_name={repo_name as string}
               twitter_text="Share on Twitter"
               chart_type={
-                orgCalcType == "commits_count"
+                orgCalcType == "commits"
                   ? "CompanyChartCommits"
                   : "CompanyChartContributors"
               }
@@ -128,14 +128,18 @@ const OrgSubSection = () => {
         Top organizations contributing to the repo
       </p>
       <RadioHorizontal
-        radio_names={["commits_count", "contributors_count"]}
+        radio_names={["commits", "contributors"]}
         active_radio_name={orgCalcType}
         setRadioName={setOrgCalcType}
         id_modifier="org"
       />
       {/* this div only for the chart - don't insert anything inside */}
       <div className="container h-96 mx-auto pt-2" id="org-chart">
-        <OrgChart value={orgCalcType} />
+        <OrgChart
+          value={
+            orgCalcType == "commits" ? "commits_count" : "contributors_count"
+          }
+        />
       </div>
       <div className="flex flex-col gap-3 pt-4 items-center justify-center">
         <InsightCompanyCard />
