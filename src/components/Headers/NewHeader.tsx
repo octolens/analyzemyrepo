@@ -25,7 +25,7 @@ const Header = () => {
           <span className="sr-only">Home</span>analyzemyrepo.com
         </Link>
         <div className="flex flex-1 md:order-2 justify-end">
-          <LoginButton />
+          {/* <LoginButton /> */}
           <button
             data-collapse-toggle="navbar-cta"
             type="button"
@@ -65,15 +65,6 @@ const Header = () => {
                 aria-current="page"
               >
                 about
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/dashboard"
-                className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0"
-                aria-current="page"
-              >
-                dashboard
               </Link>
             </li>
             <li>

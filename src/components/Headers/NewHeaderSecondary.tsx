@@ -29,7 +29,7 @@ const Header = () => {
           <div className="w-40">
             <SearchBox />
           </div>
-          <LoginButton />
+          {/* <LoginButton /> */}
           <button
             data-collapse-toggle="navbar-cta"
             type="button"
@@ -71,7 +71,7 @@ const Header = () => {
                 about
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 href="/dashboard"
                 className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0"
@@ -79,8 +79,8 @@ const Header = () => {
               >
                 dashboard
               </Link>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               <Link
                 href="https://forms.gle/nv1UB5tJtsCh7V15A"
                 className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0"
@@ -90,7 +90,7 @@ const Header = () => {
               >
                 feedback
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
                 href="https://crowd.dev"
