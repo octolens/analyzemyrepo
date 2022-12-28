@@ -1,5 +1,6 @@
 import HealthTable from "../Table/HealthTable";
 import Tooltip from "../Tooltip/Tooltip";
+import GovernanceToolTip from "./GovernanceTooltip";
 
 const CompletenessSection = ({ section_id = "Repo Checklist" }) => {
   return (
@@ -11,12 +12,9 @@ const CompletenessSection = ({ section_id = "Repo Checklist" }) => {
         Governance
       </h2>
       <p className="text-center text-gray-500">
-        Community governance docs{" "}
+        Community governance docs check{" "}
         <div className="inline align-middle">
-          <Tooltip
-            tip={<>Presence of important community docs in the repo </>}
-            position_priority={"right"}
-          />
+          <Tooltip tip={<GovernanceToolTip />} position_priority={"right"} />
         </div>
       </p>
       <HealthTable />

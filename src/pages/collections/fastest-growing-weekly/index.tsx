@@ -134,11 +134,13 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         <Header />
         <main className="container mx-auto flex flex-col items-center p-12 pt-28 flex-grow max-w-screen-xl">
           <h1 className="mb-4 text-4xl font-bold tracking-tight text-gray-900 lg:font-extrabold lg:text-6xl lg:leading-none dark:text-white lg:text-center xl:px-36 lg:mb-7">
-            The fastest growing repos on GitHub last week
+            The fastest growing repos on GitHub
           </h1>
-          <p className="mb-10 text-lg font-normal text-gray-500 dark:text-gray-400 lg:text-center lg:text-xl xl:px-60">
-            Top 100 fastest growing repos on GitHub with 1000+ stars from{" "}
-            {props.last_week} to {props.this_week}. Updated every week.
+          <p className="mb-10 text-lg font-normal text-gray-500 dark:text-gray-400 lg:text-center lg:text-xl xl:px-60 md:whitespace-nowrap">
+            Top 100 fastest growing repos on GitHub with 1,000+ stars from{" "}
+            {props.last_week} to {props.this_week}.
+            <br />
+            Updated every week
           </p>
           <FastestGrowingRepos props={props} />
         </main>

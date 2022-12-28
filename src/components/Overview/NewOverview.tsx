@@ -273,7 +273,7 @@ const OverviewSection = ({ section_id = "Overview" }) => {
       </div>
       <div className="text-center w-fit py-2">
         <p className="text-center pt-1 text-gray-500">
-          Summary of overall repo health
+          Summary of the overall repo health
         </p>
       </div>
       <div className="container flex flex-col md:flex-row">

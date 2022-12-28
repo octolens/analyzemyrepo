@@ -115,10 +115,10 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             </div>
           </div>
           <h2 className="mb-6 text-3xl font-extrabold tracking-tight leading-tight text-gray-900 lg:text-center dark:text-white md:text-4xl">
-            The fastest growing repos last week
+            The fastest growing repos
           </h2>
-          <p className="mb-6 text-lg font-normal text-gray-500 dark:text-gray-400 lg:text-center lg:text-xl lg:px-64 lg:mb-10">
-            Top 10 fastest growing repos on GitHub with 1000+ stars from{" "}
+          <p className="mb-6 text-lg font-normal text-gray-500 dark:text-gray-400 lg:text-center lg:text-xl lg:px-64 lg:mb-10 md:whitespace-nowrap">
+            Top 10 fastest growing repos on GitHub with 1,000+ stars from{" "}
             {props.last_week} to {props.this_week}
           </p>
           <FastestGrowingRepos props={props} />
@@ -156,7 +156,7 @@ const Announcement = () => {
         New{" "}
       </span>
       <span className="mr-2 text-sm font-medium">
-        We added fastest growing repos page, check it out!
+        We added a fastest-growing repos page, check it out!
       </span>
       <svg
         xmlns="http://www.w3.org/2000/svg"

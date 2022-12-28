@@ -3,7 +3,7 @@ const GeoToolTip = () => {
     <div className="z-10 w-72 text-sm font-light text-gray-500 bg-white rounded-lg border border-gray-200 shadow-sm transition-opacity duration-300 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400">
       <div className="p-3 space-y-2">
         <h3 className="font-semibold text-gray-900 dark:text-white">
-          How map is calculated
+          How the map is calculated
         </h3>
         <p>
           We analyze all quailified commits to the repo and collect all users
@@ -14,14 +14,13 @@ const GeoToolTip = () => {
           geography of your contributors.
         </p>
         <h3 className="font-semibold text-gray-900 dark:text-white">
-          Commits_count vs contributors_count
+          Commits vs contributors
         </h3>
         <p>
-          You can select how you want the map to be calculated.{" "}
-          <b>Commits_count </b>
+          You can select how you want the map to be calculated. <b>Commits </b>
           option highlights countries by the number of commits originating from
-          this country, while <b>contributors_count</b> highlight countries
-          based on number of contributors coming from particular country.
+          this country, while <b>contributors</b> highlight countries based on
+          number of contributors coming from a particular country.
         </p>
       </div>
     </div>

@@ -154,7 +154,7 @@ const ContributionSection = ({
       )}
       <h3 className="font-extrabold text-2xl pb-2">Commits Properties</h3>
       <p className="text-center pt-1 text-gray-500 text-sm pb-4 md:pb-0">
-        Metrics showing quality of commits distribution
+        Metrics showing the quality of commits distribution
       </p>
       <div className="flex flex-col gap-2 md:mx-auto">
         <div className="flex flex-row items-center justify-center">
