@@ -95,6 +95,7 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       </Head>
 
       <div className="min-h-screen flex flex-col bg-neutral">
+        <Banner />
         <Header />
         <main className="container mx-auto flex flex-col items-center p-12 pt-14 md:pt-28 flex-grow max-w-screen-xl">
           <Announcement />
@@ -249,6 +250,24 @@ const FastestGrowingRepos = ({
           ))}
         </tbody>
       </table>
+    </div>
+  );
+};
+
+const Banner = () => {
+  return (
+    <div className="bg-primary/90 px-4 py-3 pr-14 text-white relative">
+      <p className="text-left text-sm font-medium sm:text-center">
+        analyzemyrepo is now open-source!{" "}
+        <Link
+          className="underline"
+          href="https://github.com/CrowdDotDev/analyzemyrepo"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Give us a star &rarr;{" "}
+        </Link>
+      </p>
     </div>
   );
 };
