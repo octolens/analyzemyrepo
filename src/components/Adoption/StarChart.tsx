@@ -34,21 +34,31 @@ const StarChart = ({ field }: { field: "stargazers" | "forks" }) => {
     return Math.min(...data.map((value) => value[nameMap(field)] as number));
   };
 
+  const combine_history_and_recent = () => {
+    const recent_data = {
+      x: new Date(recent.data["updated_at"]),
+      y: recent.data[nameMap(field)],
+    };
+    const history_data = history.data.map((value) => ({
+      x: value.updated_at,
+      y: value[nameMap(field)],
+    }));
+
+    const data = [recent_data, ...history_data];
+    // let's sort data by x
+    data.sort((a, b) => {
+      return (a.x as Date).getTime() - (b.x as Date).getTime();
+    });
+
+    return data;
+  };
+
   return (
     <ResponsiveLine
       data={[
         {
           id: "stars-chart",
-          data: [
-            {
-              x: new Date(recent.data["updated_at"]),
-              y: recent.data[nameMap(field)],
-            },
-            ...history.data.map((value) => ({
-              x: value.updated_at,
-              y: value[nameMap(field)],
-            })),
-          ],
+          data: combine_history_and_recent(),
         },
       ]}
       margin={{ top: 10, right: 30, bottom: 40, left: 50 }}
