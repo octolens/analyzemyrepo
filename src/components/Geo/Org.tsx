@@ -30,6 +30,10 @@ const OrgChart = ({
     );
   }
 
+  if (!data.data || data.data.length === 0) {
+    return null;
+  }
+
   return (
     <ResponsiveCirclePacking
       data={{
