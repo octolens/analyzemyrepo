@@ -32,7 +32,6 @@ import { useEffect, useState } from "react";
 import { RadarSkeleton } from "../../../components/Overview/RadarChart";
 import Link from "next/link";
 import { trpc } from "../../../utils/trpc";
-import { Footer } from "../../../components/Footer";
 
 export async function getStaticProps(
   context: GetStaticPropsContext<{ org_name: string; repo_name: string }>
