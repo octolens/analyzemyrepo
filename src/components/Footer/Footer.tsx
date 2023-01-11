@@ -102,7 +102,7 @@ export const EmailForm = () => {
 
   useEffect(() => {
     if (subscribe.isSuccess) {
-      setCurrentMessage("Thank you for subscribing!");
+      setCurrentMessage("Thank you! Your submission has been received!");
     }
   }, [subscribe.isSuccess]);
 
@@ -117,12 +117,14 @@ export const EmailForm = () => {
       <div className="mx-auto px-4 pt-16 pb-8 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-lg">
           <p className="block text-center text-xl sm:text-3xl font-bold tracking-tight text-gray-900 lg:font-extrabold lg:leading-none">
-            Receive fastest growing repos and cool stats about GitHub right into
-            your inbox
+            Get updates on the fastest growing repos and cool stats about GitHub
+            right in your inbox
           </p>
 
           <form
-            className="mt-6 flex flex-col"
+            className={`${
+              subscribe.isSuccess ? "hidden " : ""
+            } mt-6 flex flex-col`}
             onSubmit={async (e) => {
               e.preventDefault();
               subscribe.mutate({
@@ -150,7 +152,7 @@ export const EmailForm = () => {
                 className="absolute top-1/2 right-1 -translate-y-1/2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-white transition hover:bg-primary/75"
                 type="submit"
               >
-                Subscribe
+                {subscribe.isLoading ? "Please wait..." : "Subscribe"}
               </button>
             </div>
             <div className="flex flex-row items-center self-center mt-4 gap-1">
