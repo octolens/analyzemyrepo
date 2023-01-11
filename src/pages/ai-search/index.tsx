@@ -25,7 +25,7 @@ const RepoCard = ({ repo }: { repo: EmbeddingSearchResult }) => {
   const avatar = `https://github.com/${owner}.png`;
   return (
     <Link href={`/analyze/${repo.full_name}`}>
-      <div className="flex flex-col gap-2 items-center w-80 h-48 p-4 bg-white shadow-lg rounded-sm">
+      <div className="flex flex-col gap-2 items-center w-64 md:w-80 h-48 p-4 bg-white shadow-lg rounded-sm">
         <div className="flex flex-row gap-2 items-center">
           <Image
             src={avatar}
@@ -93,7 +93,7 @@ const SearchPage = () => {
         />
         <meta name="og:description" content={`Search GitHub repos using AI`} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@CrowdDotDev" />o
+        <meta name="twitter:site" content="@CrowdDotDev" />
         <meta
           name="twitter:title"
           content={`Search GitHub repos using AI | analyzemyrepo.com`}
@@ -106,16 +106,21 @@ const SearchPage = () => {
       <Header />
       <div className="flex flex-col items-center">
         <div className="flex flex-col justify-center align-middle min-h-screen">
-          <div className="flex-1">
-            <h1 className="block relative text-center font-extrabold text-5xl pb-4 mt-28">
+          <div className="flex-1 flex flex-col px-2">
+            <h1 className="block relative text-center font-extrabold text-4xl lg:text-6xl pb-4 mt-10 lg:mt-28">
               Search GitHub repos using AI
-              <span className="bg-primary/75 text-xs font-medium text-white text-center p-0.5 leading-none rounded-full px-2 left-auto absolute -top-0.5">
+              <span className="hidden bg-primary/75 text-xs font-medium text-white text-center p-0.5 leading-none rounded-full px-2 absolute lg:inline-block left-auto -top-0.5">
                 beta
               </span>
             </h1>
-            <h2 className="text-center font-semibold text-3xl pb-4">
-              Query examples
+            <span className="bg-primary/75 text-xs font-medium text-white text-center p-0.5 leading-none rounded-full px-2 max-w-fit self-center mb-2 lg:hidden">
+              beta
+            </span>
+            <h2 className="text-center font-semibold text-lg lg:text-xl pb-4 max-w-lg self-center">
+              Leverage the power of GPT-3 to find the best GitHub repos for your
+              next project
             </h2>
+            <h3 className="text-center text-lg pb-4">Query examples</h3>
             <div className="text-gray-700 max-w-xs lg:max-w-[800px] flex flex-wrap justify-center gap-2 self-center pb-4">
               {EXAMPLE_QUERIES.map((query) => (
                 <span
@@ -133,7 +138,7 @@ const SearchPage = () => {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="AI powered search for GitHub repos"
-                className="w-52 md:w-96 focus:ring-primary focus:border-primary block shadow-sm sm:text-sm border-gray-300 rounded-md"
+                className="w-36 sm:w-52 md:w-96 focus:ring-primary focus:border-primary block shadow-sm sm:text-sm border-gray-300 rounded-md"
               />
               <div className="flex flex-row gap-2">
                 <button
