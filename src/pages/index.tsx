@@ -143,7 +143,7 @@ export default Home;
 const Announcement = () => {
   return (
     <Link
-      href="/collections/fastest-growing-weekly"
+      href="/ai-search"
       className="inline-flex justify-between items-center py-1 px-1 pr-4 mb-5 text-sm text-gray-700 bg-gray-100 rounded-full dark:bg-gray-800 dark:text-white hover:bg-gray-200"
       role="alert"
     >
@@ -151,7 +151,7 @@ const Announcement = () => {
         New{" "}
       </span>
       <span className="mr-2 text-sm font-medium">
-        We added a fastest-growing repos page, check it out!
+        Introducing AI search for GitHub repos, try it out!
       </span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
