@@ -16,6 +16,7 @@ const EXAMPLE_QUERIES = [
   "low code platforms for internal tools",
   "auth for next.js",
   "tools to build Figma-like multiplayer apps",
+  "community building platform",
 ];
 
 const RepoCard = ({ repo }: { repo: EmbeddingSearchResult }) => {
@@ -125,9 +126,13 @@ const SearchPage = () => {
                 </button>
               </div>
             </div>
+            <div className="flex flex-col items-center mt-2">
+              {search.isLoading && "Loading..."}
+              {search.isError &&
+                "Something went wrong. Maybe the query is too short."}
+            </div>
           </div>
           <div className="flex py-4 justify-center">
-            {search.isLoading && "Loading..."}
             {search.isSuccess && (
               <div className="flex flex-col">
                 <div
@@ -162,7 +167,6 @@ const SearchPage = () => {
                 </div>
               </div>
             )}
-            {search.isError && search.error.message}
           </div>
         </div>
       </div>
