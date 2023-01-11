@@ -7,6 +7,7 @@ import { GrStar } from "react-icons/gr";
 import { HiOutlineThumbUp, HiOutlineThumbDown } from "react-icons/hi";
 import Header from "../../components/Headers/NewHeaderSecondary";
 import { Footer, EmailForm } from "../../components/Footer/Footer";
+import Head from "next/head";
 
 const EXAMPLE_QUERIES = [
   "game engines written in rust",
@@ -53,6 +54,10 @@ const SearchPage = () => {
   const [vote, setVote] = useState<"up" | "down" | null>(null);
   const [showVote, setShowVote] = useState<boolean>(true);
 
+  const host = process.env.NEXT_PUBLIC_VERCEL_URL
+    ? "https://" + process.env.NEXT_PUBLIC_GLOBAL_URL
+    : "http://localhost:3000";
+
   const save_vote = trpc.useMutation("embeddings.vote");
 
   const processVote = async () => {
@@ -77,6 +82,27 @@ const SearchPage = () => {
 
   return (
     <>
+      <Head>
+        <title>AI Search for GitHub repos | analyzemyrepo.com</title>
+        <meta name="description" content="Search GitHub repos using AI" />
+        <meta name="og:url" content={`${host}/al-search`} />
+        <meta name="og:type" content="website" />
+        <meta
+          name="og:title"
+          content={`AI Search for GitHub repos | analyzemyrepo.com`}
+        />
+        <meta name="og:description" content={`Search GitHub repos using AI`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@CrowdDotDev" />o
+        <meta
+          name="twitter:title"
+          content={`Search GitHub repos using AI | analyzemyrepo.com`}
+        />
+        <meta
+          name="twitter:description"
+          content={`Search GitHub repos using AI`}
+        />
+      </Head>
       <Header />
       <div className="flex flex-col items-center">
         <div className="flex flex-col justify-center align-middle min-h-screen">
