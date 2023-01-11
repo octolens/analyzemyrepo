@@ -110,7 +110,7 @@ const SearchPage = () => {
                 <button
                   disabled={search.isLoading}
                   onClick={async () => await search.mutateAsync({ query })}
-                  className="bg-primary text-black w-20 h-9 rounded-md font-bold"
+                  className="bg-primary text-white w-20 h-9 rounded-md hover:bg-primary/75"
                 >
                   Search
                 </button>
@@ -120,7 +120,7 @@ const SearchPage = () => {
                     search.reset();
                     setQuery("");
                   }}
-                  className="h-9 w-fit text-black"
+                  className="h-9 w-fit text-black hover:text-black/75"
                 >
                   x
                 </button>
