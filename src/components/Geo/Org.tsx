@@ -98,6 +98,15 @@ const OrgSubSection = () => {
     return null;
   }
 
+  if (
+    data.data &&
+    (data.data[0]?.company_name == null ||
+      data.data[0]?.company_name == "" ||
+      data.data[0]?.company_name == undefined)
+  ) {
+    return null;
+  }
+
   return (
     <div className="container mx-auto pt-4 items-center flex flex-col">
       <div className="flex flex-row items-center gap-2">
