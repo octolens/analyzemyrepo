@@ -16,6 +16,6 @@ export default defineNextConfig({
   reactStrictMode: false, // its for InstantSearch to work
   swcMinify: true,
   images: {
-    domains: ["github.com"],
+    domains: ["github.com", "img.shields.io"],
   },
 });

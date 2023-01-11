@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Header from "../../../components/Headers/NewHeader";
+import Header from "../../../components/Headers/NewHeaderSecondary";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { RadarSkeleton } from "../../../components/Overview/RadarChart";

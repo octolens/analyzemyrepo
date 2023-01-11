@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import Image from "next/image";
 
 function LoginButton() {
   return (
@@ -26,6 +27,19 @@ const Header = () => {
         </Link>
         <div className="flex flex-1 md:order-2 justify-end">
           {/* <LoginButton /> */}
+          <Link
+            href="https://github.com/CrowdDotDev/analyzemyrepo"
+            target="_blank"
+            className="self-center pr-2 md:pr-0"
+          >
+            <Image
+              width="100"
+              height="100"
+              alt="GitHub Repo stars"
+              src="https://img.shields.io/github/stars/CrowdDotDev/analyzemyrepo?logoColor=orange&style=social"
+            ></Image>
+          </Link>
+
           <button
             data-collapse-toggle="navbar-cta"
             type="button"
@@ -69,6 +83,24 @@ const Header = () => {
             </li>
             <li>
               <Link
+                href="/collections/fastest-growing-weekly"
+                className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0"
+                aria-current="page"
+              >
+                fastest growing
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/ai-search"
+                className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0"
+                aria-current="page"
+              >
+                AI search
+              </Link>
+            </li>
+            {/* <li>
+              <Link
                 href="https://crowd.dev"
                 className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0"
                 aria-current="page"
@@ -77,7 +109,7 @@ const Header = () => {
               >
                 crowd.dev
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import SearchBox from "../SearchBar/EmptySearchBox";
+import Image from "next/image";
 
 function LoginButton() {
   return (
@@ -71,35 +72,22 @@ const Header = () => {
                 about
               </Link>
             </li>
-            {/* <li>
-              <Link
-                href="/dashboard"
-                className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0"
-                aria-current="page"
-              >
-                dashboard
-              </Link>
-            </li> */}
-            {/* <li>
-              <Link
-                href="https://forms.gle/nv1UB5tJtsCh7V15A"
-                className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0"
-                aria-current="page"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                feedback
-              </Link>
-            </li> */}
             <li>
               <Link
-                href="https://crowd.dev"
+                href="/collections/fastest-growing-weekly"
                 className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0"
                 aria-current="page"
-                target="_blank"
-                rel="noopener noreferrer"
               >
-                crowd.dev
+                fastest growing
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/ai-search"
+                className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0"
+                aria-current="page"
+              >
+                AI search
               </Link>
             </li>
           </ul>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { GrStar } from "react-icons/gr";
+import Header from "../../components/Headers/NewHeaderSecondary";
 
 const RepoCard = ({ repo }: { repo: EmbeddingSearchResult }) => {
   const owner = repo.full_name.split("/")[0];
@@ -39,6 +40,7 @@ const SearchPage = () => {
 
   return (
     <div className="flex flex-col justify-center align-middle">
+      <Header />
       <h1 className="text-center font-extrabold text-5xl pb-4 pt-48">
         Search GitHub repos using AI
       </h1>
