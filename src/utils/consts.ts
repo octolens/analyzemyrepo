@@ -1,8 +1,8 @@
 export const verdicts = {
   "adoption+contribution+diversity+community+growth+":
-    "Just perfect, oustanding repository with excelent metrics",
+    "Just perfect, oustanding repository with excellent metrics",
   "adoption+contribution+diversity+community+growth-":
-    "Excelent repo with a bit slow growth",
+    "Excellent repo with a bit slow growth",
   "adoption+contribution+diversity+community-growth+":
     "Outstanding repo with some governance issues",
   "adoption+contribution+diversity+community-growth-":
