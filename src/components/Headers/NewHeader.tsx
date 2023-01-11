@@ -75,7 +75,7 @@ const Header = () => {
             <li>
               <Link
                 href="/about"
-                className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0"
+                className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0 whitespace-nowrap"
                 aria-current="page"
               >
                 about
@@ -84,7 +84,7 @@ const Header = () => {
             <li>
               <Link
                 href="/collections/fastest-growing-weekly"
-                className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0"
+                className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0 whitespace-nowrap"
                 aria-current="page"
               >
                 fastest growing
@@ -93,7 +93,7 @@ const Header = () => {
             <li>
               <Link
                 href="/ai-search"
-                className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0"
+                className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0 whitespace-nowrap"
                 aria-current="page"
               >
                 AI search
