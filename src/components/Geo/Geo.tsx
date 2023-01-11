@@ -66,7 +66,7 @@ const GeoChart = ({
       borderWidth={0.5}
       borderColor="#152538"
       legends={
-        data.length > 0 && isBigScreen
+        data.length > 0 && isBigScreen && data[0] && data[0].country != null
           ? [
               {
                 anchor: "bottom-left",
@@ -303,7 +303,7 @@ const TableRowsArray = ({
       key={value["country"] + value[key]}
     >
       {/* add country flags https://countryflagsapi.com/:filetype/:code */}
-      <span>{value["country"]}</span>
+      <span>{value["country"] == null ? "-" : value["country"]}</span>
       <span>{value[key]}</span>
     </div>
   ));
