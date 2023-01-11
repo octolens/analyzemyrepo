@@ -17,5 +17,7 @@ export default defineNextConfig({
   swcMinify: true,
   images: {
     domains: ["github.com", "img.shields.io"],
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
 });

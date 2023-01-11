@@ -55,7 +55,7 @@ export const Footer = () => {
 
             <Link
               className="text-gray-700 transition hover:text-gray-700/75"
-              href="https://github.com/CrowdDotDev/analyzemyrepo.com"
+              href="https://github.com/CrowdDotDev/analyzemyrepo"
               target="_blank"
               rel="noreferrer"
             >

@@ -37,6 +37,7 @@ const Header = () => {
               height="100"
               alt="GitHub Repo stars"
               src="https://img.shields.io/github/stars/CrowdDotDev/analyzemyrepo?logoColor=orange&style=social"
+              priority={true}
             ></Image>
           </Link>
 
