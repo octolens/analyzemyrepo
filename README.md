@@ -17,7 +17,7 @@
   <h3 align="center">analyzemyrepo.com</h3>
 
   <p align="center">
-    Discover usefull insights about your open-source repo
+    Discover useful insights about your open-source repo
     <br />
     <a href="https://analyzemyrepo.com/analyze/CrowdDotDev/crowd.dev">View Demo</a>
     ·
