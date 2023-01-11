@@ -81,11 +81,14 @@ const SearchPage = () => {
       <div className="flex flex-col items-center">
         <div className="flex flex-col justify-center align-middle min-h-screen">
           <div className="flex-1">
-            <h1 className="text-center font-extrabold text-5xl pb-4 pt-28">
+            <h1 className="block relative text-center font-extrabold text-5xl pb-4 mt-28">
               Search GitHub repos using AI
+              <span className="bg-primary/75 text-xs font-medium text-white text-center p-0.5 leading-none rounded-full px-2 left-auto absolute -top-0.5">
+                beta
+              </span>
             </h1>
             <h2 className="text-center font-semibold text-3xl pb-4">
-              Examples of queries
+              Query examples
             </h2>
             <div className="text-gray-700 max-w-xs lg:max-w-[800px] flex flex-wrap justify-center gap-2 self-center pb-4">
               {EXAMPLE_QUERIES.map((query) => (

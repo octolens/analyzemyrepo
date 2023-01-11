@@ -94,10 +94,13 @@ const Header = () => {
             <li>
               <Link
                 href="/ai-search"
-                className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0 whitespace-nowrap"
+                className="block relative py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0 whitespace-nowrap"
                 aria-current="page"
               >
                 AI search
+                <span className="bg-primary/75 text-xs font-medium text-white text-center p-0.5 leading-none rounded-full px-2 left-auto absolute -top-0.5">
+                  beta
+                </span>
               </Link>
             </li>
             {/* <li>
