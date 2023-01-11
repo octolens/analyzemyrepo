@@ -87,7 +87,7 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         <title>analyzemyrepo.com | Community Insights for GitHub repos</title>
         <meta
           name="description"
-          content="Discover usefull insights about your repo"
+          content="Discover useful insights about your repo"
         />
         <meta
           name="google-site-verification"
@@ -101,7 +101,7 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         <main className="container mx-auto flex flex-col items-center p-12 pt-14 md:pt-28 flex-grow max-w-screen-xl">
           <Announcement />
           <h1 className="mb-4 text-4xl font-bold tracking-tight text-gray-900 lg:font-extrabold lg:text-6xl lg:leading-none dark:text-white lg:text-center xl:px-36 lg:mb-7">
-            Discover usefull insights about your open-source project
+            Discover useful insights about your open-source project
           </h1>
           <p className="mb-10 text-lg font-normal text-gray-500 dark:text-gray-400 lg:text-center lg:text-xl xl:px-60">
             A free tool to learn about adoption, contributions, diversity and
