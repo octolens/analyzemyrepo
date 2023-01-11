@@ -116,4 +116,22 @@ export const postgresRouter = createRouter()
 
       return data;
     },
+  })
+  .mutation("subscribe_to_newsletter", {
+    input: z.object({
+      email: z.string(),
+      consent: z.boolean(),
+    }),
+    async resolve({ ctx, input }) {
+      const client = ctx.prisma;
+      const request = await client.newsletter_subscriptions.create({
+        data: {
+          email: input.email,
+          consent: input.consent,
+          email_type: "monthly_newsletter",
+        },
+      });
+
+      return request;
+    },
   });

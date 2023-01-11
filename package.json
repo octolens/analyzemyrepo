@@ -22,6 +22,7 @@
     "@nivo/radar": "^0.80.0",
     "@prisma/client": "^4.3.1",
     "@react-spring/web": "^9.5.4",
+    "@tailwindcss/forms": "^0.5.3",
     "@trpc/client": "^9.27.2",
     "@trpc/next": "^9.27.2",
     "@trpc/react": "^9.27.2",
@@ -64,6 +65,7 @@
     "postcss": "^8.4.16",
     "prisma": "^4.3.1",
     "tailwindcss": "^3.1.8",
+    "tailwindcss-bg-patterns": "^0.2.0",
     "typescript": "4.7.4"
   },
   "ct3aMetadata": {

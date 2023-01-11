@@ -9,8 +9,10 @@ module.exports = {
     extend: {},
   },
   plugins: [
+    require("@tailwindcss/forms"),
     require("@tailwindcss/typography"),
     require("@tailwindcss/line-clamp"),
+    require("tailwindcss-bg-patterns"),
     require("flowbite/plugin"),
     require("daisyui"),
   ],

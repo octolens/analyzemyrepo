@@ -365,3 +365,11 @@ model ai_search_feedback {
   query      String
   vote       Boolean
 }
+
+model newsletter_subscriptions {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  email      String
+  consent    Boolean
+  email_type String   @unique
+}

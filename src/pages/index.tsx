@@ -8,6 +8,7 @@ import { prisma } from "../server/db/client";
 import { InferGetStaticPropsType } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { Footer, EmailForm } from "../components/Footer/Footer";
 
 export async function getStaticProps() {
   const data =
@@ -130,15 +131,8 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             See more
           </Link>
         </main>
-        <footer className="flex justify-center mb-2 flex-wrap">
-          powered by&nbsp;
-          <a href="https://crowd.dev" className="text-primary">
-            crowd.dev
-          </a>
-          <span className="hidden md:block">
-            &nbsp;&mdash;&nbsp;the community-led growth platform for devtools 🚀
-          </span>
-        </footer>
+        <EmailForm />
+        <Footer />
       </div>
     </>
   );

@@ -87,7 +87,7 @@ const Header = () => {
                 className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0 whitespace-nowrap"
                 aria-current="page"
               >
-                fastest growing
+                fastest growing repos
               </Link>
             </li>
             <li>
