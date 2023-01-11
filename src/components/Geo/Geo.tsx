@@ -183,7 +183,14 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
     });
   };
 
-  if (!geo_query.isLoading && geo_query.data?.length == 0) {
+  if (
+    !geo_query.isLoading &&
+    (geo_query.data?.length == 0 ||
+      (geo_query.data &&
+        (geo_query.data[0]?.country == null ||
+          geo_query.data[0]?.country == "" ||
+          geo_query.data[0]?.country == undefined)))
+  ) {
     return (
       <section
         className="container p-4 flex flex-col items-center border border-black rounded-md mt-4"
