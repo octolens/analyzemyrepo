@@ -274,7 +274,7 @@ model github_users {
 }
 
 //!!! ALL VIEWs SHOULD BE COMMENTED WHEN MAKING db pull or db push
-// WHEN UNCOMENT AND do prisma generate
+//WHEN UNCOMENT AND do prisma generate
 
 // it's a view
 model github_repos_serious_contributors {
@@ -357,4 +357,11 @@ enum DataURLType {
   CompanyChartCommits
   CompanyChartContributors
   CommunityGuidelinesChart
+}
+
+model ai_search_feedback {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  query      String
+  vote       Boolean
 }
