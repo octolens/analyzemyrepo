@@ -5,6 +5,10 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
+<div align="center">
+<a href="https://www.producthunt.com/posts/analyze-my-repo?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-analyze&#0045;my&#0045;repo" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=374646&theme=light" alt="Analyze&#0032;My&#0032;Repo - Free&#0032;analysis&#0032;&#0038;&#0032;insights&#0032;for&#0032;any&#0032;GitHub&#0032;repository | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+</div>
+
 
 
 <!-- PROJECT LOGO -->
