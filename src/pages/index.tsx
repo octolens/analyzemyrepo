@@ -96,7 +96,6 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       </Head>
 
       <div className="min-h-screen flex flex-col bg-neutral">
-        <Banner />
         <Header />
         <div className="container mx-auto flex flex-col items-center mt-14">
           <PHBanner />
