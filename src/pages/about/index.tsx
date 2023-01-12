@@ -69,7 +69,7 @@ const Home: NextPage = () => {
             <p>This project is built with these amazing technologies:</p>
             <ul>
               <li>
-                <strong>creat-t3-app</strong> for the Next.js app with Prisma,
+                <strong>create-t3-app</strong> for the Next.js app with Prisma,
                 TailwindCSS, NextAuth and tRPC
               </li>
               <li>
