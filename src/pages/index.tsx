@@ -261,7 +261,7 @@ const Banner = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Support us &rarr;{" "}
+          Check it out &rarr;{" "}
         </Link>
       </p>
     </div>
