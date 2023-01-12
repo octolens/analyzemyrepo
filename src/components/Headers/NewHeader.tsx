@@ -30,7 +30,7 @@ const Header = () => {
           <Link
             href="https://github.com/CrowdDotDev/analyzemyrepo"
             target="_blank"
-            className="self-center pr-2 md:pr-0"
+            className="self-center pr-2 md:pr-0 hidden sm:block"
           >
             <Image
               width="100"
