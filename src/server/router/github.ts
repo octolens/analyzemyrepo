@@ -61,7 +61,7 @@ export const githubRouter = createRouter()
           method: "GET",
           headers: {
             Accept: "application/vnd.github+json",
-            Authorization: "Bearer " + process.env.GITHUB_ACCESS_TOKEN_2,
+            Authorization: "Bearer " + process.env.GITHUB_ACCESS_TOKEN_3,
           },
         }
       );
@@ -81,7 +81,7 @@ export const githubRouter = createRouter()
           method: "GET",
           headers: {
             Accept: "application/vnd.github+json",
-            Authorization: "Bearer " + process.env.GITHUB_ACCESS_TOKEN_2,
+            Authorization: "Bearer " + process.env.GITHUB_ACCESS_TOKEN_3,
           },
         }
       );
@@ -106,7 +106,7 @@ export const githubRouter = createRouter()
           method: "GET",
           headers: {
             Accept: "application/vnd.github+json",
-            Authorization: "Bearer " + process.env.GITHUB_ACCESS_TOKEN_2,
+            Authorization: "Bearer " + process.env.GITHUB_ACCESS_TOKEN_6,
           },
         }
       );
@@ -126,7 +126,7 @@ export const githubRouter = createRouter()
           method: "GET",
           headers: {
             Accept: "application/vnd.github+json",
-            Authorization: "Bearer " + process.env.GITHUB_ACCESS_TOKEN_2,
+            Authorization: "Bearer " + process.env.GITHUB_ACCESS_TOKEN_6,
           },
         }
       );
@@ -146,7 +146,7 @@ export const githubRouter = createRouter()
           method: "GET",
           headers: {
             Accept: "application/vnd.github+json",
-            Authorization: "Bearer " + process.env.GITHUB_ACCESS_TOKEN_2,
+            Authorization: "Bearer " + process.env.GITHUB_ACCESS_TOKEN_4,
           },
         }
       );
@@ -166,7 +166,7 @@ export const githubRouter = createRouter()
           method: "GET",
           headers: {
             Accept: "application/vnd.github+json",
-            Authorization: "Bearer " + process.env.GITHUB_ACCESS_TOKEN_2,
+            Authorization: "Bearer " + process.env.GITHUB_ACCESS_TOKEN_5,
           },
         }
       );
@@ -233,7 +233,7 @@ export const githubRouter = createRouter()
           method: "GET",
           headers: {
             Accept: "application/vnd.github+json",
-            Authorization: "Bearer " + process.env.GITHUB_ACCESS_TOKEN_2,
+            Authorization: "Bearer " + process.env.GITHUB_ACCESS_TOKEN_5,
           },
         }
       );

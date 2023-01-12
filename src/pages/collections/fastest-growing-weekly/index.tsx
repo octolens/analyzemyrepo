@@ -15,7 +15,7 @@ export async function getStaticProps() {
       orderBy: {
         weekly_star_growth_rate: "desc",
       },
-      take: 100,
+      take: 20,
       select: {
         full_name: true,
         this_week_stars: true,
