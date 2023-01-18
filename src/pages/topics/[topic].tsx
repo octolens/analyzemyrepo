@@ -43,7 +43,6 @@ const capitalize = (s: string) => {
 const Topic = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
-  const host = process.env.NEXT_PUBLIC_HOST;
   return (
     <>
       <Header />
