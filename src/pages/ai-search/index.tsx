@@ -196,7 +196,9 @@ const SearchPage = () => {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pt-4">
                   {search.data.map((repo) => (
-                    <RepoCard repo={repo} />
+                    <div key={repo.full_name}>
+                      <RepoCard repo={repo} />
+                    </div>
                   ))}
                 </div>
               </div>

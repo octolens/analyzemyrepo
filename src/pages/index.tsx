@@ -335,6 +335,7 @@ const PHBanner = () => {
     <a
       href="https://www.producthunt.com/posts/analyze-my-repo?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-analyze&#0045;my&#0045;repo"
       target="_blank"
+      rel="noopener noreferrer"
     >
       <img
         src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=374646&theme=light"

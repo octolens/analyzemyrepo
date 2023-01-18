@@ -320,7 +320,7 @@ const RepoDescription = ({ full_name }: { full_name: string }) => {
               <div className="text-gray-700 max-w-xs lg:max-w-[400px] flex flex-wrap gap-2">
                 {repo.data?.topics?.length > 0
                   ? repo.data?.topics?.slice(0, 10).map((topic: string) => (
-                      <Link href={`/topics/${topic}`}>
+                      <Link href={`/topics/${topic}`} key={`${topic}-analyze`}>
                         <span
                           className="px-2 bg-primary/10 rounded-lg max-w-xs lg:max-w-[400px] break-words hover:underline"
                           key={`${full_name}-${topic}`}
