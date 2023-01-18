@@ -9,6 +9,12 @@ import { InferGetStaticPropsType } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Footer, EmailForm } from "../components/Footer/Footer";
+import { Prisma } from "@prisma/client";
+
+type Topic = {
+  topic: string;
+  topic_count: number;
+};
 
 export async function getStaticProps() {
   const data =
@@ -25,6 +31,27 @@ export async function getStaticProps() {
       },
     });
 
+  const topics = await prisma.$queryRaw<Topic[]>(
+    Prisma.sql`select
+                    topic,
+                    topic_count::integer
+                from
+                (
+                    select
+                    unnest(string_to_array(topics, '|')) as topic,
+                    count(*) as topic_count
+                    from
+                    github_clean_repos
+                    group by
+                    1
+                ) q
+                where topic is not null
+                order by
+                    2 desc
+                limit 20
+                `
+  );
+
   const dates =
     await prisma.github_repos_fastest_growing_weekly_by_stars.findFirst();
   const this_week = dates?.this_week_parsed_at;
@@ -40,6 +67,8 @@ export async function getStaticProps() {
         month: "short",
         day: "numeric",
       }),
+
+      topics: topics,
     },
     revalidate: 60 * 60 * 24, // 24 hours
   };
@@ -104,22 +133,22 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
           <h1 className="mb-4 text-4xl font-bold tracking-tight text-gray-900 lg:font-extrabold lg:text-6xl lg:leading-none dark:text-white lg:text-center xl:px-36 lg:mb-7">
             Discover useful insights about your open-source project
           </h1>
-          <p className="mb-10 text-lg font-normal text-gray-500 dark:text-gray-400 lg:text-center lg:text-xl xl:px-60">
+          <h2 className="mb-10 text-lg font-normal text-gray-500 dark:text-gray-400 lg:text-center lg:text-xl xl:px-60">
             A free tool to learn about adoption, contributions, diversity and
-            governance of your GitHub repo
-          </p>
+            governance of any GitHub repo.
+          </h2>
           <div className="flex w-full">
             <div className="mx-auto flex flex-col w-4/5 md:w-1/2 mb-14 md:mb-28">
               <SearchBar />
-              <p className="text-center pt-2 text-gray-500">
+              <h3 className="text-center pt-2 text-gray-500">
                 Search for a GitHub repo or explore the trending projects below
                 👇
-              </p>
+              </h3>
             </div>
           </div>
-          <h2 className="mb-6 text-3xl font-extrabold tracking-tight leading-tight text-gray-900 lg:text-center dark:text-white md:text-4xl">
-            The fastest growing repos
-          </h2>
+          <h3 className="mb-6 text-3xl font-extrabold tracking-tight leading-tight text-gray-900 lg:text-center dark:text-white md:text-4xl">
+            Explore fastest growing repos
+          </h3>
           <p className="mb-6 text-lg font-normal text-gray-500 dark:text-gray-400 lg:text-center lg:text-xl lg:px-64 lg:mb-10 md:whitespace-nowrap">
             Top 10 fastest growing repos on GitHub with 1,000+ stars from{" "}
             {props.last_week} to {props.this_week}
@@ -127,6 +156,19 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
           <FastestGrowingRepos props={props} />
           <Link
             href="/collections/fastest-growing-weekly"
+            className="mt-6 underline underline-offset-2 decoration-primary"
+          >
+            See more
+          </Link>
+          <h3 className="mb-6 text-3xl font-extrabold tracking-tight leading-tight text-gray-900 lg:text-center dark:text-white md:text-4xl mt-14">
+            Explore popular topics
+          </h3>
+          <p className="mb-6 text-lg font-normal text-gray-500 dark:text-gray-400 lg:text-center lg:text-xl lg:px-64 lg:mb-10 md:whitespace-nowrap">
+            The 20 most popular topics on GitHub
+          </p>
+          <PopularTopics props={props} />
+          <Link
+            href="/topics"
             className="mt-6 underline underline-offset-2 decoration-primary"
           >
             See more
@@ -168,6 +210,27 @@ const Announcement = () => {
         ></path>
       </svg>
     </Link>
+  );
+};
+
+const PopularTopics = ({
+  props,
+}: {
+  props: InferGetStaticPropsType<typeof getStaticProps>;
+}) => {
+  return (
+    <div className="flex flex-wrap justify-center gap-4 pt-4 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-xl">
+      {props.topics.map((topic, index) => (
+        <div
+          className="flex flex-col bg-primary/10 rounded-lg shadow-md p-4 mb-4 text-primary/90 dark:bg-gray-700 dark:text-gray-400 hover:shadow-lg"
+          key={topic.topic}
+        >
+          <Link href={`/topics/${topic.topic}`} className="hover:underline">
+            {topic.topic}
+          </Link>
+        </div>
+      ))}
+    </div>
   );
 };
 

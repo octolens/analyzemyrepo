@@ -11,9 +11,23 @@ export async function getServerSideProps(
 ) {
   const data = await prisma.github_clean_repos.findMany({
     where: {
-      topics: {
-        contains: context.params?.topic,
-      },
+      OR: [
+        {
+          topics: {
+            contains: `|${context.params?.topic}|`,
+          },
+        },
+        {
+          topics: {
+            contains: `|${context.params?.topic}`,
+          },
+        },
+        {
+          topics: {
+            contains: `${context.params?.topic}|`,
+          },
+        },
+      ],
     },
     orderBy: {
       stargazers_count: "desc",
@@ -46,10 +60,13 @@ const Topic = (
   return (
     <>
       <Header />
-      <div className="container mx-auto flex flex-col items-center">
-        <h1 className="font-extrabold text-5xl pt-10 sticky before:content-['__#']">
+      <div className="container mx-auto flex flex-col items-center pt-28">
+        <h1 className="text-center mb-4 text-4xl font-bold tracking-tight text-gray-900 lg:font-extrabold lg:text-6xl lg:leading-none dark:text-white lg:text-center xl:px-36 lg:mb-7 before:content-['#']">
           {props.topic && capitalize(props.topic)}
         </h1>
+        <h2 className="mb-10 text-center text-lg font-normal text-gray-500 dark:text-gray-400 lg:text-center lg:text-xl xl:px-60 md:whitespace-nowrap">
+          Most popular {props.topic && capitalize(props.topic)} repos on GitHub
+        </h2>
         {/* <ReposForTheTopic props={props} /> */}
         <div className="flex flex-col gap-4 pt-4">
           {props.data.map((repo, index) => (
