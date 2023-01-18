@@ -75,7 +75,7 @@ model github_clean_repos {
   pushed_at              DateTime? @db.Timestamp(6)
   homepage               String?
   size                   BigInt?
-  stargazers_count       BigInt?
+  stargazers_count       Int?
   watchers_count         BigInt?
   forks_count            BigInt?
   language               String?
