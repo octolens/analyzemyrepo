@@ -5,6 +5,7 @@ import Header from "../../components/Headers/NewHeaderSecondary";
 import Image from "next/image";
 import { GiRoundStar } from "react-icons/gi";
 import { EmailForm, Footer } from "../../components/Footer/Footer";
+import Head from "next/head";
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext<{ topic: string }>
@@ -57,8 +58,54 @@ const capitalize = (s: string) => {
 const Topic = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
+  const host = process.env.NEXT_PUBLIC_HOST;
   return (
     <>
+      <Head>
+        <title>
+          Most popular {props.topic && capitalize(props.topic)} repos on GitHub
+        </title>
+        <meta
+          name="title"
+          content={`Most popular ${
+            props.topic && capitalize(props.topic)
+          } repos on GitHub`}
+        />
+        <meta
+          name="description"
+          content={`Find the most popular ${
+            props.topic && capitalize(props.topic)
+          } repos on GitHub.`}
+        />
+        <meta name="og:url" content={`${host}/topics/${props.topic}`} />
+        <meta name="og:type" content="website" />
+        <meta
+          name="og:title"
+          content={`Most popular ${
+            props.topic && capitalize(props.topic)
+          } repos on GitHub`}
+        />
+        <meta
+          name="og:description"
+          content={`Find the most popular ${
+            props.topic && capitalize(props.topic)
+          } repos on GitHub.`}
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@CrowdDotDev" />
+        <meta
+          name="twitter:title"
+          content={`Most popular ${
+            props.topic && capitalize(props.topic)
+          } repos on GitHub`}
+        />
+        <meta
+          name="twitter:description"
+          content={`Find the most popular ${
+            props.topic && capitalize(props.topic)
+          } repos on GitHub.`}
+        />
+      </Head>
       <Header />
       <div className="container mx-auto flex flex-col items-center pt-28">
         <h1 className="text-center mb-4 text-4xl font-bold tracking-tight text-gray-900 lg:font-extrabold lg:text-6xl lg:leading-none dark:text-white lg:text-center xl:px-36 lg:mb-7 before:content-['#']">

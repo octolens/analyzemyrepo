@@ -4,6 +4,7 @@ import { Prisma } from "@prisma/client";
 import Header from "../../components/Headers/NewHeaderSecondary";
 import { EmailForm, Footer } from "../../components/Footer/Footer";
 import Link from "next/link";
+import Head from "next/head";
 
 type Topic = {
   topic: string;
@@ -40,8 +41,31 @@ export async function getStaticProps() {
 }
 
 const Topics = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const host = process.env.NEXT_PUBLIC_HOST;
   return (
     <>
+      <Head>
+        <title>Most popular topics on GitHub</title>
+        <meta name="title" content={`Most popular topics on GitHub`} />
+        <meta
+          name="description"
+          content={`Find the most popular topics on GitHub ranked by number of repositories.`}
+        />
+        <meta name="og:url" content={`${host}/topics`} />
+        <meta name="og:type" content="website" />
+        <meta name="og:title" content={`Most popular topics on GitHub`} />
+        <meta
+          name="og:description"
+          content={`Find the most popular topics on GitHub ranked by number of repositories.`}
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@CrowdDotDev" />
+        <meta name="twitter:title" content={`Most popular topics on GitHub`} />
+        <meta
+          name="twitter:description"
+          content={`Find the most popular topics on GitHub ranked by number of repositories.`}
+        />
+      </Head>
       <Header />
       <div className="container mx-auto flex flex-col items-center">
         <h1 className="font-extrabold text-5xl pt-28 sticky">
