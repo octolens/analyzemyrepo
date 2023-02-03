@@ -250,11 +250,11 @@ const GeoSection = ({ section_id = "Geo Map" }: { section_id: string }) => {
       />
       {json_query.isLoading || geo_query.isLoading ? (
         // skeleton
-        <div className="container h-64 md:h-96 mx-auto animate-pulse bg-gray-200 rounded-lg mt-4"></div>
+        <div className="container w-72 h-64 md:w-[700px] md:h-96 lg:w-full lg:h-96 mx-auto pb-4 md:pb-0 animate-pulse bg-gray-200 rounded-lg mt-4"></div>
       ) : (
-        <div className="flex flex-col lg:flex-row mt-4 mx-auto">
+        <div className="flex flex-col lg:flex-row mt-4 mx-auto w-full">
           <div
-            className="container w-72 h-64 md:w-[700px] md:h-96 lg:w-full lg:h-96 mx-auto pb-4 md:pb-0"
+            className="container w-full h-64 md:w-full md:h-96 lg:w-full lg:h-96 mx-auto pb-4 md:pb-0"
             id="geodistribution-chart"
           >
             <GeoChart

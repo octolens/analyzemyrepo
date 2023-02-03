@@ -100,7 +100,8 @@ export const getStaticPaths: GetStaticPaths = () => {
 
 const RepoPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
-  const { org_name, repo_name } = router.query;
+  const org_name = props.org_name;
+  const repo_name = props.repo_name;
 
   const repo = trpc.useQuery([
     "github.get_github_repo",
@@ -229,17 +230,21 @@ const RepoPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                 <div className="lg:row-start-1 lg:row-span-1 lg:col-start-2 lg:col-span-1 container w-full mx-auto px-4 flex flex-col gap-4 pb-2 pt-3">
                   <h1 className="self-center text-xl lg:text-2xl font-semibold text-center">
                     Analyze{" "}
-                    <Link
-                      href={`https://github.com/${full_name}`}
-                      rel="noopener"
-                      target="_blank"
-                      className="underline underline-offset-4 hover:text-primary inline-flex items-center gap-2"
-                    >
-                      <span className="truncate max-w-xs lg:max-w-md">
-                        {full_name}
-                      </span>
-                      <GoLinkExternal className="mt-2 hover:fill-primary" />
-                    </Link>
+                    {full_name == "undefined/undefined" ? (
+                      "..."
+                    ) : (
+                      <Link
+                        href={`https://github.com/${full_name}`}
+                        rel="noopener"
+                        target="_blank"
+                        className="underline underline-offset-4 hover:text-primary inline-flex items-center gap-2"
+                      >
+                        <span className="truncate max-w-xs lg:max-w-md">
+                          {full_name}
+                        </span>
+                        <GoLinkExternal className="mt-2 hover:fill-primary" />
+                      </Link>
+                    )}
                   </h1>
                   <RepoDescription full_name={full_name} />
                 </div>
@@ -285,7 +290,7 @@ const RepoDescription = ({ full_name }: { full_name: string }) => {
     { owner: org_name as string, repo: repo_name as string },
   ]);
 
-  if (repo.isLoading) {
+  if (repo.isLoading || org_name == "undefined" || repo_name == "undefined") {
     return (
       <div className="w-full h-28 bg-gray-200 animate-pulse rounded-lg"></div>
     );
