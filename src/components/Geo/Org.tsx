@@ -26,7 +26,7 @@ const OrgChart = ({
 
   if (data.isLoading) {
     return (
-      <div className="container h-96 mx-auto animate-pulse bg-gray-200 rounded-lg mt-4"></div>
+      <div className="container h-96 mx-auto w-full animate-pulse bg-gray-200 rounded-lg mt-4"></div>
     );
   }
 
@@ -154,7 +154,7 @@ const OrgSubSection = () => {
           }
         />
       </div>
-      <div className="flex flex-col gap-3 pt-4 items-center justify-center">
+      <div className="flex flex-col gap-3 pt-4 mt-4 items-center justify-center">
         <InsightCompanyCard />
         <InsightShareCard />
       </div>
