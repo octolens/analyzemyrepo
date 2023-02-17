@@ -113,7 +113,7 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <>
       <Head>
-        <title>analyzemyrepo.com | Community Insights for GitHub repos</title>
+        <title> Analyze any GitHub repo | analyzemyrepo.com</title>
         <meta
           name="description"
           content="Discover useful insights about your repo"
@@ -126,12 +126,12 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
       <div className="min-h-screen flex flex-col bg-neutral">
         <Header />
-        <div className="container mx-auto flex flex-col items-center mt-14">
+        {/* <div className="container mx-auto flex flex-col items-center mt-14">
           <PHBanner />
-        </div>
+        </div> */}
         <main className="container mx-auto flex flex-col items-center p-12 pt-14 flex-grow max-w-screen-xl">
           <h1 className="mb-4 text-4xl font-bold tracking-tight text-gray-900 lg:font-extrabold lg:text-6xl lg:leading-none dark:text-white lg:text-center xl:px-36 lg:mb-7">
-            Discover useful insights about your open-source project
+            Discover insights about any open-source project
           </h1>
           <h2 className="mb-10 text-lg font-normal text-gray-500 dark:text-gray-400 lg:text-center lg:text-xl xl:px-60">
             A free tool to learn about adoption, contributions, diversity and
@@ -330,20 +330,20 @@ const Banner = () => {
   );
 };
 
-const PHBanner = () => {
-  return (
-    <a
-      href="https://www.producthunt.com/posts/analyze-my-repo?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-analyze&#0045;my&#0045;repo"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <img
-        src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=374646&theme=light"
-        alt="Analyze&#0032;My&#0032;Repo - Free&#0032;analysis&#0032;&#0038;&#0032;insights&#0032;for&#0032;any&#0032;GitHub&#0032;repository | Product Hunt"
-        style={{ width: 250, height: 54 }}
-        width="250"
-        height="54"
-      />
-    </a>
-  );
-};
+// const PHBanner = () => {
+//   return (
+//     <a
+//       href="https://www.producthunt.com/posts/analyze-my-repo?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-analyze&#0045;my&#0045;repo"
+//       target="_blank"
+//       rel="noopener noreferrer"
+//     >
+//       <img
+//         src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=374646&theme=light"
+//         alt="Analyze&#0032;My&#0032;Repo - Free&#0032;analysis&#0032;&#0038;&#0032;insights&#0032;for&#0032;any&#0032;GitHub&#0032;repository | Product Hunt"
+//         style={{ width: 250, height: 54 }}
+//         width="250"
+//         height="54"
+//       />
+//     </a>
+//   );
+// };

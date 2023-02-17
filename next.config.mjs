@@ -19,5 +19,6 @@ export default defineNextConfig({
     domains: ["github.com", "img.shields.io"],
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    unoptimized: true,
   },
 });
