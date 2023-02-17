@@ -63,19 +63,23 @@ const Topic = (
     <>
       <Head>
         <title>
-          Most popular {props.topic && capitalize(props.topic)} repos on GitHub
+          Discover Popular {props.topic && capitalize(props.topic)} Projects on
+          GitHub | analyzemyrepo.com
         </title>
         <meta
           name="title"
-          content={`Most popular ${
+          content={`Discover Popular ${
             props.topic && capitalize(props.topic)
-          } repos on GitHub`}
+          } Projects on
+          GitHub | analyzemyrepo.com`}
         />
         <meta
           name="description"
-          content={`Find the most popular ${
+          content={`Explore the most popular open-source ${
             props.topic && capitalize(props.topic)
-          } repos on GitHub.`}
+          } projects sorted by stars with AnalyzeMyRepo. Our curated collection allows you to evaluate essential metrics like stars growth, contributions, diversity, bus factor, and community governance, to choose the right ${
+            props.topic && capitalize(props.topic)
+          } project with a thriving open-source community. Optimize your project's performance, security, and collaborate with a vibrant community using AnalyzeMyRepo.`}
         />
         <meta name="og:url" content={`${host}/topics/${props.topic}`} />
         <meta name="og:type" content="website" />
@@ -87,9 +91,11 @@ const Topic = (
         />
         <meta
           name="og:description"
-          content={`Find the most popular ${
+          content={`Explore the most popular open-source ${
             props.topic && capitalize(props.topic)
-          } repos on GitHub.`}
+          } projects sorted by stars with AnalyzeMyRepo. Our curated collection allows you to evaluate essential metrics like stars growth, contributions, diversity, bus factor, and community governance, to choose the right ${
+            props.topic && capitalize(props.topic)
+          } project with a thriving open-source community. Optimize your project's performance, security, and collaborate with a vibrant community using AnalyzeMyRepo.`}
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@CrowdDotDev" />
@@ -101,18 +107,23 @@ const Topic = (
         />
         <meta
           name="twitter:description"
-          content={`Find the most popular ${
+          content={`Explore the most popular open-source ${
             props.topic && capitalize(props.topic)
-          } repos on GitHub.`}
+          } projects sorted by stars with AnalyzeMyRepo. Our curated collection allows you to evaluate essential metrics like stars growth, contributions, diversity, bus factor, and community governance, to choose the right ${
+            props.topic && capitalize(props.topic)
+          } project with a thriving open-source community. Optimize your project's performance, security, and collaborate with a vibrant community using AnalyzeMyRepo.`}
         />
       </Head>
       <Header />
       <div className="container mx-auto flex flex-col items-center pt-28">
         <h1 className="text-center mb-4 text-4xl font-bold tracking-tight text-gray-900 lg:font-extrabold lg:text-6xl lg:leading-none dark:text-white lg:text-center xl:px-36 lg:mb-7 before:content-['#']">
-          {props.topic && capitalize(props.topic)}
+          Discover the Best Open-Source {props.topic && capitalize(props.topic)}{" "}
+          Projects Sorted by Stars
         </h1>
         <h2 className="mb-10 text-center text-lg font-normal text-gray-500 dark:text-gray-400 lg:text-center lg:text-xl xl:px-60 md:whitespace-nowrap">
-          Most popular {props.topic && capitalize(props.topic)} repos on GitHub
+          Get Insights into Stars Growth, Contributions, Diversity, Bus Factor,
+          and Community Governance. Optimize Your Project's Performance and
+          Collaborate with a Thriving Community.
         </h2>
         {/* <ReposForTheTopic props={props} /> */}
         <div className="flex flex-col gap-4 pt-4">

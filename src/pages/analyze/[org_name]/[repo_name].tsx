@@ -160,9 +160,7 @@ const RepoPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         />
         <meta
           name="description"
-          content={`Insights and analytics about the GitHub repository ${org_name}/${repo_name}. ${
-            repo?.data?.description || ""
-          }`}
+          content={`Get a detailed analysis of ${repo_name}, ${org_name}'s code repository, with AnalyzeMyRepo. Discover essential metrics like stars growth, contributions, diversity, bus factor, and community governance to foster a thriving open-source community. Try AnalyzeMyRepo today for actionable insights that can help you build a more collaborative and sustainable development environment.`}
         />
         <meta
           name="og:url"
@@ -175,9 +173,7 @@ const RepoPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         />
         <meta
           name="og:description"
-          content={`Insights and analytics about the GitHub repository ${org_name}/${repo_name}. ${
-            repo?.data?.description || ""
-          }`}
+          content={`Get a detailed analysis of ${repo_name}, ${org_name}'s code repository, with AnalyzeMyRepo. Discover essential metrics like stars growth, contributions, diversity, bus factor, and community governance to foster a thriving open-source community. Try AnalyzeMyRepo today for actionable insights that can help you build a more collaborative and sustainable development environment.`}
         />
         <meta
           name="og:image"
@@ -191,9 +187,7 @@ const RepoPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         />
         <meta
           name="twitter:description"
-          content={`Insights and analytics about the GitHub repository ${org_name}/${repo_name}. ${
-            repo?.data?.description || ""
-          }`}
+          content={`Get a detailed analysis of ${repo_name}, ${org_name}'s code repository, with AnalyzeMyRepo. Discover essential metrics like stars growth, contributions, diversity, bus factor, and community governance to foster a thriving open-source community. Try AnalyzeMyRepo today for actionable insights that can help you build a more collaborative and sustainable development environment.`}
         />
         <meta
           name="twitter:image"
