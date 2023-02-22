@@ -113,10 +113,12 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <>
       <Head>
-        <title> Analyze any GitHub repo | analyzemyrepo.com</title>
+        <title>
+          Analyze Any GitHub Repository for Free | analyzemyrepo.com
+        </title>
         <meta
           name="description"
-          content="Discover useful insights about your repo"
+          content="AnalyzeMyRepo is a free tool to analyze any GitHub repository. Get detailed insights into adoption, contributions, diversity and community governance. Check it out now to start analyzing your repositories!"
         />
         <meta
           name="google-site-verification"
@@ -131,11 +133,11 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         </div> */}
         <main className="container mx-auto flex flex-col items-center p-12 pt-14 flex-grow max-w-screen-xl">
           <h1 className="mb-4 text-4xl font-bold tracking-tight text-gray-900 lg:font-extrabold lg:text-6xl lg:leading-none dark:text-white lg:text-center xl:px-36 lg:mb-7">
-            Discover insights about any open-source project
+            Analyze Any GitHub Repository for Free with AnalyzeMyRepo
           </h1>
           <h2 className="mb-10 text-lg font-normal text-gray-500 dark:text-gray-400 lg:text-center lg:text-xl xl:px-60">
-            A free tool to learn about adoption, contributions, diversity and
-            governance of any GitHub repo.
+            Get In-Depth Insights into adoption, contributions, diversity,
+            community governance and more.
           </h2>
           <div className="flex w-full">
             <div className="mx-auto flex flex-col w-4/5 md:w-1/2 mb-14 md:mb-28">

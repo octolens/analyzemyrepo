@@ -122,7 +122,7 @@ const Topic = (
         </h1>
         <h2 className="mb-10 text-center text-lg font-normal text-gray-500 dark:text-gray-400 lg:text-center lg:text-xl xl:px-60 md:whitespace-nowrap">
           Get Insights into Stars Growth, Contributions, Diversity, Bus Factor,
-          and Community Governance. Optimize Your Project's Performance and
+          and Community Governance. Optimize Your Project&apos;s Performance and
           Collaborate with a Thriving Community.
         </h2>
         {/* <ReposForTheTopic props={props} /> */}
