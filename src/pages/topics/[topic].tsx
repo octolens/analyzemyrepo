@@ -116,11 +116,11 @@ const Topic = (
       </Head>
       <Header />
       <div className="container mx-auto flex flex-col items-center pt-28">
-        <h1 className="text-center mb-4 text-4xl font-bold tracking-tight text-gray-900 lg:font-extrabold lg:text-6xl lg:leading-none dark:text-white lg:text-center xl:px-36 lg:mb-7 before:content-['#']">
+        <h1 className="text-center mb-4 text-4xl font-bold tracking-tight text-gray-900 lg:font-extrabold lg:text-6xl lg:leading-none dark:text-white lg:text-center xl:px-36 lg:mb-7">
           Discover the Best Open-Source {props.topic && capitalize(props.topic)}{" "}
           Projects Sorted by Stars
         </h1>
-        <h2 className="mb-10 text-center text-lg font-normal text-gray-500 dark:text-gray-400 lg:text-center lg:text-xl xl:px-60 md:whitespace-nowrap">
+        <h2 className="mb-10 text-center text-lg font-normal text-gray-500 dark:text-gray-400 lg:text-center lg:text-xl xl:px-60">
           Get Insights into Stars Growth, Contributions, Diversity, Bus Factor,
           and Community Governance. Optimize Your Project&apos;s Performance and
           Collaborate with a Thriving Community.
