@@ -127,10 +127,8 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       </Head>
 
       <div className="min-h-screen flex flex-col bg-neutral">
+        <Banner />
         <Header />
-        {/* <div className="container mx-auto flex flex-col items-center mt-14">
-          <PHBanner />
-        </div> */}
         <main className="container mx-auto flex flex-col items-center p-12 pt-14 flex-grow max-w-screen-xl">
           <h1 className="mb-4 text-4xl font-bold tracking-tight text-gray-900 lg:font-extrabold lg:text-6xl lg:leading-none dark:text-white lg:text-center xl:px-36 lg:mb-7">
             Analyze Any GitHub Repository for Free with AnalyzeMyRepo
@@ -318,10 +316,10 @@ const Banner = () => {
   return (
     <div className="bg-primary/90 px-4 py-3 pr-14 text-white relative">
       <p className="text-left text-sm font-medium sm:text-center">
-        We are live on ProductHunt!{" "}
+        Eagle Eye by crowd.dev is live on ProductHunt!{" "}
         <Link
           className="underline"
-          href="https://www.producthunt.com/posts/analyze-my-repo?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-analyze&#0045;my&#0045;repo"
+          href="https://www.producthunt.com/posts/eagle-eye-2"
           target="_blank"
           rel="noopener noreferrer"
         >
