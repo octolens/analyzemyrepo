@@ -1,5 +1,5 @@
 import { Popover, ArrowContainer, PopoverPosition } from "react-tiny-popover";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const Tooltip = ({
   tip,
@@ -10,6 +10,7 @@ const Tooltip = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isInside, setIsInside] = useState(false);
+  const isMouseOverButton = useRef(false);
 
   const positions: PopoverPosition[] = ["top", "bottom", "left", "right"];
   return (
@@ -45,10 +46,14 @@ const Tooltip = ({
       )}
     >
       <button
-        onMouseEnter={() => setIsOpen(true)}
+        onMouseEnter={() => {
+          isMouseOverButton.current = true;
+          setIsOpen(true);
+        }}
         onMouseLeave={async () => {
+          isMouseOverButton.current = false;
           await new Promise((r) => setTimeout(r, 500));
-          if (!isInside) {
+          if (!isInside && !isMouseOverButton.current) {
             setIsOpen(false);
           }
         }}
