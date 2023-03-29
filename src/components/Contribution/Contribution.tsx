@@ -106,7 +106,7 @@ const ContributionSection = ({
         />
       </div>
       <p className="text-center pt-1 text-gray-500 text-sm">
-        Top 10 contibutors to the repo and their shares
+        Top 10 contributors to the repo and their shares
       </p>
       {response.isLoading && response_2.isLoading ? (
         <div className="h-96 container px-4 mx-auto overflow-hidden bg-gray-200 animate-pulse"></div>
