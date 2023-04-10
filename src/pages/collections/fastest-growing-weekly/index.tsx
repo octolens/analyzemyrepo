@@ -10,8 +10,8 @@ import Link from "next/link";
 import { Footer, EmailForm } from "../../../components/Footer/Footer";
 
 export async function getStaticProps() {
-  const data =
-    await prisma.github_repos_fastest_growing_weekly_by_stars.findMany({
+  const [data, dates] = await Promise.all([
+    prisma.github_repos_fastest_growing_weekly_by_stars.findMany({
       orderBy: {
         weekly_star_growth_rate: "desc",
       },
@@ -22,10 +22,10 @@ export async function getStaticProps() {
         last_week_stars: true,
         weekly_star_growth_rate: true,
       },
-    });
+    }),
 
-  const dates =
-    await prisma.github_repos_fastest_growing_weekly_by_stars.findFirst();
+    prisma.github_repos_fastest_growing_weekly_by_stars.findFirst(),
+  ]);
   const this_week = dates?.this_week_parsed_at;
   const last_week = dates?.last_week_parsed_at;
   return {

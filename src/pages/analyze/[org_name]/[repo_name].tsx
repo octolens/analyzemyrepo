@@ -44,45 +44,47 @@ export async function getStaticProps(
   const org_name = context.params?.org_name as string;
   const repo_name = context.params?.repo_name as string;
 
-  await ssg.prefetchQuery("postgres.get_repo_rank", {
-    owner: org_name as string,
-    repo: repo_name as string,
-  });
+  await Promise.all([
+    ssg.prefetchQuery("postgres.get_repo_rank", {
+      owner: org_name as string,
+      repo: repo_name as string,
+    }),
 
-  await ssg.prefetchQuery("github.get_github_repo", {
-    owner: org_name as string,
-    repo: repo_name as string,
-  });
+    ssg.prefetchQuery("github.get_github_repo", {
+      owner: org_name as string,
+      repo: repo_name as string,
+    }),
 
-  await ssg.prefetchQuery("github.get_github_repo_contributors", {
-    owner: org_name as string,
-    repo: repo_name as string,
-  });
+    ssg.prefetchQuery("github.get_github_repo_contributors", {
+      owner: org_name as string,
+      repo: repo_name as string,
+    }),
 
-  await ssg.prefetchQuery("postgres.get_serious_contributors", {
-    owner: org_name as string,
-    repo: repo_name as string,
-  });
+    ssg.prefetchQuery("postgres.get_serious_contributors", {
+      owner: org_name as string,
+      repo: repo_name as string,
+    }),
 
-  await ssg.prefetchQuery("github.get_contributions_count", {
-    owner: org_name as string,
-    repo: repo_name as string,
-  });
+    ssg.prefetchQuery("github.get_contributions_count", {
+      owner: org_name as string,
+      repo: repo_name as string,
+    }),
 
-  await ssg.prefetchQuery("postgres.get_repo_contributors_countries", {
-    owner: org_name as string,
-    repo: repo_name as string,
-  });
+    ssg.prefetchQuery("postgres.get_repo_contributors_countries", {
+      owner: org_name as string,
+      repo: repo_name as string,
+    }),
 
-  await ssg.prefetchQuery("postgres.get_repo_contributors_companies", {
-    owner: org_name as string,
-    repo: repo_name as string,
-  });
+    ssg.prefetchQuery("postgres.get_repo_contributors_companies", {
+      owner: org_name as string,
+      repo: repo_name as string,
+    }),
 
-  await ssg.prefetchQuery("github.get_community_health", {
-    owner: org_name as string,
-    repo: repo_name as string,
-  });
+    ssg.prefetchQuery("github.get_community_health", {
+      owner: org_name as string,
+      repo: repo_name as string,
+    }),
+  ]);
 
   // Make sure to return { props: { trpcState: ssg.dehydrate() } }
   return {
