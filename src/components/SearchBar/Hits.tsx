@@ -40,7 +40,7 @@ const CustomHits = ({ searchState, searchResults }: any) => {
       >
         {hits.map((hit: any) => (
           <li key={hit.objectID} className="search-hits first:font-extrabold">
-            <Link className="cursor-pointer" href={`/analyze/${hit.full_name}`}>
+            <Link className="cursor-pointer" href={`/analyze/${searchState.query}`}>
               {hit.full_name}
             </Link>
           </li>
