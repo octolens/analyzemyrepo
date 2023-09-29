@@ -17,19 +17,19 @@ type Topic = {
 };
 
 export async function getStaticProps() {
-  const data =
-    await prisma.github_repos_fastest_growing_weekly_by_stars.findMany({
-      orderBy: {
-        weekly_star_growth_rate: "desc",
-      },
-      take: 10,
-      select: {
-        full_name: true,
-        this_week_stars: true,
-        last_week_stars: true,
-        weekly_star_growth_rate: true,
-      },
-    });
+  // const data =
+  //   await prisma.github_repos_fastest_growing_weekly_by_stars.findMany({
+  //     orderBy: {
+  //       weekly_star_growth_rate: "desc",
+  //     },
+  //     take: 10,
+  //     select: {
+  //       full_name: true,
+  //       this_week_stars: true,
+  //       last_week_stars: true,
+  //       weekly_star_growth_rate: true,
+  //     },
+  //   });
 
   const topics = await prisma.$queryRaw<Topic[]>(
     Prisma.sql`select
@@ -52,21 +52,21 @@ export async function getStaticProps() {
                 `
   );
 
-  const dates =
-    await prisma.github_repos_fastest_growing_weekly_by_stars.findFirst();
-  const this_week = dates?.this_week_parsed_at;
-  const last_week = dates?.last_week_parsed_at;
+  // const dates =
+  //   await prisma.github_repos_fastest_growing_weekly_by_stars.findFirst();
+  // const this_week = dates?.this_week_parsed_at;
+  // const last_week = dates?.last_week_parsed_at;
   return {
     props: {
-      data: data,
-      this_week: this_week?.toLocaleString("en-US", {
-        month: "short",
-        day: "numeric",
-      }),
-      last_week: last_week?.toLocaleString("en-US", {
-        month: "short",
-        day: "numeric",
-      }),
+      // data: data,
+      // this_week: this_week?.toLocaleString("en-US", {
+      //   month: "short",
+      //   day: "numeric",
+      // }),
+      // last_week: last_week?.toLocaleString("en-US", {
+      //   month: "short",
+      //   day: "numeric",
+      // }),
 
       topics: topics,
     },
@@ -127,7 +127,6 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       </Head>
 
       <div className="min-h-screen flex flex-col bg-neutral">
-        <Banner />
         <Header />
         <main className="container mx-auto flex flex-col items-center p-12 pt-14 flex-grow max-w-screen-xl">
           <h1 className="mb-4 text-4xl font-bold tracking-tight text-gray-900 lg:font-extrabold lg:text-6xl lg:leading-none dark:text-white lg:text-center xl:px-36 lg:mb-7">
@@ -138,28 +137,27 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             community governance and more.
           </h2>
           <div className="flex w-full">
-            <div className="mx-auto flex flex-col w-4/5 md:w-1/2 mb-14 md:mb-28">
+            <div className="mx-auto flex flex-col w-4/5 md:w-1/2 mb-14 md:mb-2">
               <SearchBar />
               <h3 className="text-center pt-2 text-gray-500">
-                Search for a GitHub repo or explore the trending projects below
-                👇
+                Search for a GitHub repo 👇
               </h3>
             </div>
           </div>
-          <h3 className="mb-6 text-3xl font-extrabold tracking-tight leading-tight text-gray-900 lg:text-center dark:text-white md:text-4xl">
+          {/* <h3 className="mb-6 text-3xl font-extrabold tracking-tight leading-tight text-gray-900 lg:text-center dark:text-white md:text-4xl">
             Explore fastest growing repos
           </h3>
           <p className="mb-6 text-lg font-normal text-gray-500 dark:text-gray-400 lg:text-center lg:text-xl lg:px-64 lg:mb-10 md:whitespace-nowrap">
             Top 10 fastest growing repos on GitHub with 1,000+ stars from{" "}
             {props.last_week} to {props.this_week}
-          </p>
-          <FastestGrowingRepos props={props} />
-          <Link
+          </p> */}
+          {/* <FastestGrowingRepos props={props} /> */}
+          {/* <Link
             href="/collections/fastest-growing-weekly"
             className="mt-6 underline underline-offset-2 decoration-primary"
           >
             See more
-          </Link>
+          </Link> */}
           <h3 className="mb-6 text-3xl font-extrabold tracking-tight leading-tight text-gray-900 lg:text-center dark:text-white md:text-4xl mt-14">
             Explore popular topics
           </h3>
