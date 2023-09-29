@@ -30,7 +30,7 @@ const Header = () => {
           <Link
             href="https://github.com/CrowdDotDev/analyzemyrepo"
             target="_blank"
-            className="self-center pr-2 md:pr-0 hidden sm:block"
+            className="self-center pr-2 md:pr-0"
           >
             <Image
               width="100"
@@ -41,7 +41,7 @@ const Header = () => {
             ></Image>
           </Link>
 
-          <button
+          {/* <button
             data-collapse-toggle="navbar-cta"
             type="button"
             className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
@@ -63,7 +63,7 @@ const Header = () => {
                 clipRule="evenodd"
               ></path>
             </svg>
-          </button>
+          </button> */}
         </div>
         <div
           className={
@@ -73,7 +73,7 @@ const Header = () => {
           id="navbar-cta"
         >
           <ul className="flex flex-col space-y-2 p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-neutral md:space-y-0">
-            <li>
+            {/* <li>
               <Link
                 href="/about"
                 className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0 whitespace-nowrap"
@@ -102,7 +102,7 @@ const Header = () => {
                   beta
                 </span>
               </Link>
-            </li>
+            </li> */}
             {/* <li>
               <Link
                 href="https://crowd.dev"

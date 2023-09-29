@@ -58,7 +58,7 @@ const CustomSearchBox = () => {
           onClick={() => setIsOpen(true)}
         />
         <div className="flex absolute inset-y-0 right-0 items-center pr-3 pointer-events-none gap-1">
-          <kbd className="kbd kbd-xs hidden lg:flex">ctrl</kbd>
+          <kbd className="kbd kbd-xs hidden lg:flex">cmd</kbd>
           <kbd className="kbd kbd-xs hidden lg:flex">K</kbd>
         </div>
       </div>

@@ -26,12 +26,21 @@ const Header = () => {
         >
           <span className="sr-only">Home</span>analyzemyrepo.com
         </Link>
-        <div className="flex flex-1 gap-2 md:order-3 items-center justify-end">
-          <div className="w-40 flex-auto ml-2 md:flex-none md:ml-0">
-            <SearchBox />
-          </div>
-          {/* <LoginButton /> */}
-          <button
+        <div className="flex gap-2 md:order-3 items-center justify-end">
+          <Link
+            href="https://github.com/CrowdDotDev/analyzemyrepo"
+            target="_blank"
+            className="self-center pr-2 md:pr-0"
+          >
+            <Image
+              width="100"
+              height="100"
+              alt="GitHub Repo stars"
+              src="https://img.shields.io/github/stars/CrowdDotDev/analyzemyrepo?logoColor=orange&style=social"
+              priority={true}
+            ></Image>
+          </Link>
+          {/* <button
             data-collapse-toggle="navbar-cta"
             type="button"
             className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
@@ -53,17 +62,20 @@ const Header = () => {
                 clipRule="evenodd"
               ></path>
             </svg>
-          </button>
+          </button> */}
         </div>
         <div
           className={
-            "items-center w-full md:flex md:w-auto md:order-2 md:justify-center md:flex-1 md:mt-0.5 md:ml-4 lg:justify-start" +
+            "items-center w-full justify-center md:flex md:w-auto md:order-2 md:justify-center md:flex-1 md:mt-0.5 md:ml-4 lg:justify-start" +
             (isOpen ? "" : " hidden")
           }
           id="navbar-cta"
         >
-          <ul className="flex flex-col space-y-2 p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-neutral md:space-y-0">
-            <li>
+          <div className="w-80 mx-auto">
+            <SearchBox />
+          </div>
+          {/* <ul className="flex flex-col space-y-2 p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-neutral md:space-y-0"> */}
+          {/* <li>
               <Link
                 href="/about"
                 className="block py-2 pr-4 pl-3 text-white bg-black rounded md:bg-transparent md:text-black md:p-0 whitespace-nowrap"
@@ -89,8 +101,8 @@ const Header = () => {
               >
                 AI search
               </Link>
-            </li>
-          </ul>
+            </li> */}
+          {/* </ul> */}
         </div>
       </div>
     </header>

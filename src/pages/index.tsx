@@ -140,7 +140,7 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             <div className="mx-auto flex flex-col w-4/5 md:w-1/2 mb-14 md:mb-2">
               <SearchBar />
               <h3 className="text-center pt-2 text-gray-500">
-                Search for a GitHub repo 👇
+                Search for a GitHub repo
               </h3>
             </div>
           </div>

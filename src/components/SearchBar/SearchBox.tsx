@@ -86,7 +86,7 @@ const CustomSearchBox = ({
             ref={inputRef}
           />
           <div className="flex absolute inset-y-0 right-0 items-center pr-3 pointer-events-none gap-1">
-            <kbd className="kbd hidden lg:flex">ctrl</kbd>
+            <kbd className="kbd hidden lg:flex">cmd</kbd>
             <kbd className="kbd hidden lg:flex">K</kbd>
           </div>
         </div>

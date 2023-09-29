@@ -15,7 +15,7 @@ export const Footer = () => {
           </Link>
 
           <div className="flex justify-center items-center">
-            <nav
+            {/* <nav
               aria-label="Footer Services Nav"
               className="flex flex-col space-y-1 md:flex-row md:space-x-8 md:space-y-0 whitespace-nowrap items-center"
             >
@@ -31,7 +31,7 @@ export const Footer = () => {
               <Link className="text-black font-semibold" href="/ai-search">
                 AI search
               </Link>
-            </nav>
+            </nav> */}
           </div>
 
           <div className="flex flex-none md:flex-1 justify-end gap-4 items-center">
@@ -77,14 +77,22 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="flex justify-center flex-wrap mt-4 pt-4 md:mt-8 md:pt-8 mb-2">
-          powered by&nbsp;
-          <a href="https://crowd.dev" className="text-primary">
-            crowd.dev
-          </a>
-          <span className="hidden md:block">
-            &nbsp;&mdash;&nbsp;the community-led growth platform for devtools 🚀
-          </span>
+        <div className="flex flex-col justify-center items-center flex-wrap mt-4 pt-4 md:mt-8 md:pt-8 mb-2">
+          <div>
+            This tool is powered by&nbsp;
+            <a href="https://crowd.dev" className="text-primary">
+              crowd.dev
+            </a>
+          </div>
+          <div>
+            <a
+              href="https://github.com/CrowdDotDev/crowd.dev"
+              className="text-primary"
+            >
+              Leave a star on our main repository
+            </a>
+            , if you want to support our work for open source projects ⭐
+          </div>
         </div>
       </div>
     </footer>
