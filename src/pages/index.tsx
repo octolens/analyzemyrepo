@@ -232,101 +232,101 @@ const PopularTopics = ({
   );
 };
 
-const FastestGrowingRepos = ({
-  props,
-}: {
-  props: InferGetStaticPropsType<typeof getStaticProps>;
-}) => {
-  return (
-    <div
-      className="relative shadow-md sm:rounded-lg"
-      id="fastest-growing-section"
-    >
-      <table className="text-sm text-left text-gray-500 dark:text-gray-400 table-auto">
-        <thead className="text-xs text-white bg-primary/90 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            <th scope="col" className="py-3 px-1 md:px-6 text-lg">
-              #
-            </th>
-            <th scope="col" className="py-3 px-1 md:px-6">
-              Repo
-            </th>
-            <th scope="col" className="py-3 px-1 md:px-6">
-              Stars
-            </th>
-            <th scope="col" className="py-3 px-1 md:px-6">
-              Growth
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.data.map((repo, index) => (
-            <tr
-              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-              key={repo.full_name}
-            >
-              <td className="">
-                <div className="flex items-center py-3 px-1 md:px-6">
-                  <span className="font-medium">{index + 1}</span>
-                </div>
-              </td>
-              <th
-                scope="row"
-                className="flex items-center py-4 px-1 md:px-6 text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                <Image
-                  className="w-10 h-10 rounded-full"
-                  src={`https://github.com/${repo.full_name.split("/")[0]}.png`}
-                  alt="Repo Image"
-                  priority={true}
-                  loading="eager"
-                  width={40}
-                  height={40}
-                />
-                <div className="pl-3 pr-1 flex max-w-[110px] md:max-w-xs md:pr-0">
-                  <div className="text-base font-semibold whitespace-nowrap overflow-hidden text-ellipsis">
-                    <Link
-                      href={`/analyze/${repo.full_name}`}
-                      className="hover:underline"
-                    >
-                      {repo.full_name}
-                    </Link>
-                  </div>
-                </div>
-              </th>
-              <td className="py-4 px-1 md:px-6">
-                {repo.this_week_stars.toLocaleString()}
-              </td>
-              <td className="py-4 px-1 md:px-6">
-                <div className="flex items-center">
-                  {repo.weekly_star_growth_rate.toPrecision(3)}%
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-};
+// const FastestGrowingRepos = ({
+//   props,
+// }: {
+//   props: InferGetStaticPropsType<typeof getStaticProps>;
+// }) => {
+//   return (
+//     <div
+//       className="relative shadow-md sm:rounded-lg"
+//       id="fastest-growing-section"
+//     >
+//       <table className="text-sm text-left text-gray-500 dark:text-gray-400 table-auto">
+//         <thead className="text-xs text-white bg-primary/90 dark:bg-gray-700 dark:text-gray-400">
+//           <tr>
+//             <th scope="col" className="py-3 px-1 md:px-6 text-lg">
+//               #
+//             </th>
+//             <th scope="col" className="py-3 px-1 md:px-6">
+//               Repo
+//             </th>
+//             <th scope="col" className="py-3 px-1 md:px-6">
+//               Stars
+//             </th>
+//             <th scope="col" className="py-3 px-1 md:px-6">
+//               Growth
+//             </th>
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {props.data.map((repo, index) => (
+//             <tr
+//               className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+//               key={repo.full_name}
+//             >
+//               <td className="">
+//                 <div className="flex items-center py-3 px-1 md:px-6">
+//                   <span className="font-medium">{index + 1}</span>
+//                 </div>
+//               </td>
+//               <th
+//                 scope="row"
+//                 className="flex items-center py-4 px-1 md:px-6 text-gray-900 whitespace-nowrap dark:text-white"
+//               >
+//                 <Image
+//                   className="w-10 h-10 rounded-full"
+//                   src={`https://github.com/${repo.full_name.split("/")[0]}.png`}
+//                   alt="Repo Image"
+//                   priority={true}
+//                   loading="eager"
+//                   width={40}
+//                   height={40}
+//                 />
+//                 <div className="pl-3 pr-1 flex max-w-[110px] md:max-w-xs md:pr-0">
+//                   <div className="text-base font-semibold whitespace-nowrap overflow-hidden text-ellipsis">
+//                     <Link
+//                       href={`/analyze/${repo.full_name}`}
+//                       className="hover:underline"
+//                     >
+//                       {repo.full_name}
+//                     </Link>
+//                   </div>
+//                 </div>
+//               </th>
+//               <td className="py-4 px-1 md:px-6">
+//                 {repo.this_week_stars.toLocaleString()}
+//               </td>
+//               <td className="py-4 px-1 md:px-6">
+//                 <div className="flex items-center">
+//                   {repo.weekly_star_growth_rate.toPrecision(3)}%
+//                 </div>
+//               </td>
+//             </tr>
+//           ))}
+//         </tbody>
+//       </table>
+//     </div>
+//   );
+// };
 
-const Banner = () => {
-  return (
-    <div className="bg-primary/90 px-4 py-3 pr-14 text-white relative">
-      <p className="text-left text-sm font-medium sm:text-center">
-        Eagle Eye by crowd.dev is live on ProductHunt!{" "}
-        <Link
-          className="underline"
-          href="https://www.producthunt.com/posts/eagle-eye-2"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Check it out &rarr;{" "}
-        </Link>
-      </p>
-    </div>
-  );
-};
+// const Banner = () => {
+//   return (
+//     <div className="bg-primary/90 px-4 py-3 pr-14 text-white relative">
+//       <p className="text-left text-sm font-medium sm:text-center">
+//         Eagle Eye by crowd.dev is live on ProductHunt!{" "}
+//         <Link
+//           className="underline"
+//           href="https://www.producthunt.com/posts/eagle-eye-2"
+//           target="_blank"
+//           rel="noopener noreferrer"
+//         >
+//           Check it out &rarr;{" "}
+//         </Link>
+//       </p>
+//     </div>
+//   );
+// };
 
 // const PHBanner = () => {
 //   return (
