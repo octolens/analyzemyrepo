@@ -23,7 +23,13 @@ const Header = () => {
           href="/"
           className="flex flex-1 items-center text-primary font-bold text-md md:text-xl"
         >
-          <span className="sr-only">Home</span>analyzemyrepo.com
+          <Image
+            width="240"
+            height="132"
+            alt="analyzemyrepo.com"
+            src="/logo.png"
+            priority={true}
+          ></Image>
         </Link>
         <div className="flex flex-1 md:order-2 justify-end">
           {/* <LoginButton /> */}

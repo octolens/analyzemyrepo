@@ -24,7 +24,13 @@ const Header = () => {
           href="/"
           className="flex items-center mx-auto py-2 text-primary font-bold text-md md:text-xl"
         >
-          <span className="sr-only">Home</span>analyzemyrepo.com
+          <Image
+            width="240"
+            height="132"
+            alt="analyzemyrepo.com"
+            src="/logo.png"
+            priority={true}
+          ></Image>
         </Link>
         <div className="flex gap-2 md:order-3 items-center justify-end">
           <Link

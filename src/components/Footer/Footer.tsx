@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { trpc } from "../../utils/trpc";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export const Footer = () => {
   return (
@@ -11,7 +12,13 @@ export const Footer = () => {
             href="/"
             className="flex flex-1 items-center text-primary font-bold text-md md:text-xl"
           >
-            <span className="sr-only">Home</span>analyzemyrepo.com
+            <Image
+              width="240"
+              height="132"
+              alt="analyzemyrepo.com"
+              src="/logo.png"
+              priority={true}
+            ></Image>
           </Link>
 
           <div className="flex justify-center items-center">
